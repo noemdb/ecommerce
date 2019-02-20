@@ -6,7 +6,7 @@
         <div class="row">
             <div class="col-md-12">
                 {!!Form::model($orders, ['route' => ['admin-orders.update', $orders->id], "method" =>  "put","files" => true])!!}
-                {!! Form::bsSelect("status","Status",null,$status,"Please select a status") !!}
+                {!! Form::bsSelect("status","Estado",null,$status,"Por favor select a status") !!}
                 {!! Form::bsSubmit("Update") !!}
                 {!! Form::close() !!}
 
@@ -14,12 +14,12 @@
                 <table class="table table-bordererd table-hover">
                     <tr>
                         <th>Iyzico Conversation ID</th>
-                        <th>Name Surname</th>
+                        <th>Nombre Apellido</th>
                         <th>E-Mail</th>
-                        <th>Phone</th>
-                        <th>Mobile Phone</th>
-                        <th>Address</th>
-                        <th>Status</th>
+                        <th>Teléfono</th>
+                        <th>Mobile Teléfono</th>
+                        <th>Dirección</th>
+                        <th>Estado</th>
                     </tr>
                     @foreach($orders->baskets->basket_products as $basket_product)
                         <tr>
@@ -39,12 +39,12 @@
                 <h3>Order(s) - (PN-{{$orders->id}})</h3>
                 <table class="table table-bordererd table-hover">
                     <tr>
-                        <th>Image</th>
-                        <th>Product Name</th>
+                        <th>Imagen</th>
+                        <th>Nombre del producto</th>
                         <th>Price</th>
-                        <th>Quantity</th>
+                        <th>Cantidad</th>
                         <th>Sub Total</th>
-                        <th>Status</th>
+                        <th>Estado</th>
                     </tr>
                     @foreach($orders->baskets->basket_products as $basket_product)
                         <tr>
@@ -73,7 +73,7 @@
                     </tr>
 
                     <tr>
-                        <th colspan="4" class="text-right">Status</th>
+                        <th colspan="4" class="text-right">Estado</th>
                         <td colspan="2">{{$orders->status}}</td>
                     </tr>
 

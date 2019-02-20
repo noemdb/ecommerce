@@ -16,12 +16,12 @@
                     <thead>
                     <tr>
                         <th>ID</th>
-                        <th>Image</th>
+                        <th>Imagen</th>
                         <th>Category</th>
-                        <th>Product Name</th>
+                        <th>Nombre del producto</th>
                         <th>Original Price</th>
                         <th>Product Price</th>
-                        <th>Product Detail</th>
+                        <th>Product Detalle</th>
                         <th>Created At</th>
                         <th>#</th>
 

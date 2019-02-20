@@ -17,7 +17,7 @@
 
                 <div class="breadcrumbs d-flex flex-row align-items-center">
                     <ul>
-                        <li><a href="{{url('/')}}">Home</a></li>
+                        <li><a href="{{url('/')}}">Inicio</a></li>
                         <li class="active"><a href="{{route('category', $category->slug)}}"><i class="fa fa-angle-right" aria-hidden="true"></i>{{ $category->category_name }}</a></li>
                     </ul>
                 </div>
@@ -58,7 +58,7 @@
                                                     <input type="number" class="quantity" id="quantity" name="quantity" value="1" style="width: 50px; margin-right: 10px;">
                                                 </div>
                                             </div>
-                                            <div class="add_to_cart_button red_button" style="margin-top: 40px;"><a href="{{ route('basket.create', ['id' => $product->id]) }}">add to cart</a></div>
+                                            <div class="add_to_cart_button red_button" style="margin-top: 40px;"><a href="{{ route('basket.create', ['id' => $product->id]) }}">Añadir a la cesta</a></div>
                                         </div>
                                         </a>
                                     @endforeach
@@ -81,8 +81,8 @@
                     <div class="benefit_item d-flex flex-row align-items-center">
                         <div class="benefit_icon"><i class="fa fa-truck" aria-hidden="true"></i></div>
                         <div class="benefit_content">
-                            <h6>free shipping</h6>
-                            <p>Suffered Alteration in Some Form</p>
+                            <h6>envío gratis</h6>
+                            <p>Alteración sufrida en alguna forma</p>
                         </div>
                     </div>
                 </div>
@@ -90,8 +90,8 @@
                     <div class="benefit_item d-flex flex-row align-items-center">
                         <div class="benefit_icon"><i class="fa fa-money" aria-hidden="true"></i></div>
                         <div class="benefit_content">
-                            <h6>cash on delivery</h6>
-                            <p>The Internet Tend To Repeat</p>
+                            <h6>contra reembolso</h6>
+                            <p>Internet tiende a repetirse</p>
                         </div>
                     </div>
                 </div>
@@ -99,8 +99,8 @@
                     <div class="benefit_item d-flex flex-row align-items-center">
                         <div class="benefit_icon"><i class="fa fa-undo" aria-hidden="true"></i></div>
                         <div class="benefit_content">
-                            <h6>45 days return</h6>
-                            <p>Making it Look Like Readable</p>
+                            <h6>Vuelta de 45 dias</h6>
+                            <p>Haciéndolo parecer legible</p>
                         </div>
                     </div>
                 </div>
@@ -108,7 +108,7 @@
                     <div class="benefit_item d-flex flex-row align-items-center">
                         <div class="benefit_icon"><i class="fa fa-clock-o" aria-hidden="true"></i></div>
                         <div class="benefit_content">
-                            <h6>opening all week</h6>
+                            <h6>abriendo toda la semana</h6>
                             <p>8AM - 09PM</p>
                         </div>
                     </div>

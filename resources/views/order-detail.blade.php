@@ -14,16 +14,16 @@
                     <div class="col-sm-12 locations text-left">
                         <div class="section-padding"></div>
                         <a href="{{ route('orders') }}" class="btn btn-xs btn-primary">
-                            <i class="glyphicon glyphicon-arrow-left"></i> Return to orders
+                            <i class="glyphicon glyphicon-arrow-left"></i> Volver a pedidos
                         </a>
                         <br><br>
-                        <h2>ORDER (PN-{{ $order->id }}) <br><br></h2>
+                        <h2>ORDEN (PN-{{ $order->id }}) <br><br></h2>
                         <table class="table table-bordererd table-hover">
                             <tr>
-                                <th>Image</th>
-                                <th>Product Name</th>
-                                <th>Unit Price</th>
-                                <th>Quantity</th>
+                                <th>Imagen</th>
+                                <th>Nombre del producto</th>
+                                <th>Precio unitario</th>
+                                <th>Cantidad</th>
                                 <th>Sub Total</th>
                             </tr>
                             @foreach($order->baskets->basket_products as $basket_product)
@@ -52,7 +52,7 @@
                             </tr>
 
                             <tr>
-                                <th colspan="4" class="text-right">Status</th>
+                                <th colspan="4" class="text-right">Estado</th>
                                 <td colspan="2">{{ $order->status }}</td>
                             </tr>
                         </table>
@@ -72,7 +72,7 @@
                 <div class="row">
                     <div class="col-md-12 order-summary">
                         <div class="alert alert-danger text-center">
-                            <h2>No records found!</h2>
+                            <h2>¡No se encontrarón archivos!</h2>
                         </div>
                     </div>
                 </div>

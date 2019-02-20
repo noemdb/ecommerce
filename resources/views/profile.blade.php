@@ -6,14 +6,14 @@
                 <table class="table table-hover">
                     <thead>
                     <tr>
-                        <th>Name Surname</th>
+                        <th>Nombre Apellido</th>
                         <th>E-Mail</th>
-                        <th>Address</th>
-                        <th>Phone</th>
-                        <th>Mobile Phone</th>
-                        <th>City</th>
-                        <th>Country</th>
-                        <th>Zip Code</th>
+                        <th>Dirección</th>
+                        <th>Teléfono</th>
+                        <th>Teléfono Móvil</th>
+                        <th>Ciudad</th>
+                        <th>País</th>
+                        <th>Código Postal</th>
                         <th>#</th>
                     </tr>
                     </thead>

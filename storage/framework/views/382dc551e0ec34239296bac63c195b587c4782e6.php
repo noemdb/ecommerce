@@ -1,11 +1,9 @@
-@extends('layouts/main')
-
-@section('content')
+<?php $__env->startSection('content'); ?>
 
     <!-- Slider -->
 
 
-    <div class="main_slider" style="background-image:url({{ asset('assets/images/slider_1.jpg')}})">
+    <div class="main_slider" style="background-image:url(<?php echo e(asset('assets/images/slider_1.jpg')); ?>)">
         <div class="container fill_height">
             <div class="row align-items-center fill_height">
                 <div class="col">
@@ -37,10 +35,10 @@
                             <li class="grid_sorting_button button d-flex flex-column justify-content-center align-items-center active is-checked"
                                 data-filter="*">all
                             </li>
-                            @foreach($categoryMenu as $menu)
+                            <?php $__currentLoopData = $categoryMenu; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $menu): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                 <li class="grid_sorting_button button d-flex flex-column justify-content-center align-items-center"
-                                    data-filter=".{{ $menu->id }}">{{ $menu->category_name }}</li>
-                            @endforeach
+                                    data-filter=".<?php echo e($menu->id); ?>"><?php echo e($menu->category_name); ?></li>
+                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                         </ul>
                     </div>
                 </div>
@@ -50,20 +48,22 @@
                     <div class="product-grid"
                          data-isotope='{ "itemSelector": ".product-item", "layoutMode": "fitRows" }'>
 
-                        @foreach($products as $product)
-                            <a href="/product/{{$product->slug}}">
-                                <div class="product-item {{$product->category_id}} ">
+                        <?php $__currentLoopData = $products; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $product): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                            <a href="/product/<?php echo e($product->slug); ?>">
+                                <div class="product-item <?php echo e($product->category_id); ?> ">
                                 <div class="product discount product_filter">
                                     <div class="product_image">
-                                        {!! $product->thumbs !!}
+                                        <?php echo $product->thumbs; ?>
+
                                     </div>
 
                                     <div class="product_info">
                                         <h6 class="product_name"><a
-                                                    href="/product/{{$product->slug}}">{{ $product->product_name }}</a>
+                                                    href="/product/<?php echo e($product->slug); ?>"><?php echo e($product->product_name); ?></a>
                                         </h6>
 
-                                        <div class="product_price">{{ number_format($product->product_price) }} ₺<span>{{ number_format($product->original_price ) }}
+                                        <div class="product_price"><?php echo e(number_format($product->product_price)); ?> ₺<span><?php echo e(number_format($product->original_price )); ?>
+
                                                 ₺</span></div>
 
                                         <input type="number" class="quantity" id="quantity" name="quantity" value="1"
@@ -71,11 +71,11 @@
                                     </div>
                                 </div>
                                 <div class="add_to_cart_button red_button"><a
-                                            href="{{ route('basket.create', ['id' => $product->id]) }}">Añadir a la cesta</a>
+                                            href="<?php echo e(route('basket.create', ['id' => $product->id])); ?>">Añadir a la cesta</a>
                                 </div>
                             </div>
                             </a>
-                        @endforeach
+                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 
                     </div>
                 </div>
@@ -90,7 +90,7 @@
             <div class="row align-items-center">
                 <div class="col-lg-6">
                     <div class="deal_ofthe_week_img">
-                        <img src="{{ asset('assets/images/deal_ofthe_week.png')}}" alt="">
+                        <img src="<?php echo e(asset('assets/images/deal_ofthe_week.png')); ?>" alt="">
                     </div>
                 </div>
                 <div class="col-lg-6 text-right deal_ofthe_week_col">
@@ -170,10 +170,10 @@
     </div>
 
 
-@endsection
+<?php $__env->stopSection(); ?>
 
 
-@section('js')
+<?php $__env->startSection('js'); ?>
 
 
     <script>
@@ -194,4 +194,6 @@
         });
     </script>
 
-@endsection
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('layouts/main', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

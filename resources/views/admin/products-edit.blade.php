@@ -6,12 +6,12 @@
             <div class="col-md-12">
 
                 {!!Form::model($products, ['route' => ['admin-products.update', $products->id], "method" =>  "put","files" => true])!!}
-                {!! Form::bsSelect("category_id","Category",null,$categoriess,"Please select a category") !!}
-                {!! Form::bsFile("img[]","Product Image") !!}
-                {!! Form::bsText("product_name","Product Name") !!}
+                {!! Form::bsSelect("category_id","Category",null,$categoriess,"Por favor select a category") !!}
+                {!! Form::bsFile("img[]","Product Imagen") !!}
+                {!! Form::bsText("product_name","Nombre del producto") !!}
                 {!! Form::bsText("original_price","Original Price") !!}
                 {!! Form::bsText("product_price","Product Price") !!}
-                {!! Form::bsTextArea("product_detail","Product Detail",null,["class" => "summernote"]) !!}
+                {!! Form::bsTextArea("product_detail","Product Detalle",null,["class" => "summernote"]) !!}
                 {!! Form::bsSubmit("Update") !!}
                 {!! Form::close() !!}
 

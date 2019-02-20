@@ -5,12 +5,12 @@
         <div class="row">
             <div class="col-md-12">
                 {!!Form::open(["url" => "/admin-products",'files' => 'true', "method" => "post"]) !!}
-                {!! Form::bsFile("img[]","Product Image") !!}
-                {!! Form::bsSelect("category_id","Category",null,$categoriess,"Please select a category") !!}
-                {!! Form::bsText("product_name","Product Name") !!}
+                {!! Form::bsFile("img[]","Product Imagen") !!}
+                {!! Form::bsSelect("category_id","Category",null,$categoriess,"Por favor select a category") !!}
+                {!! Form::bsText("product_name","Nombre del producto") !!}
                 {!! Form::bsText("original_price","Original Price") !!}
                 {!! Form::bsText("product_price","Product Price") !!}
-                {!! Form::bsTextArea("product_detail","Product Detail",null,["class" => "summernote"]) !!}
+                {!! Form::bsTextArea("product_detail","Product Detalle",null,["class" => "summernote"]) !!}
                 {!! Form::bsSubmit("Save") !!}
                 {!! Form::close() !!}
 

@@ -14,7 +14,7 @@
                     <tr>
                         <th>Orders ID</th>
                         <th>Order Price</th>
-                        <th>Status</th>
+                        <th>Estado</th>
                         <th></th>
                     </tr>
                     @foreach($orders as $order)
@@ -22,7 +22,7 @@
                             <td>PN-{{ $order->id }}</td>
                             <td>{{ $order->order_price }} ₺</td>
                             <td>{{ $order->status }}</td>
-                            <td><a href="/orders/{{$order->id}}" class="btn-sm btn-success">Detail</a></td>
+                            <td><a href="/orders/{{$order->id}}" class="btn-sm btn-success">Detalle</a></td>
                         </tr>
                     @endforeach
                 </table>

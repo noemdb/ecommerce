@@ -9,11 +9,11 @@
                     <tr>
                         <th>Order ID</th>
                         <th>Iyzico C. ID</th>
-                        <th>Name Surname</th>
-                        <th>Phone</th>
+                        <th>Nombre Apellido</th>
+                        <th>Teléfono</th>
                         <th>Payment Method</th>
                         <th>Price</th>
-                        <th>Status</th>
+                        <th>Estado</th>
                         <th>Order Date</th>
                         <th></th>
                     </tr>

@@ -1,6 +1,4 @@
-@extends('layouts/main')
-
-@section('content')
+<?php $__env->startSection('content'); ?>
 
     <!-- Checkout Content -->
     <div class="container-fluid no-padding checkout-content" style="margin-top: 40px;">
@@ -15,7 +13,7 @@
                         <h3>ESTA</h3>
                     </div><!-- Section Header /- -->
                     <div class="order-summary-content">
-                        @if(count(Cart::content())>0)
+                        <?php if(count(Cart::content())>0): ?>
                             <table class="shop_cart">
                                 <thead>
                                 <tr>
@@ -26,39 +24,42 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                @foreach(Cart::content() as $productCartItem)
+                                <?php $__currentLoopData = Cart::content(); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $productCartItem): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                     <tr class="cart_item">
 
 
-                                        <td data-title="{{$productCartItem->name}}" class="product-name">
-                                            <a title="{{$productCartItem->name}}" href="{{ route('product', $productCartItem->options->slug) }}">
-                                                {{$productCartItem->name}}
+                                        <td data-title="<?php echo e($productCartItem->name); ?>" class="product-name">
+                                            <a title="<?php echo e($productCartItem->name); ?>" href="<?php echo e(route('product', $productCartItem->options->slug)); ?>">
+                                                <?php echo e($productCartItem->name); ?>
+
                                             </a>
                                         </td>
                                         <td data-title="Cantidad" class="product-quantity">
                                             <div class="quantity">
 
-                                                <input type="text" class="quantityf" data-id="{{ $productCartItem->rowId }}" value=" {{ $productCartItem->qty  }}">
+                                                <input type="text" class="quantityf" data-id="<?php echo e($productCartItem->rowId); ?>" value=" <?php echo e($productCartItem->qty); ?>">
 
                                              </div>
                                         </td>
 
                                         <td data-title="Total" class="product-subtotal">
-                                            <span>{{$productCartItem->price}} ₺</span>
+                                            <span><?php echo e($productCartItem->price); ?> ₺</span>
                                         </td>
                                         <td data-title="Total" class="product-remove">
-                                            <span>{{($productCartItem->price) * ($productCartItem->qty) }} ₺</span>
+                                            <span><?php echo e(($productCartItem->price) * ($productCartItem->qty)); ?> ₺</span>
                                         </td>
                                     </tr>
-                                @endforeach
+                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 
                                 </tbody>
                                 <tfoot>
                                 <tr>
                                     <td colspan="6">
-                                        <form action="{{route('basket.destroy')}}" method="POST">
-                                            {{csrf_field()}}
-                                            {{method_field('DELETE')}}
+                                        <form action="<?php echo e(route('basket.destroy')); ?>" method="POST">
+                                            <?php echo e(csrf_field()); ?>
+
+                                            <?php echo e(method_field('DELETE')); ?>
+
                                             <input type="submit" class="btn pull-left" value="CLEAR ALL">
                                         </form>
                                     </td>
@@ -69,14 +70,14 @@
                             <!-- Proceed To Checkout -->
                             <div class="col-md-12 col-sm-12 text-right">
                                 <div class="wc-proceed-to-checkout">
-                                    <p>SUBTOTAL <span>{{ Cart::subtotal() }} + VAT</span></p>
-                                    <p>TOTAL <span>{{ Cart::total() }} ₺ </span></p>
+                                    <p>SUBTOTAL <span><?php echo e(Cart::subtotal()); ?> + VAT</span></p>
+                                    <p>TOTAL <span><?php echo e(Cart::total()); ?> ₺ </span></p>
 
-                                    <a href="{{route('payment')}}" class="red_button" title="REVISAR">REVISAR</a>
+                                    <a href="<?php echo e(route('payment')); ?>" class="red_button" title="REVISAR">REVISAR</a>
                                 </div>
                             </div><!-- Proceed To Checkout /- -->
 
-                        @else
+                        <?php else: ?>
                             <div class="container-fluid no-padding checkout-content">
                                 <div class="container">
                                     <div class="row">
@@ -88,7 +89,7 @@
                                     </div>
                                 </div>
                             </div>
-                        @endif
+                        <?php endif; ?>
 
                     </div>
                 </div><!-- Order Summary /- -->
@@ -100,10 +101,10 @@
         </div><!-- Container /- -->
         <div class="section-padding"></div>
     </div><!-- Checkout Content /- -->
-@endsection
+<?php $__env->stopSection(); ?>
 
 
-@section('js')
+<?php $__env->startSection('js'); ?>
     <script>
         $(function(){
             $('.quantityf').on('change', function() {
@@ -111,7 +112,7 @@
                 toastr.options.timeOut = 4500;
                 $.ajax({
                     type: "PATCH",
-                    url: '{{ url('basket/update') }}' + '/' + id,
+                    url: '<?php echo e(url('basket/update')); ?>' + '/' + id,
                     data: {
                         'quantity': this.value,
                     },
@@ -119,11 +120,13 @@
                         console.log(data);
 
                         toastr.success('Updated successfully!');
-                        window.location.href = '{{ route('basket') }}';
+                        window.location.href = '<?php echo e(route('basket')); ?>';
                     }
                 });
             });
         });
     </script>
-@endsection
+<?php $__env->stopSection(); ?>
 
+
+<?php echo $__env->make('layouts/main', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
