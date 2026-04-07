@@ -240,33 +240,54 @@ export function ProductForm({ initialData, categories, suppliers }: ProductFormP
 
             <div className="space-y-4">
               {/* Display uploaded images */}
-              {fields.map((field, index) => (
-                <div key={field.id} className="flex items-start gap-4">
-                  <div className="flex-1">
-                    <Input
-                      placeholder="URL de imagen"
-                      {...register(`images.${index}` as any)}
-                      error={(errors.images as any)?.[index]?.message}
-                    />
-                  </div>
-                  {fields.length > 1 && (
-                    <button
-                      type="button"
-                      onClick={() => remove(index)}
-                      className="mt-4 p-2 text-neutral-400 hover:text-red-500 transition-colors"
+              <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4">
+                {fields.map((field, index) => {
+                  const imageUrl = watch("images")?.[index];
+                  return (
+                    <div
+                      key={field.id}
+                      className="group relative overflow-hidden rounded-lg border border-neutral-200 bg-neutral-100 shadow-sm transition-shadow hover:shadow-lg dark:border-neutral-800 dark:bg-neutral-950"
                     >
-                      <Trash2 className="w-5 h-5" />
-                    </button>
-                  )}
-                </div>
-              ))}
+                      <input
+                        type="hidden"
+                        value={imageUrl}
+                        {...register(`images.${index}` as any)}
+                      />
+                      <div className="relative h-40 w-full bg-neutral-200 dark:bg-neutral-900">
+                        {imageUrl ? (
+                          <Image
+                            src={imageUrl}
+                            alt={`Imagen ${index + 1}`}
+                            fill
+                            sizes="(max-width: 768px) 100vw, 33vw"
+                            className="object-cover"
+                          />
+                        ) : (
+                          <div className="flex h-full w-full items-center justify-center text-sm text-neutral-500">
+                            No hay imagen
+                          </div>
+                        )}
+                      </div>
+                      <button
+                        type="button"
+                        onClick={() => remove(index)}
+                        className="absolute right-3 top-3 z-10 inline-flex h-10 w-10 items-center justify-center rounded-full bg-black/60 text-white opacity-0 transition-opacity duration-200 hover:bg-black/80 group-hover:opacity-100"
+                      >
+                        <Trash2 className="w-4 h-4" />
+                      </button>
+                    </div>
+                  );
+                })}
+              </div>
 
               {/* Upload Button */}
               <UploadButton<OurFileRouter, "productImage">
                 endpoint="productImage"
+                content={{ button: "Seleccione imagen" }}
+                appearance={{ button: "p-4" }}
                 onClientUploadComplete={(res) => {
                   if (res) {
-                    const urls = res.map((file) => file.url);
+                    const urls = res.map((file: any) => file.url);
                     const currentImages = watch("images") || [];
                     setValue("images", [...currentImages, ...urls]);
                     showPremiumToast.success("Subida completa", "Imágenes subidas exitosamente");
@@ -275,7 +296,7 @@ export function ProductForm({ initialData, categories, suppliers }: ProductFormP
                 onUploadError={(error: Error) => {
                   showPremiumToast.error("Error de subida", `Error al subir imagen: ${error.message}`);
                 }}
-                className="w-full"
+                className="w-full p-1 border-2 border-dashed border-neutral-300 rounded-md text-sm font-medium text-neutral-500 hover:border-blue-500 hover:text-blue-500 transition-colors flex items-center justify-center gap-2"
               />
 
               {errors.images && (
