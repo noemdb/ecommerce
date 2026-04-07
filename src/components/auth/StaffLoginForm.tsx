@@ -30,12 +30,15 @@ export function StaffLoginForm() {
       const result = await signIn("staff-credentials", {
         email: data.email,
         password: data.password,
-        redirect: true,
+        redirect: false,
         callbackUrl: "/admin",
       });
 
       if (result?.error) {
         toast.error("Credenciales de administrador inválidas");
+      } else {
+        router.refresh();
+        router.push("/admin");
       }
     } catch (error) {
       toast.error("Error al iniciar sesión");

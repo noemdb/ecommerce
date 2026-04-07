@@ -32,12 +32,15 @@ export function CustomerLoginForm() {
       const result = await signIn("customer-credentials", {
         email: data.email,
         password: data.password,
-        redirect: true,
+        redirect: false,
         callbackUrl: callbackUrl,
       });
 
       if (result?.error) {
         toast.error("Credenciales inválidas");
+      } else {
+        router.refresh();
+        router.push(callbackUrl);
       }
     } catch (error) {
       toast.error("Error al iniciar sesión");
