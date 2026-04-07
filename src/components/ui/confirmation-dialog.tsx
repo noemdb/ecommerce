@@ -3,7 +3,7 @@
 import * as React from "react";
 import * as AlertDialogPrimitive from "@radix-ui/react-alert-dialog";
 import { cn } from "@/lib/utils";
-import { Button } from "./Button";
+import { Button } from "./button";
 import { AlertCircle, HelpCircle } from "lucide-react";
 
 export interface ConfirmationOptions {

@@ -15,9 +15,10 @@ import {
   MessageSquare,
   ShieldCheck,
   ChevronLeft,
-  ChevronRight
+  ChevronRight,
+  Sparkles
 } from "lucide-react";
-import { Button } from "@/components/ui/Button";
+import { Button } from "@/components/ui/button";
 import { useState, useEffect } from "react";
 import { cn } from "@/lib/utils";
 
@@ -30,6 +31,7 @@ const SIDEBAR_ITEMS = [
   { label: "Categorías", href: "/admin/categorias", icon: Tags },
   { label: "Clientes", href: "/admin/clientes", icon: Users },
   { label: "Reseñas", href: "/admin/resenas", icon: MessageSquare },
+  { label: "Prompts AI", href: "/admin/prompts", icon: Sparkles },
   { label: "Usuarios", href: "/admin/usuarios", icon: ShieldCheck },
   { label: "Métricas", href: "/admin/metricas", icon: Settings },
 ];

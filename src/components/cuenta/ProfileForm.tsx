@@ -4,8 +4,8 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { updateCustomerProfileSchema, type UpdateCustomerProfileInput } from "@/lib/validators/auth";
 import { updateCustomerProfileAction } from "@/actions/customer-account";
-import { Button } from "@/components/ui/Button";
-import { Input } from "@/components/ui/Input";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 import { useState } from "react";
 import { toast } from "sonner";
 

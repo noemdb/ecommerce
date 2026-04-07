@@ -5,8 +5,8 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { productSchema, type ProductInput } from "@/lib/validators/product";
 import { createProductAction, updateProductAction } from "@/actions/product";
-import { Button } from "@/components/ui/Button";
-import { Input } from "@/components/ui/Input";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 import { useState, useTransition, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
@@ -23,8 +23,10 @@ import {
   Package,
   Layers,
   Settings,
-  Globe
+  Globe,
+  Sparkles
 } from "lucide-react";
+import { PromptForm } from "./PromptForm";
 
 interface Category {
   id: string;
@@ -259,6 +261,60 @@ export function ProductForm({ initialData, categories, suppliers }: ProductFormP
               </Button>
             </div>
           </section>
+
+          {/* AI Prompts Section (Only when editing) */}
+          {initialData && (
+            <section className="bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 rounded-3xl overflow-hidden shadow-sm flex flex-col">
+              <div className="p-8 border-b border-neutral-100 dark:border-neutral-800 flex items-center justify-between">
+                <div className="flex items-center gap-3">
+                  <div className="w-8 h-8 rounded-xl bg-blue-500/10 flex items-center justify-center">
+                    <Sparkles className="w-4 h-4 text-blue-500" />
+                  </div>
+                  <h2 className="font-bold text-lg">Prompts de IA para Imágenes</h2>
+                </div>
+              </div>
+              
+              <div className="p-8 space-y-8">
+                {/* History of Prompts */}
+                {initialData.prompts && initialData.prompts.length > 0 && (
+                  <div className="space-y-4">
+                    <h3 className="text-xs font-black uppercase tracking-widest text-neutral-400 ml-1">Historial de Versiones</h3>
+                    <div className="grid grid-cols-1 gap-3">
+                      {initialData.prompts.map((p: any) => (
+                        <div key={p.id} className={cn(
+                          "p-4 rounded-2xl border transition-all",
+                          p.isActive 
+                            ? "bg-blue-50/50 border-blue-200 dark:bg-blue-500/5 dark:border-blue-500/20" 
+                            : "bg-neutral-50 border-neutral-100 dark:bg-neutral-800/50 dark:border-neutral-800"
+                        )}>
+                          <div className="flex justify-between items-start mb-2">
+                             <span className={cn(
+                               "text-[10px] font-black uppercase px-2 py-0.5 rounded-lg",
+                               p.isActive ? "bg-blue-600 text-white" : "bg-neutral-200 dark:bg-neutral-700 text-neutral-500"
+                             )}>
+                               Versión {p.version} {p.isActive && "• Activa"}
+                             </span>
+                             <span className="text-[10px] text-neutral-400 font-bold">
+                               {new Date(p.createdAt).toLocaleDateString()}
+                             </span>
+                          </div>
+                          <p className="text-xs text-neutral-700 dark:text-neutral-300 italic line-clamp-3 leading-relaxed">
+                            "{p.prompt}"
+                          </p>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
+
+                {/* New Prompt Form */}
+                <div className="pt-4 border-t border-neutral-100 dark:border-neutral-800">
+                  <h3 className="text-xs font-black uppercase tracking-widest text-neutral-400 ml-1 mb-4">Añadir Nueva Versión</h3>
+                  <PromptForm productId={initialData.id} onSuccess={() => router.refresh()} />
+                </div>
+              </div>
+            </section>
+          )}
 
           {/* SEO (Optional collapsible if needed, but for now flat) */}
           <section className="bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 rounded-3xl p-8 flex flex-col gap-6 shadow-sm">

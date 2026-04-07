@@ -3,7 +3,7 @@
 import { useState, useTransition } from "react";
 import Link from "next/link";
 import { updateOrderStatusAction } from "@/actions/admin-order";
-import { Button } from "@/components/ui/Button";
+import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import type { OrderStatus } from "@prisma/client";
 import { toast } from "sonner";

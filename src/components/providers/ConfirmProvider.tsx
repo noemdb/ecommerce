@@ -1,7 +1,7 @@
 "use client";
 
 import React, { createContext, useContext, useState, useCallback, ReactNode } from "react";
-import { ConfirmationDialog, type ConfirmationOptions } from "@/components/ui/ConfirmationDialog";
+import { ConfirmationDialog, type ConfirmationOptions } from "@/components/ui/confirmation-dialog";
 
 interface ConfirmContextType {
   confirm: (options: ConfirmationOptions) => Promise<boolean>;

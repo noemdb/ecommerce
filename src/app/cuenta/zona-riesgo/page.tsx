@@ -4,8 +4,8 @@ import { useState } from "react";
 import { signOut } from "next-auth/react";
 import { deleteFullAccountAction, clearCustomerBitacoraAction } from "@/actions/customer-account";
 import { AlertTriangle, LogOut, CheckCircle2, ShieldAlert, History, Trash2 } from "lucide-react";
-import { Button } from "@/components/ui/Button";
-import { Input } from "@/components/ui/Input";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 import { useConfirm } from "@/components/providers/ConfirmProvider";
 import { toast } from "sonner";
 

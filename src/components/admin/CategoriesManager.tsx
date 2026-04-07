@@ -7,8 +7,8 @@ import {
   toggleCategoryActiveAction,
   deleteCategoryAction,
 } from "@/actions/category";
-import { Button } from "@/components/ui/Button";
-import { Input } from "@/components/ui/Input";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
 import { toast } from "sonner";
 import { useConfirm } from "@/components/providers/ConfirmProvider";
