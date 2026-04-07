@@ -14,6 +14,7 @@ export async function createProductAction(data: ProductInput & { images: string[
     const product = await prisma.product.create({
       data: {
         ...validatedData,
+        supplierId: data.supplierId || null,
         images: {
           create: data.images.map((url, index) => ({
             url,
@@ -47,6 +48,7 @@ export async function updateProductAction(id: string, data: ProductInput & { ima
         where: { id },
         data: {
           ...validatedData,
+          supplierId: data.supplierId || null,
           images: {
             create: data.images.map((url, index) => ({
               url,

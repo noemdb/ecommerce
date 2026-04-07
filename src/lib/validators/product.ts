@@ -9,7 +9,7 @@ export const productSchema = z.object({
   promoPrice: z.coerce.number().positive().optional().nullable(),
   sku: z.string().min(1, "SKU requerido").max(50),
   categoryId: z.string().min(1, "Categoría inválida"),
-  supplierId: z.string().optional().nullable(),
+  supplierId: z.preprocess((value) => value === "" ? null : value, z.string().optional().nullable()),
   stock: z.coerce.number().int().min(0),
   lowStockThreshold: z.coerce.number().int().min(0).default(5),
   isFeatured: z.boolean().default(false),
