@@ -1,5 +1,6 @@
 // src/lib/validators/product.ts
 import { z } from "zod";
+import { optionalStringNullable } from "@/lib/validators/utils";
 
 export const productSchema = z.object({
   name: z.string().min(2, "Nombre requerido").max(200),
@@ -9,7 +10,7 @@ export const productSchema = z.object({
   promoPrice: z.coerce.number().positive().optional().nullable(),
   sku: z.string().min(1, "SKU requerido").max(50),
   categoryId: z.string().min(1, "Categoría inválida"),
-  supplierId: z.preprocess((value) => value === "" ? null : value, z.string().optional().nullable()),
+  supplierId: optionalStringNullable,
   stock: z.coerce.number().int().min(0),
   lowStockThreshold: z.coerce.number().int().min(0).default(5),
   isFeatured: z.boolean().default(false),
