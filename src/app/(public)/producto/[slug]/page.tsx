@@ -1,0 +1,226 @@
+import { auth } from "@/auth";
+import { prisma } from "@/lib/prisma";
+import { notFound } from "next/navigation";
+import Image from "next/image";
+import { RatingStars } from "@/components/catalog/RatingStars";
+import { AddToCartButton } from "@/components/catalog/AddToCartButton";
+import { ReviewForm } from "@/components/catalog/ReviewForm";
+import { formatPrice } from "@/lib/utils";
+import { Package, ShieldCheck, Truck, ArrowLeft, Star, MessageSquare } from "lucide-react";
+import Link from "next/link";
+
+interface ProductPageProps {
+  params: Promise<{ slug: string }>;
+}
+
+export default async function ProductPage({ params }: ProductPageProps) {
+  const { slug } = await params;
+  const session = await auth();
+  const isCustomer = session?.user?.role === "CUSTOMER";
+
+  const product = await prisma.product.findUnique({
+    where: { slug, isActive: true },
+    include: {
+      images: { orderBy: { order: "asc" } },
+      category: true,
+      reviews: {
+        where: { status: "APPROVED" },
+        orderBy: { createdAt: "desc" },
+      },
+    },
+  });
+
+  if (!product) {
+    notFound();
+  }
+
+  const primaryImage = product.images.find((img) => img.isPrimary) || product.images[0];
+  const avgRating = product.reviews.length > 0
+    ? product.reviews.reduce((acc, r) => acc + r.rating, 0) / product.reviews.length
+    : 0;
+
+  return (
+    <div className="container mx-auto px-4 py-12 md:py-20 lg:px-8">
+      {/* Breadcrumbs / Back */}
+      <Link 
+        href="/#catalogo" 
+        className="inline-flex items-center gap-2 text-sm font-medium text-neutral-500 hover:text-blue-600 transition-colors mb-8 group"
+      >
+        <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
+        Volver al catálogo
+      </Link>
+
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20">
+        {/* Left: Gallery */}
+        <div className="space-y-4">
+          <div className="aspect-square relative bg-neutral-50 dark:bg-neutral-900 rounded-3xl overflow-hidden border dark:border-neutral-800 shadow-sm group">
+            {primaryImage && (
+              <Image 
+                src={primaryImage.url} 
+                alt={primaryImage.alt || product.name} 
+                fill 
+                className="object-cover transition-transform duration-700 group-hover:scale-105" 
+                priority
+              />
+            )}
+            {product.isNew && (
+              <span className="absolute top-6 left-6 bg-blue-600 text-white text-[10px] font-black uppercase tracking-widest px-3 py-1.5 rounded-full shadow-lg">
+                Novedad
+              </span>
+            )}
+          </div>
+          
+          {/* Thumbnails */}
+          {product.images.length > 1 && (
+            <div className="grid grid-cols-4 gap-4">
+              {product.images.map((image) => (
+                <div 
+                  key={image.id} 
+                  className={`aspect-square relative rounded-xl overflow-hidden border-2 cursor-pointer transition-all ${
+                    image.id === primaryImage?.id ? "border-blue-600 shadow-md" : "border-transparent hover:border-neutral-200 dark:hover:border-neutral-700"
+                  }`}
+                >
+                  <Image src={image.url} alt={image.alt || product.name} fill className="object-cover" />
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+
+        {/* Right: Info */}
+        <div className="flex flex-col">
+          <div className="mb-8">
+            <Link 
+              href={`/?categoryId=${product.categoryId}`}
+              className="text-xs font-bold text-blue-600 uppercase tracking-widest bg-blue-50 dark:bg-blue-900/30 px-3 py-1 rounded-full inline-block mb-4"
+            >
+              {product.category?.name}
+            </Link>
+            <h1 className="text-4xl md:text-5xl font-black tracking-tighter mb-4 text-neutral-900 dark:text-white leading-tight">
+              {product.name}
+            </h1>
+            <div className="flex items-center gap-6 text-sm">
+              <div className="flex items-center gap-2">
+                <RatingStars rating={avgRating} />
+                <span className="font-bold text-neutral-900 dark:text-neutral-200">{avgRating.toFixed(1)}</span>
+                <span className="text-neutral-400">({product.reviews.length} reseñas)</span>
+              </div>
+              <div className="h-4 w-px bg-neutral-200 dark:bg-neutral-800" />
+              <div className={`flex items-center gap-2 font-bold ${product.stock > 0 ? "text-emerald-600" : "text-red-500"}`}>
+                <Package className="w-4 h-4" />
+                {product.stock > 0 ? "En Stock" : "Agotado"}
+              </div>
+            </div>
+          </div>
+
+          <div className="mb-10 p-6 bg-neutral-50 dark:bg-neutral-900/50 rounded-3xl border dark:border-neutral-800">
+            <div className="flex items-baseline gap-4 mb-6">
+              <span className="text-4xl font-black tracking-tighter text-blue-600">
+                {formatPrice(product.promoPrice || product.price)}
+              </span>
+              {product.promoPrice && (
+                <span className="text-xl text-neutral-400 line-through font-medium italic opacity-60">
+                  {formatPrice(product.price)}
+                </span>
+              )}
+            </div>
+            
+            <AddToCartButton 
+              product={product}
+              variantId={product.id} 
+              disabled={product.stock <= 0}
+              className="w-full h-16 text-lg rounded-2xl shadow-xl shadow-blue-500/20"
+            />
+            
+            <p className="text-[10px] text-center text-neutral-400 mt-4 uppercase tracking-[0.2em] font-bold">
+              Garantía de satisfacción y pago seguro
+            </p>
+          </div>
+
+          <div className="space-y-6 flex-1">
+            <div className="prose prose-sm dark:prose-invert max-w-none">
+              <h3 className="text-sm font-bold uppercase tracking-widest text-neutral-400 mb-2">Descripción</h3>
+              <p className="text-neutral-600 dark:text-neutral-400 leading-relaxed text-base italic">
+                {product.description || "Este producto premium ha sido cuidadosamente seleccionado para ofrecer la mejor experiencia en su categoría."}
+              </p>
+            </div>
+
+            <div className="grid grid-cols-2 gap-4 pt-6 border-t dark:border-neutral-800">
+              <div className="flex items-start gap-3">
+                <div className="p-2 bg-neutral-100 dark:bg-neutral-800 rounded-lg text-neutral-500">
+                  <ShieldCheck className="w-5 h-5" />
+                </div>
+                <div>
+                  <h4 className="text-xs font-bold uppercase">Garantía Real</h4>
+                  <p className="text-[10px] text-neutral-500">12 meses de soporte</p>
+                </div>
+              </div>
+              <div className="flex items-start gap-3">
+                <div className="p-2 bg-neutral-100 dark:bg-neutral-800 rounded-lg text-neutral-500">
+                  <Truck className="w-5 h-5" />
+                </div>
+                <div>
+                  <h4 className="text-xs font-bold uppercase">Envío Seguro</h4>
+                  <p className="text-[10px] text-neutral-500">Verificado manualmente</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Reviews Section */}
+      <section className="mt-24 pt-24 border-t dark:border-neutral-800 grid grid-cols-1 lg:grid-cols-3 gap-12">
+        <div className="lg:col-span-2">
+          <div className="flex items-center gap-3 mb-12">
+            <MessageSquare className="w-8 h-8 text-neutral-300" />
+            <h2 className="text-3xl font-black tracking-tighter">Experiencias de Clientes</h2>
+          </div>
+
+          {product.reviews.length === 0 ? (
+            <div className="bg-neutral-50 dark:bg-neutral-900/50 rounded-3xl p-12 text-center border-2 border-dashed border-neutral-200 dark:border-neutral-800">
+              <p className="text-neutral-500 font-medium mb-2 italic">Aún no hay reseñas para este producto.</p>
+              <p className="text-xs text-neutral-400">Sé el primero en compartir tu experiencia premium.</p>
+            </div>
+          ) : (
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+              {product.reviews.map((review) => (
+                <div key={review.id} className="p-8 bg-neutral-50 dark:bg-neutral-900/30 rounded-3xl border dark:border-neutral-800 flex flex-col gap-4">
+                  <div className="flex items-center justify-between">
+                    <RatingStars rating={review.rating} />
+                    <span className="text-[10px] text-neutral-400 font-bold uppercase tracking-widest">
+                      {new Date(review.createdAt).toLocaleDateString()}
+                    </span>
+                  </div>
+                  <p className="text-neutral-700 dark:text-neutral-300 leading-relaxed font-medium italic">
+                    "{review.comment}"
+                  </p>
+                  <div className="mt-auto flex items-center gap-2">
+                    <div className="w-6 h-6 rounded-full bg-neutral-200 flex items-center justify-center text-[10px] font-bold">
+                      C
+                    </div>
+                    <span className="text-xs font-bold text-neutral-500 uppercase">Cliente Verificado</span>
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+
+        <div>
+           {isCustomer ? (
+             <ReviewForm productId={product.id} />
+           ) : (
+             <div className="bg-neutral-50 dark:bg-neutral-900/50 rounded-[2.5rem] p-10 border border-neutral-100 dark:border-neutral-800 text-center space-y-4 shadow-xl shadow-blue-500/5">
+                <h3 className="text-xl font-black tracking-tight">Comparte tu opinión</h3>
+                <p className="text-sm text-neutral-500 italic">Inicia sesión con tu cuenta premium para dejar una reseña sobre este producto.</p>
+                <Link href="/login" className="inline-block mt-4 text-blue-600 font-bold underline underline-offset-4">
+                  Ir a Iniciar Sesión
+                </Link>
+             </div>
+           )}
+        </div>
+      </section>
+    </div>
+  );
+}

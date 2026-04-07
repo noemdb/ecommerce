@@ -1,0 +1,424 @@
+// prisma/schema.prisma
+// VERSIÓN CANÓNICA v2.0 — Ecommerce Premium
+
+generator client {
+  provider        = "prisma-client-js"
+  previewFeatures = ["driverAdapters"]
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// ═══════════════════════════════════════════════════════════════
+// ENUMS
+// ═══════════════════════════════════════════════════════════════
+
+enum UserRole {
+  ADMIN
+  STAFF
+}
+
+enum OrderStatus {
+  PENDIENTE
+  VERIFICANDO
+  CONFIRMADA
+  EN_PROCESO
+  COMPLETADA
+  CANCELADA
+  RECHAZADA
+}
+
+enum ReviewStatus {
+  PENDING
+  APPROVED
+  REJECTED
+}
+
+enum InventoryMovementType {
+  ENTRADA
+  SALIDA
+  AJUSTE
+}
+
+enum CustomerActionType {
+  LOGIN
+  LOGOUT
+  REGISTER
+  UPDATE_PROFILE
+  CHANGE_PASSWORD
+  DELETE_ACCOUNT_REQUEST
+  VIEWED_ORDER
+}
+
+// ═══════════════════════════════════════════════════════════════
+// USUARIOS INTERNOS (solo admin/staff)
+// ═══════════════════════════════════════════════════════════════
+
+model User {
+  id        String   @id @default(cuid())
+  name      String
+  email     String   @unique
+  password  String   // bcrypt hash
+  role      UserRole @default(STAFF)
+  isActive  Boolean  @default(true)
+
+  ordersConfirmed Order[]    @relation("ConfirmedByUser")
+  auditLogs       AuditLog[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([email])
+  @@index([role])
+  @@map("users")
+}
+
+// ═══════════════════════════════════════════════════════════════
+// CLIENTES — autenticación opcional (v2.0)
+// ═══════════════════════════════════════════════════════════════
+
+model Customer {
+  id       String  @id @default(cuid())
+  name     String
+  email    String  @unique
+  phone    String?
+  idDoc    String?
+  address  String? @db.Text
+
+  // Auth opcional — null = cliente invitado/anónimo
+  password           String?
+  isEmailVerified    Boolean   @default(false)
+  emailVerifyToken   String?
+  emailVerifyExpires DateTime?
+
+  resetPasswordToken   String?
+  resetPasswordExpires DateTime?
+
+  isBlocked Boolean @default(false)
+  notes     String? @db.Text
+
+  orders          Order[]
+  reviews         Review[]
+  customerActions CustomerAction[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([email])
+  @@index([isBlocked])
+  @@index([isEmailVerified])
+  @@map("customers")
+}
+
+model CustomerAction {
+  id          String             @id @default(cuid())
+  customerId  String
+  customer    Customer           @relation(fields: [customerId], references: [id], onDelete: Cascade)
+  action      CustomerActionType
+  description String?
+  ip          String?
+  userAgent   String?
+
+  createdAt DateTime @default(now())
+
+  @@index([customerId])
+  @@index([createdAt])
+  @@map("customer_actions")
+}
+
+// ═══════════════════════════════════════════════════════════════
+// CATEGORÍAS
+// ═══════════════════════════════════════════════════════════════
+
+model Category {
+  id          String     @id @default(cuid())
+  name        String
+  slug        String     @unique
+  description String?    @db.Text
+  imageUrl    String?
+  order       Int        @default(0)
+  isActive    Boolean    @default(true)
+
+  parentId String?
+  parent   Category?  @relation("CategoryTree", fields: [parentId], references: [id], onDelete: SetNull)
+  children Category[] @relation("CategoryTree")
+
+  products Product[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([slug])
+  @@index([parentId])
+  @@index([isActive])
+  @@map("categories")
+}
+
+// ═══════════════════════════════════════════════════════════════
+// PROVEEDORES
+// ═══════════════════════════════════════════════════════════════
+
+model Supplier {
+  id              String  @id @default(cuid())
+  name            String
+  rif             String? @unique
+  contactName     String?
+  phone           String?
+  email           String?
+  address         String? @db.Text
+  commercialTerms String? @db.Text
+  isActive        Boolean @default(true)
+
+  products Product[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([rif])
+  @@index([isActive])
+  @@map("suppliers")
+}
+
+// ═══════════════════════════════════════════════════════════════
+// PRODUCTOS
+// ═══════════════════════════════════════════════════════════════
+
+model Product {
+  id                String  @id @default(cuid())
+  name              String
+  slug              String  @unique
+  description       String  @db.Text
+  price             Float
+  promoPrice        Float?
+  sku               String  @unique
+  isActive          Boolean @default(true)
+  isFeatured        Boolean @default(false)
+  isBestSeller      Boolean @default(false)
+  isMostSearched    Boolean @default(false)
+  isNew             Boolean @default(false)
+  stock             Int     @default(0)
+  lowStockThreshold Int     @default(5)
+
+  metaTitle       String?
+  metaDescription String?
+
+  categoryId String
+  category   Category  @relation(fields: [categoryId], references: [id], onDelete: Restrict)
+  supplierId String?
+  supplier   Supplier? @relation(fields: [supplierId], references: [id], onDelete: SetNull)
+
+  images             ProductImage[]
+  variants           ProductVariant[]
+  prompts            ProductPrompt[]
+  orderItems         OrderItem[]
+  reviews            Review[]
+  inventoryMovements InventoryMovement[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([slug])
+  @@index([categoryId])
+  @@index([isActive])
+  @@index([isFeatured])
+  @@index([isBestSeller])
+  @@index([isNew])
+  @@index([stock])
+  @@map("products")
+}
+
+model ProductImage {
+  id        String  @id @default(cuid())
+  productId String
+  product   Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+  url       String
+  alt       String?
+  order     Int     @default(0)
+  isPrimary Boolean @default(false)
+
+  @@index([productId])
+  @@map("product_images")
+}
+
+model ProductVariant {
+  id        String  @id @default(cuid())
+  productId String
+  product   Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+  name      String
+  value     String
+  sku       String  @unique
+  price     Float?
+  stock     Int     @default(0)
+
+  orderItems OrderItem[]
+
+  @@index([productId])
+  @@map("product_variants")
+}
+
+model ProductPrompt {
+  id        String  @id @default(cuid())
+  productId String
+  product   Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+  version   Int     @default(1)
+  prompt    String  @db.Text
+  isActive  Boolean @default(true)
+  notes     String?
+
+  createdAt DateTime @default(now())
+
+  @@index([productId])
+  @@index([isActive])
+  @@map("product_prompts")
+}
+
+// ═══════════════════════════════════════════════════════════════
+// ÓRDENES
+// ═══════════════════════════════════════════════════════════════
+
+model Order {
+  id          String    @id @default(cuid())
+  orderNumber String    @unique
+  customerId String?
+  customer   Customer? @relation(fields: [customerId], references: [id], onDelete: SetNull)
+  
+  customerName  String
+  customerEmail String
+  customerPhone String
+  
+  items      OrderItem[]
+
+  bankName        String
+  accountHolder   String
+  referenceNumber String
+  transferAmount  Float
+  transferDate    DateTime
+  voucherUrl      String?
+
+  subtotal Float
+  total    Float
+
+  status        OrderStatus @default(PENDIENTE)
+  internalNotes String?     @db.Text
+
+  confirmedById String?
+  confirmedBy   User?   @relation("ConfirmedByUser", fields: [confirmedById], references: [id])
+
+  statusHistory OrderStatusHistory[]
+  auditLogs     AuditLog[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([customerId])
+  @@index([status])
+  @@index([createdAt])
+  @@map("orders")
+}
+
+model OrderItem {
+  id        String         @id @default(cuid())
+  orderId   String
+  order     Order          @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  productId String
+  product   Product        @relation(fields: [productId], references: [id], onDelete: Restrict)
+  variantId String?
+  variant   ProductVariant? @relation(fields: [variantId], references: [id])
+
+  name     String
+  sku      String
+  price    Float
+  quantity Int
+
+  @@index([orderId])
+  @@index([productId])
+  @@map("order_items")
+}
+
+model OrderStatusHistory {
+  id        String      @id @default(cuid())
+  orderId   String
+  order     Order       @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  status    OrderStatus
+  note      String?
+  changedAt DateTime    @default(now())
+
+  @@index([orderId])
+  @@map("order_status_history")
+}
+
+// ═══════════════════════════════════════════════════════════════
+// INVENTARIO
+// ═══════════════════════════════════════════════════════════════
+
+model InventoryMovement {
+  id          String                @id @default(cuid())
+  productId   String
+  product     Product               @relation(fields: [productId], references: [id], onDelete: Restrict)
+  type        InventoryMovementType
+  quantity    Int
+  stockBefore Int
+  stockAfter  Int
+  reason      String?
+  reference   String?
+
+  createdAt DateTime @default(now())
+
+  @@index([productId])
+  @@index([type])
+  @@index([createdAt])
+  @@map("inventory_movements")
+}
+
+// ═══════════════════════════════════════════════════════════════
+// RESEÑAS
+// ═══════════════════════════════════════════════════════════════
+
+model Review {
+  id          String       @id @default(cuid())
+  productId   String
+  product     Product      @relation(fields: [productId], references: [id], onDelete: Cascade)
+  customerId  String?
+  customer    Customer?    @relation(fields: [customerId], references: [id], onDelete: SetNull)
+
+  reviewerName  String
+  rating        Int
+  comment       String      @db.Text
+  adminResponse String?     @db.Text
+  status        ReviewStatus @default(PENDING)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([productId])
+  @@index([status])
+  @@index([rating])
+  @@map("reviews")
+}
+
+// ═══════════════════════════════════════════════════════════════
+// AUDITORÍA
+// ═══════════════════════════════════════════════════════════════
+
+model AuditLog {
+  id            String   @id @default(cuid())
+  entity        String
+  entityId      String
+  action        String
+  changes       Json
+  performedById String?
+  performedBy   User?    @relation(fields: [performedById], references: [id])
+  ip            String?
+
+  orderId String?
+  order   Order?  @relation(fields: [orderId], references: [id])
+
+  createdAt DateTime @default(now())
+
+  @@index([entity, entityId])
+  @@index([performedById])
+  @@index([createdAt])
+  @@map("audit_logs")
+}
