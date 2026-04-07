@@ -239,45 +239,27 @@ export function ProductForm({ initialData, categories, suppliers }: ProductFormP
             </div>
 
             <div className="space-y-4">
-              {/* Display uploaded images as a grid of previews */}
-              <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
-                {fields.map((field, index) => {
-                  const imageUrl = watch(`images.${index}` as any);
-                  return (
-                    <div key={field.id} className="relative group aspect-square rounded-md overflow-hidden border border-neutral-200 dark:border-neutral-800 bg-neutral-50 dark:bg-neutral-800/50">
-                      {imageUrl ? (
-                        <Image
-                          src={imageUrl}
-                          alt={`Producto ${index + 1}`}
-                          fill
-                          className="object-cover transition-transform duration-300 group-hover:scale-110"
-                        />
-                      ) : (
-                        <div className="flex items-center justify-center h-full text-neutral-300">
-                          <ImageIcon className="w-8 h-8 opacity-20" />
-                        </div>
-                      )}
-                      
-                      <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-2">
-                        <button
-                          type="button"
-                          onClick={() => remove(index)}
-                          className="p-2 bg-red-500 text-white rounded-md hover:bg-red-600 transition-colors shadow-lg"
-                          title="Eliminar imagen"
-                        >
-                          <Trash2 className="w-4 h-4" />
-                        </button>
-                      </div>
-                      
-                      {/* Hidden input to keep field in sync with react-hook-form */}
-                      <input 
-                        type="hidden" 
-                        {...register(`images.${index}` as any)} 
-                      />
-                    </div>
-                  );
-                })}
-              </div>
+              {/* Display uploaded images */}
+              {fields.map((field, index) => (
+                <div key={field.id} className="flex items-start gap-4">
+                  <div className="flex-1">
+                    <Input
+                      placeholder="URL de imagen"
+                      {...register(`images.${index}` as any)}
+                      error={(errors.images as any)?.[index]?.message}
+                    />
+                  </div>
+                  {fields.length > 1 && (
+                    <button
+                      type="button"
+                      onClick={() => remove(index)}
+                      className="mt-4 p-2 text-neutral-400 hover:text-red-500 transition-colors"
+                    >
+                      <Trash2 className="w-5 h-5" />
+                    </button>
+                  )}
+                </div>
+              ))}
 
               {/* Upload Button */}
               <UploadButton<OurFileRouter, "productImage">
