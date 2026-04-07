@@ -26,6 +26,8 @@ import {
   Globe,
   Sparkles
 } from "lucide-react";
+import { UploadButton } from "@uploadthing/react";
+import { OurFileRouter } from "@/lib/uploadthing";
 import { PromptForm } from "./PromptForm";
 
 interface Category {
@@ -58,7 +60,7 @@ export function ProductForm({ initialData, categories, suppliers }: ProductFormP
     formState: { errors },
   } = useForm<any>({
     resolver: zodResolver(productSchema.extend({
-        images: z.array(z.string().url("URL de imagen inválida")).min(1, "Al menos una imagen requerida")
+        images: z.array(z.string()).min(1, "Al menos una imagen requerida")
     })),
     defaultValues: initialData ? {
       name: initialData.name,
@@ -76,7 +78,7 @@ export function ProductForm({ initialData, categories, suppliers }: ProductFormP
       isMostSearched: initialData.isMostSearched || false,
       isNew: initialData.isNew || false,
       isActive: initialData.isActive ?? true,
-      images: initialData.images?.map((img: any) => img.url) || [""],
+      images: initialData.images?.map((img: any) => img.url) || [],
       metaTitle: initialData.metaTitle || "",
       metaDescription: initialData.metaDescription || ""
     } : {
@@ -95,7 +97,7 @@ export function ProductForm({ initialData, categories, suppliers }: ProductFormP
       isMostSearched: false,
       isNew: true,
       isActive: true,
-      images: [""],
+      images: [],
       metaTitle: "",
       metaDescription: ""
     }
@@ -229,11 +231,12 @@ export function ProductForm({ initialData, categories, suppliers }: ProductFormP
             </div>
 
             <div className="space-y-4">
+              {/* Display uploaded images */}
               {fields.map((field, index) => (
                 <div key={field.id} className="flex items-start gap-4">
                   <div className="flex-1">
                     <Input
-                      placeholder="https://ejemplo.com/imagen.jpg"
+                      placeholder="URL de imagen"
                       {...register(`images.${index}` as any)}
                       error={(errors.images as any)?.[index]?.message}
                     />
@@ -249,16 +252,29 @@ export function ProductForm({ initialData, categories, suppliers }: ProductFormP
                   )}
                 </div>
               ))}
-              <Button
-                type="button"
-                variant="outline"
-                size="sm"
-                onClick={() => append("")}
-                className="w-full h-12 rounded-2xl border-dashed border-2 gap-2"
-              >
-                <Plus className="w-4 h-4" />
-                Añadir otra URL de imagen
-              </Button>
+
+              {/* Upload Button */}
+              <UploadButton<OurFileRouter, "productImage">
+                endpoint="productImage"
+                onClientUploadComplete={(res) => {
+                  if (res) {
+                    const urls = res.map((file) => file.url);
+                    const currentImages = watch("images") || [];
+                    setValue("images", [...currentImages, ...urls]);
+                    toast.success("Imágenes subidas exitosamente");
+                  }
+                }}
+                onUploadError={(error: Error) => {
+                  toast.error(`Error al subir imagen: ${error.message}`);
+                }}
+                className="w-full"
+              />
+
+              {errors.images && (
+                <p className="text-[10px] font-bold text-red-500 uppercase tracking-widest ml-1">
+                  {errors.images.message as string}
+                </p>
+              )}
             </div>
           </section>
 
@@ -310,7 +326,7 @@ export function ProductForm({ initialData, categories, suppliers }: ProductFormP
                 {/* New Prompt Form */}
                 <div className="pt-4 border-t border-neutral-100 dark:border-neutral-800">
                   <h3 className="text-xs font-black uppercase tracking-widest text-neutral-400 ml-1 mb-4">Añadir Nueva Versión</h3>
-                  <PromptForm productId={initialData.id} onSuccess={() => router.refresh()} />
+                  <PromptForm productId={initialData.id} onSuccess={() => router.refresh()} standalone={false} />
                 </div>
               </div>
             </section>

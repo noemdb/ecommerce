@@ -16,9 +16,10 @@ interface PromptFormProps {
   initialData?: any;
   onSuccess?: () => void;
   products?: { id: string, name: string, sku: string }[];
+  standalone?: boolean;
 }
 
-export function PromptForm({ productId, initialData, onSuccess, products }: PromptFormProps) {
+export function PromptForm({ productId, initialData, onSuccess, products, standalone = true }: PromptFormProps) {
   const [isPending, startTransition] = useTransition();
 
   const {
@@ -57,8 +58,8 @@ export function PromptForm({ productId, initialData, onSuccess, products }: Prom
     });
   };
 
-  return (
-    <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
+  const formContent = (
+    <>
       <div className="bg-neutral-50 dark:bg-neutral-800/50 p-6 rounded-3xl border border-neutral-100 dark:border-neutral-800 flex flex-col gap-5">
         
         {!productId && products && (
@@ -128,7 +129,8 @@ export function PromptForm({ productId, initialData, onSuccess, products }: Prom
 
       <div className="flex justify-end gap-3 pt-2">
         <Button 
-          type="submit" 
+          type="button"
+          onClick={handleSubmit(onSubmit)}
           isLoading={isPending} 
           className="h-12 px-8 rounded-2xl gap-2 font-black uppercase tracking-widest text-xs"
         >
@@ -136,6 +138,20 @@ export function PromptForm({ productId, initialData, onSuccess, products }: Prom
           {initialData ? "Actualizar Prompt" : "Guardar Prompt"}
         </Button>
       </div>
-    </form>
+    </>
+  );
+
+  if (standalone) {
+    return (
+      <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
+        {formContent}
+      </form>
+    );
+  }
+
+  return (
+    <div className="space-y-6">
+      {formContent}
+    </div>
   );
 }
