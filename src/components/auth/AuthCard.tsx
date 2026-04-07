@@ -19,7 +19,7 @@ export function AuthCard({ children, title, subtitle, icon, className }: AuthCar
           <div className="text-center mb-10 space-y-4">
             {icon && (
               <div className="flex justify-center">
-                <div className="p-4 bg-blue-50 dark:bg-blue-900/30 rounded-2xl text-blue-600">
+                <div className="p-4 bg-blue-50 dark:bg-blue-900/30 rounded-md text-blue-600">
                   {icon}
                 </div>
               </div>

@@ -7,7 +7,7 @@ import { createPromptAction, updatePromptAction } from "@/actions/prompt";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useState, useTransition } from "react";
-import { toast } from "sonner";
+import { showPremiumToast } from "@/components/ui/PremiumToast";
 import { Sparkles, MessageSquare, AlertCircle } from "lucide-react";
 import { cn } from "@/lib/utils";
 
@@ -49,18 +49,18 @@ export function PromptForm({ productId, initialData, onSuccess, products, standa
         : await createPromptAction(data);
 
       if (res.success) {
-        toast.success(res.message);
+        showPremiumToast.success("Prompt guardado", res.message);
         if (onSuccess) onSuccess();
         if (!initialData) reset();
       } else {
-        toast.error(res.error || "Ocurrió un error");
+        showPremiumToast.error("Error", res.error || "Ocurrió un error");
       }
     });
   };
 
   const formContent = (
     <>
-      <div className="bg-neutral-50 dark:bg-neutral-800/50 p-6 rounded-3xl border border-neutral-100 dark:border-neutral-800 flex flex-col gap-5">
+      <div className="bg-neutral-50 dark:bg-neutral-800/50 p-6 rounded-lg border border-neutral-100 dark:border-neutral-800 flex flex-col gap-5">
         
         {!productId && products && (
           <div className="flex flex-col gap-2">
@@ -69,7 +69,7 @@ export function PromptForm({ productId, initialData, onSuccess, products, standa
             </label>
             <select
               {...register("productId")}
-              className="flex h-12 w-full rounded-xl border border-neutral-200 bg-white px-4 py-2 text-sm font-bold transition-all focus:outline-none focus:ring-2 focus:ring-blue-500/30 dark:bg-neutral-900 dark:border-neutral-800 dark:text-white"
+              className="flex h-12 w-full rounded-md border border-neutral-200 bg-white px-4 py-2 text-sm font-bold transition-all focus:outline-none focus:ring-2 focus:ring-blue-500/30 dark:bg-neutral-900 dark:border-neutral-800 dark:text-white"
             >
               <option value="">Selecciona un producto...</option>
               {products.map(p => (
@@ -96,7 +96,7 @@ export function PromptForm({ productId, initialData, onSuccess, products, standa
             rows={5}
             placeholder="Ej: High-end lifestyle photography, studio lighting... [Include subject and details]"
             className={cn(
-              "flex w-full rounded-2xl border-2 border-neutral-100 bg-white px-4 py-3 text-sm font-medium transition-all duration-300 placeholder:text-neutral-300 focus:outline-none focus:border-blue-600 focus:ring-4 focus:ring-blue-500/10 dark:bg-neutral-900 dark:border-neutral-800 dark:text-white resize-none",
+              "flex w-full rounded-md border-2 border-neutral-100 bg-white px-4 py-3 text-sm font-medium transition-all duration-300 placeholder:text-neutral-300 focus:outline-none focus:border-blue-600 focus:ring-4 focus:ring-blue-500/10 dark:bg-neutral-900 dark:border-neutral-800 dark:text-white resize-none",
               errors.prompt && "border-red-500"
             )}
           />
@@ -114,7 +114,7 @@ export function PromptForm({ productId, initialData, onSuccess, products, standa
           {...register("notes")}
         />
 
-        <label className="flex items-center justify-between p-4 bg-white dark:bg-neutral-900 rounded-2xl border border-neutral-100 dark:border-neutral-800 cursor-pointer group hover:border-blue-500/30 transition-all">
+        <label className="flex items-center justify-between p-4 bg-white dark:bg-neutral-900 rounded-md border border-neutral-100 dark:border-neutral-800 cursor-pointer group hover:border-blue-500/30 transition-all">
           <div className="flex flex-col">
             <span className="text-xs font-bold">Activar inmediatamente</span>
             <span className="text-[10px] text-neutral-400 font-medium uppercase truncate">Desactivará otros prompts de este producto</span>
@@ -132,7 +132,7 @@ export function PromptForm({ productId, initialData, onSuccess, products, standa
           type="button"
           onClick={handleSubmit(onSubmit)}
           isLoading={isPending} 
-          className="h-12 px-8 rounded-2xl gap-2 font-black uppercase tracking-widest text-xs"
+          className="h-12 px-8 rounded-md gap-2 font-black uppercase tracking-widest text-xs"
         >
           <Sparkles className="w-4 h-4" />
           {initialData ? "Actualizar Prompt" : "Guardar Prompt"}

@@ -2,7 +2,7 @@
 
 import { useTransition } from "react";
 import { Trash2, ToggleLeft, ToggleRight, MessageSquare, AlertCircle } from "lucide-react";
-import { toast } from "sonner";
+import { showPremiumToast } from "@/components/ui/PremiumToast";
 import { useConfirm } from "@/components/providers/ConfirmProvider";
 import { togglePromptActiveAction, deletePromptAction } from "@/actions/prompt";
 import { cn } from "@/lib/utils";
@@ -21,9 +21,9 @@ export function PromptActions({ id, isActive, productName }: PromptActionsProps)
     startTransition(async () => {
       const res = await togglePromptActiveAction(id);
       if (res.success) {
-        toast.success(res.message);
+        showPremiumToast.success("Estado actualizado", res.message);
       } else {
-        toast.error(res.error);
+        showPremiumToast.error("Error", res.error);
       }
     });
   }
@@ -42,9 +42,9 @@ export function PromptActions({ id, isActive, productName }: PromptActionsProps)
     startTransition(async () => {
       const res = await deletePromptAction(id);
       if (res.success) {
-        toast.success(res.message);
+        showPremiumToast.success("Eliminado", res.message);
       } else {
-        toast.error(res.error);
+        showPremiumToast.error("Error al eliminar", res.error);
       }
     });
   }

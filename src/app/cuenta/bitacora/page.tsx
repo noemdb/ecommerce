@@ -36,7 +36,7 @@ export default async function BitacoraPage({
         </p>
       </div>
 
-      <div className="bg-white dark:bg-neutral-900 rounded-2xl border border-neutral-200 dark:border-neutral-800 shadow-sm overflow-hidden">
+      <div className="bg-white dark:bg-neutral-900 rounded-md border border-neutral-200 dark:border-neutral-800 shadow-sm overflow-hidden">
         {actions.length > 0 ? (
           <>
             <div className="overflow-x-auto">
@@ -55,7 +55,7 @@ export default async function BitacoraPage({
                         {new Date(action.createdAt).toLocaleString()}
                       </td>
                       <td className="px-6 py-4">
-                        <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-400">
+                        <span className="inline-flex items-center px-2.5 py-0.5 rounded-lg text-xs font-semibold bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-400">
                           {action.action}
                         </span>
                       </td>
@@ -72,7 +72,7 @@ export default async function BitacoraPage({
           </>
         ) : (
           <div className="p-16 text-center">
-            <div className="w-16 h-16 bg-neutral-100 dark:bg-neutral-800 rounded-full flex items-center justify-center mx-auto mb-4">
+            <div className="w-16 h-16 bg-neutral-100 dark:bg-neutral-800 rounded-lg flex items-center justify-center mx-auto mb-4">
               <History className="w-8 h-8 text-neutral-400" />
             </div>
             <h3 className="text-xl font-bold text-neutral-900 dark:text-white mb-2">Sin actividad reciente</h3>
@@ -83,7 +83,7 @@ export default async function BitacoraPage({
         )}
       </div>
 
-      <div className="mt-8 bg-blue-50 dark:bg-blue-900/20 p-4 rounded-xl flex items-start gap-4 border border-blue-100 dark:border-blue-800/50">
+      <div className="mt-8 bg-blue-50 dark:bg-blue-900/20 p-4 rounded-md flex items-start gap-4 border border-blue-100 dark:border-blue-800/50">
         <Info className="w-5 h-5 text-blue-600 dark:text-blue-400 flex-shrink-0 mt-0.5" />
         <p className="text-sm text-blue-700 dark:text-blue-300">
           Este registro es solo informativo y te ayuda a monitorear la seguridad de tu cuenta. Si notas alguna actividad sospechosa, te recomendamos cambiar tu contraseña de inmediato.

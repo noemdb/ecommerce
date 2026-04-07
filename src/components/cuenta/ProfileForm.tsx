@@ -7,7 +7,7 @@ import { updateCustomerProfileAction } from "@/actions/customer-account";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useState } from "react";
-import { toast } from "sonner";
+import { showPremiumToast } from "@/components/ui/PremiumToast";
 
 export function ProfileForm({ 
   initialData 
@@ -31,9 +31,9 @@ export function ProfileForm({
 
     const res = await updateCustomerProfileAction(data);
     if (!res.success) {
-      toast.error(res.error || "Error al actualizar perfil");
+      showPremiumToast.error("Error", res.error || "Error al actualizar perfil");
     } else {
-      toast.success("Perfil actualizado correctamente.");
+      showPremiumToast.success("¡Éxito!", "Perfil actualizado correctamente.");
     }
     setIsPending(false);
   };

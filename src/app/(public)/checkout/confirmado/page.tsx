@@ -48,7 +48,7 @@ export default async function ConfirmationPage({ searchParams }: ConfirmationPag
           <div className="absolute top-0 right-0 p-8 opacity-20 rotate-12">
             <CheckCircle2 className="w-32 h-32" />
           </div>
-          <div className="w-20 h-20 bg-white/20 backdrop-blur-md rounded-full flex items-center justify-center mx-auto mb-6 scale-110 shadow-lg">
+          <div className="w-20 h-20 bg-white/20 backdrop-blur-md rounded-lg flex items-center justify-center mx-auto mb-6 scale-110 shadow-lg">
             <CheckCircle2 className="w-10 h-10 text-white" />
           </div>
           <h1 className="text-4xl font-black tracking-tighter">¡PEDIDO RECIBIDO!</h1>
@@ -65,7 +65,7 @@ export default async function ConfirmationPage({ searchParams }: ConfirmationPag
               <h3 className="text-xs font-black uppercase tracking-[0.2em] text-neutral-400">Resumen de la Orden</h3>
               <div className="space-y-4">
                 <div className="flex items-center gap-4 group">
-                  <div className="w-10 h-10 bg-neutral-100 dark:bg-neutral-800 rounded-xl flex items-center justify-center text-neutral-500">
+                  <div className="w-10 h-10 bg-neutral-100 dark:bg-neutral-800 rounded-md flex items-center justify-center text-neutral-500">
                     <Calendar className="w-5 h-5" />
                   </div>
                   <div>
@@ -75,20 +75,20 @@ export default async function ConfirmationPage({ searchParams }: ConfirmationPag
                   </div>
                 </div>
                 <div className="flex items-center gap-4 group">
-                  <div className="w-10 h-10 bg-neutral-100 dark:bg-neutral-800 rounded-xl flex items-center justify-center text-neutral-500">
+                  <div className="w-10 h-10 bg-neutral-100 dark:bg-neutral-800 rounded-md flex items-center justify-center text-neutral-500">
                     <Tag className="w-5 h-5" />
                   </div>
                   <div>
                     <p className="text-[10px] uppercase font-bold text-neutral-400">Estado</p>
                     <div className="flex items-center gap-2">
-                       <span className="text-xs font-bold px-2 py-0.5 bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-500 rounded-full">
+                       <span className="text-xs font-bold px-2 py-0.5 bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-500 rounded-lg">
                          VERIFICANDO PAGO
                        </span>
                     </div>
                   </div>
                 </div>
                 <div className="flex items-center gap-4 group">
-                  <div className="w-10 h-10 bg-neutral-100 dark:bg-neutral-800 rounded-xl flex items-center justify-center text-neutral-500">
+                  <div className="w-10 h-10 bg-neutral-100 dark:bg-neutral-800 rounded-md flex items-center justify-center text-neutral-500">
                     <Package className="w-5 h-5" />
                   </div>
                   <div>
@@ -101,20 +101,20 @@ export default async function ConfirmationPage({ searchParams }: ConfirmationPag
             </div>
 
             {/* Next Steps */}
-            <div className="p-8 bg-neutral-50 dark:bg-neutral-950/40 rounded-3xl border border-neutral-100 dark:border-neutral-800 space-y-4">
+            <div className="p-8 bg-neutral-50 dark:bg-neutral-950/40 rounded-lg border border-neutral-100 dark:border-neutral-800 space-y-4">
               <h4 className="text-sm font-black tracking-tight mb-2 italic">¿Qué sigue ahora?</h4>
               <ol className="space-y-4">
                 <li className="flex gap-3">
-                  <span className="w-6 h-6 bg-blue-600 text-white rounded-full flex items-center justify-center text-[10px] font-black shrink-0">1</span>
+                  <span className="w-6 h-6 bg-blue-600 text-white rounded-lg flex items-center justify-center text-[10px] font-black shrink-0">1</span>
                   {/* @ts-ignore */}
                   <p className="text-xs text-neutral-600 dark:text-neutral-400 leading-snug">Nuestro equipo verificará manualmente tu comprobante de pago en el banco <strong>{order.bankName}</strong>.</p>
                 </li>
                 <li className="flex gap-3">
-                  <span className="w-6 h-6 bg-blue-600 text-white rounded-full flex items-center justify-center text-[10px] font-black shrink-0">2</span>
+                  <span className="w-6 h-6 bg-blue-600 text-white rounded-lg flex items-center justify-center text-[10px] font-black shrink-0">2</span>
                   <p className="text-xs text-neutral-600 dark:text-neutral-400 leading-snug">Recibirás un email de confirmación una vez que el pedido sea aprobado para despacho.</p>
                 </li>
                 <li className="flex gap-3">
-                  <span className="w-6 h-6 bg-blue-100 text-blue-400 rounded-full flex items-center justify-center text-[10px] font-black shrink-0">3</span>
+                  <span className="w-6 h-6 bg-blue-100 text-blue-400 rounded-lg flex items-center justify-center text-[10px] font-black shrink-0">3</span>
                   <p className="text-xs text-neutral-600 dark:text-neutral-400 leading-snug">Te contactaremos vía WhatsApp o email con tu guía de rastreo premium.</p>
                 </li>
               </ol>
@@ -125,7 +125,7 @@ export default async function ConfirmationPage({ searchParams }: ConfirmationPag
             {session?.user?.role === "CUSTOMER" ? (
               <Link 
                 href="/cuenta/pedidos" 
-                className="flex-1 h-14 bg-blue-600 hover:bg-blue-700 text-white flex items-center justify-center gap-2 rounded-2xl font-bold transition-all shadow-lg active:scale-95 transition-all"
+                className="flex-1 h-14 bg-blue-600 hover:bg-blue-700 text-white flex items-center justify-center gap-2 rounded-md font-bold transition-all shadow-lg active:scale-95 transition-all"
               >
                 Ver en mis pedidos
                 <ArrowRight className="w-5 h-5" />
@@ -133,13 +133,13 @@ export default async function ConfirmationPage({ searchParams }: ConfirmationPag
             ) : (
                 <Link 
                   href="/" 
-                  className="flex-1 h-14 bg-neutral-900 dark:bg-white text-white dark:text-neutral-900 flex items-center justify-center gap-2 rounded-2xl font-bold transition-all shadow-lg active:scale-95 transition-all"
+                  className="flex-1 h-14 bg-neutral-900 dark:bg-white text-white dark:text-neutral-900 flex items-center justify-center gap-2 rounded-md font-bold transition-all shadow-lg active:scale-95 transition-all"
                 >
                   <Home className="w-5 h-5" />
                   Volver al Catálogo
                 </Link>
             )}
-            <div className="flex-1 border-2 border-dashed border-neutral-200 dark:border-neutral-800 rounded-2xl p-4 flex items-center justify-center text-center">
+            <div className="flex-1 border-2 border-dashed border-neutral-200 dark:border-neutral-800 rounded-md p-4 flex items-center justify-center text-center">
               <p className="text-[10px] font-bold text-neutral-400 italic">
                 Cualquier duda, contáctanos mencionando tu número de pedido.
               </p>

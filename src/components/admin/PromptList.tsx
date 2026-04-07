@@ -42,11 +42,11 @@ export function PromptList({ initialPrompts }: PromptListProps) {
           placeholder="Buscar por producto, SKU o contenido..."
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
-          className="h-11 w-full rounded-xl border border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-900 pl-11 pr-4 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/30 focus:border-blue-500 transition-all font-medium"
+          className="h-11 w-full rounded-md border border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-900 pl-11 pr-4 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/30 focus:border-blue-500 transition-all font-medium"
         />
       </div>
 
-      <div className="bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 rounded-3xl overflow-hidden shadow-sm">
+      <div className="bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 rounded-lg overflow-hidden shadow-sm">
         {filteredPrompts.length === 0 ? (
           <div className="flex flex-col items-center py-20 gap-4 text-neutral-400">
             <Sparkles className="w-12 h-12 opacity-20" />
@@ -98,7 +98,7 @@ export function PromptList({ initialPrompts }: PromptListProps) {
                     </td>
                     <td className="px-6 py-4">
                       <span className={cn(
-                        "text-[10px] uppercase font-black px-2.5 py-1 rounded-full",
+                        "text-[10px] uppercase font-black px-2.5 py-1 rounded-lg",
                         p.isActive 
                           ? "text-emerald-600 bg-emerald-500/10 shadow-[0_0_12px_rgba(16,185,129,0.1)]" 
                           : "text-neutral-400 bg-neutral-100 dark:bg-neutral-800"

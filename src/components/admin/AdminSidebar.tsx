@@ -63,7 +63,7 @@ export function AdminSidebar() {
       {/* Header / Logo */}
       <div className="h-20 flex items-center px-4 border-b border-neutral-200 dark:border-neutral-800 shrink-0 relative overflow-hidden">
         <Link href="/admin" className="flex items-center gap-3">
-          <div className="w-10 h-10 rounded-xl bg-blue-600 flex items-center justify-center shrink-0 shadow-lg shadow-blue-500/20">
+          <div className="w-10 h-10 rounded-md bg-blue-600 flex items-center justify-center shrink-0 shadow-lg shadow-blue-500/20">
             <span className="text-xs text-white font-black">v2</span>
           </div>
           {!isCollapsed && (
@@ -77,7 +77,7 @@ export function AdminSidebar() {
       {/* Toggle Button */}
       <button 
         onClick={toggleSidebar}
-        className="absolute -right-3 top-24 bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 rounded-full p-1 shadow-sm text-neutral-400 hover:text-blue-600 dark:hover:text-blue-400 z-50 transition-colors"
+        className="absolute -right-3 top-24 bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 rounded-lg p-1 shadow-sm text-neutral-400 hover:text-blue-600 dark:hover:text-blue-400 z-50 transition-colors"
       >
         {isCollapsed ? <ChevronRight className="w-4 h-4" /> : <ChevronLeft className="w-4 h-4" />}
       </button>
@@ -92,7 +92,7 @@ export function AdminSidebar() {
               href={item.href}
               title={isCollapsed ? item.label : undefined}
               className={cn(
-                "flex items-center gap-3 rounded-xl transition-all duration-300 text-sm font-bold",
+                "flex items-center gap-3 rounded-md transition-all duration-300 text-sm font-bold",
                 isCollapsed ? "px-3 py-3 justify-center" : "px-4 py-3",
                 isActive 
                   ? "bg-blue-600/10 text-blue-600 dark:bg-blue-500/10 dark:text-blue-500 shadow-sm" 
@@ -113,7 +113,7 @@ export function AdminSidebar() {
           onClick={() => signOut({ callbackUrl: "/admin/login" })}
           title={isCollapsed ? "Cerrar Sesión" : undefined}
           className={cn(
-            "w-full gap-3 h-12 rounded-xl text-neutral-600 dark:text-neutral-400 font-bold hover:text-red-600 dark:hover:text-red-500 hover:bg-red-50 dark:hover:bg-red-500/10 transition-all",
+            "w-full gap-3 h-12 rounded-md text-neutral-600 dark:text-neutral-400 font-bold hover:text-red-600 dark:hover:text-red-500 hover:bg-red-50 dark:hover:bg-red-500/10 transition-all",
             isCollapsed ? "justify-center px-0" : "justify-start px-4"
           )}
         >

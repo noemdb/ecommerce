@@ -30,7 +30,7 @@ export default async function ProveedoresPage() {
         </div>
       </div>
 
-      <div className="bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 rounded-2xl overflow-hidden">
+      <div className="bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 rounded-md overflow-hidden">
         {suppliers.length === 0 ? (
           <div className="flex flex-col items-center py-20 gap-4 text-neutral-400">
             <Truck className="w-12 h-12" />
@@ -99,13 +99,13 @@ export default async function ProveedoresPage() {
                       )}
                     </td>
                     <td className="px-5 py-4">
-                      <span className="inline-flex items-center justify-center w-7 h-7 rounded-full bg-blue-500/10 text-xs font-bold text-blue-600">
+                      <span className="inline-flex items-center justify-center w-7 h-7 rounded-lg bg-blue-500/10 text-xs font-bold text-blue-600">
                         {s._count.products}
                       </span>
                     </td>
                     <td className="px-5 py-4">
                       <span
-                        className={`text-xs font-bold px-2.5 py-1 rounded-full ${
+                        className={`text-xs font-bold px-2.5 py-1 rounded-lg ${
                           s.isActive
                             ? "text-emerald-600 bg-emerald-500/10"
                             : "text-neutral-400 bg-neutral-100 dark:bg-neutral-800"

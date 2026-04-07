@@ -46,7 +46,7 @@ export default async function PromptsPage() {
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-6">
         <div>
           <div className="flex items-center gap-2 mb-1">
-             <div className="w-8 h-8 rounded-xl bg-blue-600 flex items-center justify-center shadow-lg shadow-blue-500/20">
+             <div className="w-8 h-8 rounded-md bg-blue-600 flex items-center justify-center shadow-lg shadow-blue-500/20">
                 <Sparkles className="w-4 h-4 text-white" />
              </div>
              <h1 className="text-3xl font-black tracking-tight">Prompts AI</h1>
@@ -59,17 +59,17 @@ export default async function PromptsPage() {
 
       <div className="grid grid-cols-1 gap-8">
         <Tabs defaultValue="list" className="w-full">
-          <div className="bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 rounded-3xl p-2 mb-8 inline-block shadow-sm">
+          <div className="bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 rounded-lg p-2 mb-8 inline-block shadow-sm">
             <TabsList className="bg-transparent border-0 gap-2">
               <TabsTrigger 
                 value="list" 
-                className="rounded-2xl px-6 py-2.5 data-[state=active]:bg-neutral-100 dark:data-[state=active]:bg-white/10 data-[state=active]:shadow-none font-bold text-xs uppercase tracking-widest transition-all"
+                className="rounded-md px-6 py-2.5 data-[state=active]:bg-neutral-100 dark:data-[state=active]:bg-white/10 data-[state=active]:shadow-none font-bold text-xs uppercase tracking-widest transition-all"
               >
                 Todos los Prompts
               </TabsTrigger>
               <TabsTrigger 
                 value="new" 
-                className="rounded-2xl px-6 py-2.5 data-[state=active]:bg-blue-600 data-[state=active]:text-white shadow-none font-bold text-xs uppercase tracking-widest transition-all gap-2"
+                className="rounded-md px-6 py-2.5 data-[state=active]:bg-blue-600 data-[state=active]:text-white shadow-none font-bold text-xs uppercase tracking-widest transition-all gap-2"
               >
                 <Plus className="w-3.5 h-3.5" />
                 Nuevo Prompt

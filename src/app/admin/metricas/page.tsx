@@ -142,11 +142,11 @@ export default async function MetricasPage() {
         ].map((kpi) => (
           <div
             key={kpi.label}
-            className="bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 p-6 rounded-2xl flex flex-col gap-4"
+            className="bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 p-6 rounded-md flex flex-col gap-4"
           >
             <div
               className={cn(
-                "w-12 h-12 rounded-xl flex items-center justify-center",
+                "w-12 h-12 rounded-md flex items-center justify-center",
                 kpi.bg
               )}
             >
@@ -172,7 +172,7 @@ export default async function MetricasPage() {
         ].map((s) => (
           <div
             key={s.label}
-            className="bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 p-5 rounded-2xl flex items-center gap-4"
+            className="bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 p-5 rounded-md flex items-center gap-4"
           >
             <s.icon className={cn("w-5 h-5 shrink-0", s.color)} />
             <div>
@@ -185,7 +185,7 @@ export default async function MetricasPage() {
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Recent orders */}
-        <div className="bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 rounded-2xl overflow-hidden">
+        <div className="bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 rounded-md overflow-hidden">
           <div className="px-6 py-4 border-b border-neutral-100 dark:border-neutral-800">
             <h3 className="font-bold">Órdenes recientes</h3>
           </div>
@@ -198,7 +198,7 @@ export default async function MetricasPage() {
                 </div>
                 <span
                   className={cn(
-                    "text-xs font-bold px-2.5 py-1 rounded-full shrink-0",
+                    "text-xs font-bold px-2.5 py-1 rounded-lg shrink-0",
                     STATUS_COLORS[o.status]
                   )}
                 >
@@ -213,7 +213,7 @@ export default async function MetricasPage() {
         </div>
 
         {/* Top products */}
-        <div className="bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 rounded-2xl overflow-hidden">
+        <div className="bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 rounded-md overflow-hidden">
           <div className="px-6 py-4 border-b border-neutral-100 dark:border-neutral-800">
             <h3 className="font-bold">Productos más vendidos</h3>
           </div>

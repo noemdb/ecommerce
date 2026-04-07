@@ -3,7 +3,7 @@
 import { useState, useTransition } from "react";
 import Link from "next/link";
 import { Pencil, ToggleLeft, ToggleRight, Trash2 } from "lucide-react";
-import { toast } from "sonner";
+import { showPremiumToast } from "@/components/ui/PremiumToast";
 import { useConfirm } from "@/components/providers/ConfirmProvider";
 import { toggleProductActiveAction, deleteProductAction } from "@/actions/product";
 import { cn } from "@/lib/utils";
@@ -22,9 +22,9 @@ export function ProductActions({ productId, isActive, productName }: ProductActi
     startTransition(async () => {
       const res = await toggleProductActiveAction(productId, !isActive);
       if (res.success) {
-        toast.success(res.message);
+        showPremiumToast.success("Estado actualizado", res.message);
       } else {
-        toast.error(res.error);
+        showPremiumToast.error("Error", res.error);
       }
     });
   }
@@ -43,9 +43,9 @@ export function ProductActions({ productId, isActive, productName }: ProductActi
     startTransition(async () => {
       const res = await deleteProductAction(productId);
       if (res.success) {
-        toast.success(res.message);
+        showPremiumToast.success("¡Eliminado!", res.message);
       } else {
-        toast.error(res.error);
+        showPremiumToast.error("Error al eliminar", res.error);
       }
     });
   }

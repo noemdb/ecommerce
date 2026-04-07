@@ -122,7 +122,7 @@ export function OrdersTable({
               key={tab.label}
               onClick={() => setParam("status", tab.status)}
               className={cn(
-                "flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-medium whitespace-nowrap transition-all shrink-0",
+                "flex items-center gap-2 px-4 py-2 rounded-md text-sm font-medium whitespace-nowrap transition-all shrink-0",
                 isActive
                   ? "bg-neutral-900 text-white dark:bg-white dark:text-neutral-900"
                   : "text-neutral-500 hover:bg-neutral-100 dark:hover:bg-neutral-800"
@@ -131,7 +131,7 @@ export function OrdersTable({
               {tab.label}
               <span
                 className={cn(
-                  "text-xs rounded-full px-1.5 py-0.5 min-w-[20px] text-center",
+                  "text-xs rounded-lg px-1.5 py-0.5 min-w-[20px] text-center",
                   isActive
                     ? "bg-white/20 dark:bg-black/20"
                     : "bg-neutral-100 dark:bg-neutral-800 text-neutral-500"
@@ -151,7 +151,7 @@ export function OrdersTable({
           type="search"
           placeholder="Buscar por Nº orden, cliente..."
           defaultValue={query}
-          className="h-11 w-full rounded-xl border border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-900 pl-11 pr-4 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/30 focus:border-blue-500 transition-all"
+          className="h-11 w-full rounded-md border border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-900 pl-11 pr-4 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/30 focus:border-blue-500 transition-all"
           onKeyDown={(e) => {
             if (e.key === "Enter")
               setParam("q", (e.target as HTMLInputElement).value || undefined);
@@ -162,7 +162,7 @@ export function OrdersTable({
       {/* Table */}
       <div
         className={cn(
-          "bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 rounded-2xl overflow-hidden transition-opacity",
+          "bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 rounded-md overflow-hidden transition-opacity",
           isPending && "opacity-60"
         )}
       >
@@ -217,7 +217,7 @@ export function OrdersTable({
                         </code>
                       </td>
                       <td className="px-5 py-4 text-center">
-                        <span className="inline-flex items-center justify-center w-7 h-7 rounded-full bg-neutral-100 dark:bg-neutral-800 text-xs font-bold">
+                        <span className="inline-flex items-center justify-center w-7 h-7 rounded-lg bg-neutral-100 dark:bg-neutral-800 text-xs font-bold">
                           {order._count.items}
                         </span>
                       </td>
@@ -227,7 +227,7 @@ export function OrdersTable({
                       <td className="px-5 py-4">
                         <span
                           className={cn(
-                            "inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-bold",
+                            "inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-xs font-bold",
                             s.color
                           )}
                         >
@@ -270,14 +270,14 @@ export function OrdersTable({
             <button
               disabled={page <= 1 || isPending}
               onClick={() => setParam("page", String(page - 1))}
-              className="w-9 h-9 rounded-xl border border-neutral-200 dark:border-neutral-800 flex items-center justify-center hover:bg-neutral-50 dark:hover:bg-neutral-800 disabled:opacity-40 transition-colors"
+              className="w-9 h-9 rounded-md border border-neutral-200 dark:border-neutral-800 flex items-center justify-center hover:bg-neutral-50 dark:hover:bg-neutral-800 disabled:opacity-40 transition-colors"
             >
               <ChevronLeft className="w-4 h-4" />
             </button>
             <button
               disabled={page >= totalPages || isPending}
               onClick={() => setParam("page", String(page + 1))}
-              className="w-9 h-9 rounded-xl border border-neutral-200 dark:border-neutral-800 flex items-center justify-center hover:bg-neutral-50 dark:hover:bg-neutral-800 disabled:opacity-40 transition-colors"
+              className="w-9 h-9 rounded-md border border-neutral-200 dark:border-neutral-800 flex items-center justify-center hover:bg-neutral-50 dark:hover:bg-neutral-800 disabled:opacity-40 transition-colors"
             >
               <ChevronRight className="w-4 h-4" />
             </button>

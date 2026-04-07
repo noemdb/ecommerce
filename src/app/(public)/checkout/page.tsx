@@ -36,7 +36,7 @@ export default async function CheckoutPage() {
           </h1>
         </div>
         
-        <div className="flex items-center gap-2 px-4 py-2 bg-emerald-50 dark:bg-emerald-900/20 border border-emerald-100 dark:border-emerald-800 rounded-full">
+        <div className="flex items-center gap-2 px-4 py-2 bg-emerald-50 dark:bg-emerald-900/20 border border-emerald-100 dark:border-emerald-800 rounded-lg">
           <ShieldCheck className="w-5 h-5 text-emerald-600" />
           <span className="text-xs font-bold text-emerald-700 dark:text-emerald-400 uppercase tracking-widest">
             Checkout Seguro 256-bit SSL

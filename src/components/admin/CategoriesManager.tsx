@@ -211,7 +211,7 @@ export function CategoriesManager({ categories }: CategoriesManagerProps) {
         </div>
         <Button
           onClick={openCreate}
-          className="h-11 rounded-xl gap-2"
+          className="h-11 rounded-md gap-2"
           id="btn-create-category"
         >
           <Plus className="w-4 h-4" />
@@ -229,9 +229,9 @@ export function CategoriesManager({ categories }: CategoriesManagerProps) {
         ].map((stat) => (
           <div
             key={stat.label}
-            className="bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 rounded-2xl p-5 flex items-center gap-4"
+            className="bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 rounded-md p-5 flex items-center gap-4"
           >
-            <div className={cn("w-10 h-10 rounded-xl flex items-center justify-center shrink-0", stat.bg)}>
+            <div className={cn("w-10 h-10 rounded-md flex items-center justify-center shrink-0", stat.bg)}>
               <stat.icon className={cn("w-5 h-5", stat.color)} />
             </div>
             <div>
@@ -243,7 +243,7 @@ export function CategoriesManager({ categories }: CategoriesManagerProps) {
       </div>
 
       {/* ── Table ──────────────────────────────── */}
-      <div className="bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 rounded-2xl overflow-hidden">
+      <div className="bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 rounded-md overflow-hidden">
         {categories.length === 0 ? (
           <div className="flex flex-col items-center justify-center py-20 gap-4 text-neutral-400">
             <Layers className="w-12 h-12" />
@@ -300,7 +300,7 @@ export function CategoriesManager({ categories }: CategoriesManagerProps) {
           className="fixed inset-0 z-40 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4"
           onClick={(e) => e.target === e.currentTarget && closeModal()}
         >
-          <div className="bg-white dark:bg-neutral-900 rounded-3xl shadow-2xl w-full max-w-lg animate-in zoom-in-95 fade-in duration-200 overflow-hidden">
+          <div className="bg-white dark:bg-neutral-900 rounded-lg shadow-2xl w-full max-w-lg animate-in zoom-in-95 fade-in duration-200 overflow-hidden">
             {/* Modal header */}
             <div className="flex items-center justify-between px-7 py-6 border-b border-neutral-100 dark:border-neutral-800">
               <h2 className="text-lg font-bold">
@@ -308,7 +308,7 @@ export function CategoriesManager({ categories }: CategoriesManagerProps) {
               </h2>
               <button
                 onClick={closeModal}
-                className="w-9 h-9 rounded-xl flex items-center justify-center text-neutral-400 hover:text-neutral-900 hover:bg-neutral-100 dark:hover:bg-neutral-800 dark:hover:text-white transition-colors"
+                className="w-9 h-9 rounded-md flex items-center justify-center text-neutral-400 hover:text-neutral-900 hover:bg-neutral-100 dark:hover:bg-neutral-800 dark:hover:text-white transition-colors"
               >
                 <X className="w-4 h-4" />
               </button>
@@ -356,7 +356,7 @@ export function CategoriesManager({ categories }: CategoriesManagerProps) {
                   onChange={(e) => setForm((f) => ({ ...f, description: e.target.value }))}
                   placeholder="Descripción breve de la categoría..."
                   rows={3}
-                  className="flex w-full rounded-2xl border-2 border-neutral-100 bg-white px-4 py-3 text-sm font-medium transition-all duration-300 placeholder:text-neutral-300 focus:outline-none focus:border-blue-600 focus:ring-4 focus:ring-blue-500/10 dark:bg-neutral-900 dark:border-neutral-800 dark:text-white dark:placeholder:text-neutral-600 resize-none"
+                  className="flex w-full rounded-md border-2 border-neutral-100 bg-white px-4 py-3 text-sm font-medium transition-all duration-300 placeholder:text-neutral-300 focus:outline-none focus:border-blue-600 focus:ring-4 focus:ring-blue-500/10 dark:bg-neutral-900 dark:border-neutral-800 dark:text-white dark:placeholder:text-neutral-600 resize-none"
                 />
               </div>
 
@@ -390,7 +390,7 @@ export function CategoriesManager({ categories }: CategoriesManagerProps) {
                     id="field-parentId"
                     value={form.parentId}
                     onChange={(e) => setForm((f) => ({ ...f, parentId: e.target.value }))}
-                    className="flex h-14 w-full rounded-2xl border-2 border-neutral-100 bg-white px-4 py-2 text-sm font-medium transition-all duration-300 focus:outline-none focus:border-blue-600 focus:ring-4 focus:ring-blue-500/10 dark:bg-neutral-900 dark:border-neutral-800 dark:text-white appearance-none pr-10"
+                    className="flex h-14 w-full rounded-md border-2 border-neutral-100 bg-white px-4 py-2 text-sm font-medium transition-all duration-300 focus:outline-none focus:border-blue-600 focus:ring-4 focus:ring-blue-500/10 dark:bg-neutral-900 dark:border-neutral-800 dark:text-white appearance-none pr-10"
                   >
                     <option value="">— Sin padre (raíz) —</option>
                     {categories
@@ -482,7 +482,7 @@ function CategoryRow({
 
       {/* Products count */}
       <td className="px-5 py-4">
-        <span className="inline-flex items-center gap-1 text-xs font-bold bg-blue-500/10 text-blue-600 dark:text-blue-400 rounded-full px-2.5 py-1">
+        <span className="inline-flex items-center gap-1 text-xs font-bold bg-blue-500/10 text-blue-600 dark:text-blue-400 rounded-lg px-2.5 py-1">
           {cat._count.products}
         </span>
       </td>
@@ -497,12 +497,12 @@ function CategoryRow({
         >
           {cat.isActive ? (
             <>
-              <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+              <span className="w-2 h-2 rounded-lg bg-emerald-500 animate-pulse" />
               <span className="text-emerald-600 dark:text-emerald-400">Activa</span>
             </>
           ) : (
             <>
-              <span className="w-2 h-2 rounded-full bg-neutral-300 dark:bg-neutral-600" />
+              <span className="w-2 h-2 rounded-lg bg-neutral-300 dark:bg-neutral-600" />
               <span className="text-neutral-400">Inactiva</span>
             </>
           )}

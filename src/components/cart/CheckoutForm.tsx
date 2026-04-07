@@ -78,7 +78,7 @@ export function CheckoutForm({ initialData }: CheckoutFormProps) {
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-10">
         <section className="space-y-6">
           <div className="flex items-center gap-3">
-            <div className="p-2 bg-blue-50 dark:bg-blue-900/30 rounded-xl text-blue-600">
+            <div className="p-2 bg-blue-50 dark:bg-blue-900/30 rounded-md text-blue-600">
               <ShoppingBag className="w-5 h-5" />
             </div>
             <h2 className="text-xl font-black tracking-tight uppercase tracking-widest">1. Información del Cliente</h2>
@@ -107,7 +107,7 @@ export function CheckoutForm({ initialData }: CheckoutFormProps) {
 
         <section className="space-y-6">
           <div className="flex items-center gap-3">
-            <div className="p-2 bg-blue-50 dark:bg-blue-900/30 rounded-xl text-blue-600">
+            <div className="p-2 bg-blue-50 dark:bg-blue-900/30 rounded-md text-blue-600">
               <Building2 className="w-5 h-5" />
             </div>
             <h2 className="text-xl font-black tracking-tight uppercase tracking-widest">2. Detalles de Pago</h2>
@@ -119,7 +119,7 @@ export function CheckoutForm({ initialData }: CheckoutFormProps) {
               </label>
               <select 
                 {...register("bankName")}
-                className="flex h-14 w-full rounded-2xl border-2 border-neutral-100 bg-white px-4 py-2 text-sm font-medium transition-all duration-300 focus:outline-none focus:border-blue-600 dark:bg-neutral-900 dark:border-neutral-800 dark:text-white"
+                className="flex h-14 w-full rounded-md border-2 border-neutral-100 bg-white px-4 py-2 text-sm font-medium transition-all duration-300 focus:outline-none focus:border-blue-600 dark:bg-neutral-900 dark:border-neutral-800 dark:text-white"
               >
                 <option value="">Selecciona un banco</option>
                 <option value="BBVA">BBVA</option>
@@ -143,13 +143,13 @@ export function CheckoutForm({ initialData }: CheckoutFormProps) {
 
         <section className="space-y-6">
           <div className="flex items-center gap-3">
-            <div className="p-2 bg-blue-50 dark:bg-blue-900/30 rounded-xl text-blue-600">
+            <div className="p-2 bg-blue-50 dark:bg-blue-900/30 rounded-md text-blue-600">
               <Upload className="w-5 h-5" />
             </div>
             <h2 className="text-xl font-black tracking-tight uppercase tracking-widest">3. Comprobante de Pago</h2>
           </div>
-          <div className="p-8 border-2 border-dashed border-neutral-200 dark:border-neutral-800 rounded-3xl text-center space-y-4 hover:border-blue-500/50 hover:bg-blue-50/10 transition-all cursor-pointer group">
-            <div className="w-12 h-12 bg-neutral-100 dark:bg-neutral-800 rounded-full mx-auto flex items-center justify-center text-neutral-400 group-hover:scale-110 group-hover:text-blue-600 transition-all">
+          <div className="p-8 border-2 border-dashed border-neutral-200 dark:border-neutral-800 rounded-lg text-center space-y-4 hover:border-blue-500/50 hover:bg-blue-50/10 transition-all cursor-pointer group">
+            <div className="w-12 h-12 bg-neutral-100 dark:bg-neutral-800 rounded-lg mx-auto flex items-center justify-center text-neutral-400 group-hover:scale-110 group-hover:text-blue-600 transition-all">
               <Upload className="w-6 h-6" />
             </div>
             <div className="space-y-1">
@@ -159,7 +159,7 @@ export function CheckoutForm({ initialData }: CheckoutFormProps) {
             {/* Mock input - in real app would use uploadthing or similar */}
             <input type="file" className="hidden" />
           </div>
-          <div className="flex gap-2 p-4 bg-amber-50 dark:bg-amber-900/20 rounded-2xl border border-amber-100 dark:border-amber-800">
+          <div className="flex gap-2 p-4 bg-amber-50 dark:bg-amber-900/20 rounded-md border border-amber-100 dark:border-amber-800">
             <AlertCircle className="w-5 h-5 text-amber-600 shrink-0" />
             <p className="text-[10px] text-amber-700 dark:text-amber-400 font-bold uppercase tracking-wider leading-relaxed">
               Importante: Nuestro equipo verificará manualmente tu pago. El pedido se procesará una vez confirmado el depósito.
@@ -181,13 +181,13 @@ export function CheckoutForm({ initialData }: CheckoutFormProps) {
           <div className="space-y-6 max-h-[400px] overflow-y-auto pr-2 custom-scrollbar">
             {items.map((it) => (
               <div key={`${it.productId}-${it.variantId}`} className="flex gap-4 group">
-                <div className="relative w-24 h-24 bg-white dark:bg-neutral-800 rounded-2xl overflow-hidden shrink-0 border dark:border-neutral-700 shadow-sm">
+                <div className="relative w-24 h-24 bg-white dark:bg-neutral-800 rounded-md overflow-hidden shrink-0 border dark:border-neutral-700 shadow-sm">
                   <Image src={it.imageUrl} alt={it.name} fill className="object-cover group-hover:scale-110 transition-transform duration-500" />
                 </div>
                 <div className="flex-1 flex flex-col py-0.5 justify-center">
                   <h4 className="text-sm font-bold line-clamp-2 leading-tight mb-1">{it.name}</h4>
                   <div className="flex justify-between items-center mt-2">
-                    <span className="text-[10px] font-bold text-neutral-400 bg-white dark:bg-neutral-800 px-2 py-0.5 rounded-full border dark:border-neutral-700">
+                    <span className="text-[10px] font-bold text-neutral-400 bg-white dark:bg-neutral-800 px-2 py-0.5 rounded-lg border dark:border-neutral-700">
                       CANT: {it.quantity}
                     </span>
                     <span className="font-bold text-sm tracking-tight">{formatPrice(it.price * it.quantity)}</span>
@@ -213,7 +213,7 @@ export function CheckoutForm({ initialData }: CheckoutFormProps) {
           </div>
         </div>
 
-        <div className="bg-blue-600 rounded-3xl p-8 text-white relative overflow-hidden shadow-xl shadow-blue-500/30">
+        <div className="bg-blue-600 rounded-lg p-8 text-white relative overflow-hidden shadow-xl shadow-blue-500/30">
           <div className="absolute top-0 right-0 p-4 opacity-10">
             <CreditCard className="w-24 h-24" />
           </div>

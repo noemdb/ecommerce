@@ -28,7 +28,7 @@ export function ProductCard({ product, badge }: ProductCardProps) {
     : 0;
 
   return (
-    <div className="group relative bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 rounded-2xl overflow-hidden transition-all duration-300 hover:shadow-xl hover:-translate-y-1 h-full flex flex-col">
+    <div className="group relative bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 rounded-md overflow-hidden transition-all duration-300 hover:shadow-xl hover:-translate-y-1 h-full flex flex-col">
       <Link href={`/producto/${product.slug}`} className="absolute inset-0 z-0">
         <span className="sr-only">Ver {product.name}</span>
       </Link>

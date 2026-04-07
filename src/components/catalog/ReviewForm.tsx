@@ -85,7 +85,7 @@ export function ReviewForm({ productId }: ReviewFormProps) {
           <textarea
             value={comment}
             onChange={(e) => setComment(e.target.value)}
-            className="w-full min-h-[120px] rounded-2xl border-2 border-neutral-100 dark:border-neutral-800 bg-white dark:bg-neutral-900 p-4 text-sm font-medium focus:outline-none focus:border-blue-600 focus:ring-4 focus:ring-blue-500/10 transition-all placeholder:text-neutral-300 dark:placeholder:text-neutral-600"
+            className="w-full min-h-[120px] rounded-md border-2 border-neutral-100 dark:border-neutral-800 bg-white dark:bg-neutral-900 p-4 text-sm font-medium focus:outline-none focus:border-blue-600 focus:ring-4 focus:ring-blue-500/10 transition-all placeholder:text-neutral-300 dark:placeholder:text-neutral-600"
             placeholder="¿Qué te pareció la calidad? ¿Superó tus expectativas?"
           />
           <p className="text-[10px] text-neutral-400 font-bold uppercase tracking-widest ml-1 text-right">

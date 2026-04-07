@@ -21,7 +21,7 @@ export function CategoryBar({ categories, activeCategoryId }: CategoryBarProps) 
             href="/#catalogo"
             prefetch={false}
             className={cn(
-              "px-4 py-2 text-sm font-medium rounded-full transition-colors whitespace-nowrap",
+              "px-4 py-2 text-sm font-medium rounded-lg transition-colors whitespace-nowrap",
               !activeCategoryId
                 ? "bg-neutral-900 text-white dark:bg-white dark:text-neutral-900 shadow-shape"
                 : "bg-neutral-100 text-neutral-600 hover:bg-neutral-200 dark:bg-neutral-800 dark:text-neutral-400 dark:hover:bg-neutral-700"
@@ -35,7 +35,7 @@ export function CategoryBar({ categories, activeCategoryId }: CategoryBarProps) 
               href={`/?categoryId=${category.id}#catalogo`}
               prefetch={false}
               className={cn(
-                "px-4 py-2 text-sm font-medium rounded-full transition-colors whitespace-nowrap",
+                "px-4 py-2 text-sm font-medium rounded-lg transition-colors whitespace-nowrap",
                 activeCategoryId === category.id
                   ? "bg-neutral-900 text-white dark:bg-white dark:text-neutral-900 shadow-shape"
                   : "bg-neutral-100 text-neutral-600 hover:bg-neutral-200 dark:bg-neutral-800 dark:text-neutral-400 dark:hover:bg-neutral-700"

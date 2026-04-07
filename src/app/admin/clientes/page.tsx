@@ -75,12 +75,12 @@ export default async function ClientesPage({
           type="search"
           placeholder="Buscar por nombre, email o teléfono..."
           defaultValue={q}
-          className="h-11 w-full rounded-xl border border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-900 pl-11 pr-4 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/30 focus:border-blue-500 transition-all"
+          className="h-11 w-full rounded-md border border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-900 pl-11 pr-4 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/30 focus:border-blue-500 transition-all"
         />
       </form>
 
       {/* Table */}
-      <div className="bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 rounded-2xl overflow-hidden">
+      <div className="bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 rounded-md overflow-hidden">
         {customers.length === 0 ? (
           <div className="flex flex-col items-center justify-center py-20 gap-4 text-neutral-400">
             <Users className="w-12 h-12" />
@@ -113,7 +113,7 @@ export default async function ClientesPage({
                     <td className="px-5 py-4 text-neutral-500 text-xs">{c.email}</td>
                     <td className="px-5 py-4 text-neutral-500 text-xs">{c.phone ?? "—"}</td>
                     <td className="px-5 py-4">
-                      <span className="inline-flex items-center gap-1 text-xs font-bold bg-blue-500/10 text-blue-600 dark:text-blue-400 rounded-full px-2.5 py-1">
+                      <span className="inline-flex items-center gap-1 text-xs font-bold bg-blue-500/10 text-blue-600 dark:text-blue-400 rounded-lg px-2.5 py-1">
                         <ShoppingBag className="w-3 h-3" />
                         {c._count.orders}
                       </span>
@@ -127,11 +127,11 @@ export default async function ClientesPage({
                     </td>
                     <td className="px-5 py-4">
                       {c.isBlocked ? (
-                        <span className="text-xs font-bold text-red-600 bg-red-50 dark:bg-red-500/10 px-2.5 py-1 rounded-full">
+                        <span className="text-xs font-bold text-red-600 bg-red-50 dark:bg-red-500/10 px-2.5 py-1 rounded-lg">
                           Bloqueado
                         </span>
                       ) : (
-                        <span className="text-xs font-bold text-emerald-600 bg-emerald-50 dark:bg-emerald-500/10 px-2.5 py-1 rounded-full">
+                        <span className="text-xs font-bold text-emerald-600 bg-emerald-50 dark:bg-emerald-500/10 px-2.5 py-1 rounded-lg">
                           Activo
                         </span>
                       )}
@@ -170,7 +170,7 @@ export default async function ClientesPage({
             {page > 1 && (
               <Link
                 href={`?q=${q}&page=${page - 1}`}
-                className="px-4 h-9 rounded-xl border border-neutral-200 dark:border-neutral-800 flex items-center text-sm hover:bg-neutral-50 dark:hover:bg-neutral-800 transition-colors"
+                className="px-4 h-9 rounded-md border border-neutral-200 dark:border-neutral-800 flex items-center text-sm hover:bg-neutral-50 dark:hover:bg-neutral-800 transition-colors"
               >
                 ← Anterior
               </Link>
@@ -178,7 +178,7 @@ export default async function ClientesPage({
             {page < totalPages && (
               <Link
                 href={`?q=${q}&page=${page + 1}`}
-                className="px-4 h-9 rounded-xl border border-neutral-200 dark:border-neutral-800 flex items-center text-sm hover:bg-neutral-50 dark:hover:bg-neutral-800 transition-colors"
+                className="px-4 h-9 rounded-md border border-neutral-200 dark:border-neutral-800 flex items-center text-sm hover:bg-neutral-50 dark:hover:bg-neutral-800 transition-colors"
               >
                 Siguiente →
               </Link>

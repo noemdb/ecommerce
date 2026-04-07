@@ -121,11 +121,11 @@ export default async function InventarioPage({
         ].map((stat) => (
           <div
             key={stat.label}
-            className="bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 rounded-2xl p-5 flex items-center gap-4"
+            className="bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 rounded-md p-5 flex items-center gap-4"
           >
             <div
               className={cn(
-                "w-10 h-10 rounded-xl flex items-center justify-center shrink-0",
+                "w-10 h-10 rounded-md flex items-center justify-center shrink-0",
                 stat.bg
               )}
             >
@@ -151,7 +151,7 @@ export default async function InventarioPage({
               key={tab.key}
               href={`?filter=${tab.key}${q ? `&q=${q}` : ""}`}
               className={cn(
-                "px-4 py-2 rounded-xl text-sm font-medium transition-all whitespace-nowrap",
+                "px-4 py-2 rounded-md text-sm font-medium transition-all whitespace-nowrap",
                 filter === tab.key
                   ? "bg-neutral-900 text-white dark:bg-white dark:text-neutral-900"
                   : "text-neutral-500 hover:bg-neutral-100 dark:hover:bg-neutral-800"
@@ -169,13 +169,13 @@ export default async function InventarioPage({
             type="search"
             placeholder="Buscar producto o SKU..."
             defaultValue={q}
-            className="h-10 w-full rounded-xl border border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-900 px-4 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/30 focus:border-blue-500 transition-all"
+            className="h-10 w-full rounded-md border border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-900 px-4 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/30 focus:border-blue-500 transition-all"
           />
         </form>
       </div>
 
       {/* Table */}
-      <div className="bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 rounded-2xl overflow-hidden">
+      <div className="bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 rounded-md overflow-hidden">
         <div className="overflow-x-auto">
           <table className="w-full text-sm">
             <thead>
@@ -247,17 +247,17 @@ export default async function InventarioPage({
                       </td>
                       <td className="px-5 py-4">
                         {isOut ? (
-                          <span className="inline-flex items-center gap-1.5 text-xs font-bold text-red-600 bg-red-50 dark:bg-red-500/10 px-2.5 py-1 rounded-full">
+                          <span className="inline-flex items-center gap-1.5 text-xs font-bold text-red-600 bg-red-50 dark:bg-red-500/10 px-2.5 py-1 rounded-lg">
                             <TrendingDown className="w-3 h-3" />
                             Sin stock
                           </span>
                         ) : isLow ? (
-                          <span className="inline-flex items-center gap-1.5 text-xs font-bold text-amber-600 bg-amber-50 dark:bg-amber-500/10 px-2.5 py-1 rounded-full">
+                          <span className="inline-flex items-center gap-1.5 text-xs font-bold text-amber-600 bg-amber-50 dark:bg-amber-500/10 px-2.5 py-1 rounded-lg">
                             <AlertTriangle className="w-3 h-3" />
                             Stock bajo
                           </span>
                         ) : (
-                          <span className="text-xs font-bold text-emerald-600 bg-emerald-50 dark:bg-emerald-500/10 px-2.5 py-1 rounded-full">
+                          <span className="text-xs font-bold text-emerald-600 bg-emerald-50 dark:bg-emerald-500/10 px-2.5 py-1 rounded-lg">
                             OK
                           </span>
                         )}

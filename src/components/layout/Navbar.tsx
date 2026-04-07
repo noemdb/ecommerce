@@ -55,7 +55,7 @@ export function Navbar() {
           <div className="flex items-center gap-2 md:gap-4">
             <Link 
               href="/cuenta" 
-              className="p-2 text-neutral-600 hover:text-blue-600 transition-all rounded-full hover:bg-neutral-100 dark:text-neutral-400 dark:hover:bg-neutral-800"
+              className="p-2 text-neutral-600 hover:text-blue-600 transition-all rounded-lg hover:bg-neutral-100 dark:text-neutral-400 dark:hover:bg-neutral-800"
               title="Mi cuenta"
             >
               <User className="w-5 h-5" />
@@ -63,12 +63,12 @@ export function Navbar() {
 
             <button 
               onClick={toggleCart}
-              className="p-2 relative group text-neutral-600 hover:text-blue-600 transition-all rounded-full hover:bg-neutral-100 dark:text-neutral-400 dark:hover:bg-neutral-800"
+              className="p-2 relative group text-neutral-600 hover:text-blue-600 transition-all rounded-lg hover:bg-neutral-100 dark:text-neutral-400 dark:hover:bg-neutral-800"
               aria-label="Ver carrito"
             >
               <ShoppingCart className="w-5 h-5 group-hover:scale-110 transition-transform" />
               {mounted && cartCount > 0 && (
-                <span className="absolute -top-1 -right-1 w-5 h-5 bg-blue-600 text-white text-[10px] font-black rounded-full flex items-center justify-center ring-2 ring-white dark:ring-neutral-900 animate-in zoom-in">
+                <span className="absolute -top-1 -right-1 w-5 h-5 bg-blue-600 text-white text-[10px] font-black rounded-lg flex items-center justify-center ring-2 ring-white dark:ring-neutral-900 animate-in zoom-in">
                   {cartCount}
                 </span>
               )}

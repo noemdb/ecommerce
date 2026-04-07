@@ -47,7 +47,7 @@ export function CustomerRegisterForm() {
     return (
       <div className="text-center space-y-6 animate-in fade-in zoom-in duration-500">
         <div className="flex justify-center">
-          <div className="w-20 h-20 bg-emerald-50 dark:bg-emerald-900/30 rounded-full flex items-center justify-center text-emerald-600">
+          <div className="w-20 h-20 bg-emerald-50 dark:bg-emerald-900/30 rounded-lg flex items-center justify-center text-emerald-600">
             <CheckCircle2 className="w-10 h-10" />
           </div>
         </div>

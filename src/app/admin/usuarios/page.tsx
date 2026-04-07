@@ -30,7 +30,7 @@ export default async function UsuariosPage() {
         </div>
       </div>
 
-      <div className="bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 rounded-2xl overflow-hidden">
+      <div className="bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 rounded-md overflow-hidden">
         {users.length === 0 ? (
           <div className="flex flex-col items-center py-20 gap-4 text-neutral-400">
             <Users className="w-12 h-12" />
@@ -61,7 +61,7 @@ export default async function UsuariosPage() {
                   >
                     <td className="px-5 py-4">
                       <div className="flex items-center gap-3">
-                        <div className="w-8 h-8 rounded-full bg-blue-500/10 flex items-center justify-center text-xs font-bold text-blue-600">
+                        <div className="w-8 h-8 rounded-lg bg-blue-500/10 flex items-center justify-center text-xs font-bold text-blue-600">
                           {u.name.charAt(0).toUpperCase()}
                         </div>
                         <span className="font-semibold">{u.name}</span>
@@ -70,7 +70,7 @@ export default async function UsuariosPage() {
                     <td className="px-5 py-4 text-neutral-500 text-xs">{u.email}</td>
                     <td className="px-5 py-4">
                       <span
-                        className={`inline-flex items-center gap-1.5 text-xs font-bold px-2.5 py-1 rounded-full ${
+                        className={`inline-flex items-center gap-1.5 text-xs font-bold px-2.5 py-1 rounded-lg ${
                           u.role === "ADMIN"
                             ? "text-purple-600 bg-purple-500/10"
                             : "text-blue-600 bg-blue-500/10"
@@ -89,7 +89,7 @@ export default async function UsuariosPage() {
                     </td>
                     <td className="px-5 py-4">
                       <span
-                        className={`text-xs font-bold px-2.5 py-1 rounded-full ${
+                        className={`text-xs font-bold px-2.5 py-1 rounded-lg ${
                           u.isActive
                             ? "text-emerald-600 bg-emerald-500/10"
                             : "text-neutral-400 bg-neutral-100 dark:bg-neutral-800"

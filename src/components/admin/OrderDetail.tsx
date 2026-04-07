@@ -6,7 +6,7 @@ import { updateOrderStatusAction } from "@/actions/admin-order";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import type { OrderStatus } from "@prisma/client";
-import { toast } from "sonner";
+import { showPremiumToast } from "@/components/ui/PremiumToast";
 import { useConfirm } from "@/components/providers/ConfirmProvider";
 import {
   ArrowLeft,
@@ -107,9 +107,9 @@ export function OrderDetail({ order }: { order: OrderDetailType }) {
     startTransition(async () => {
       const res = await updateOrderStatusAction(order.id, newStatus);
       if (res.success) {
-        toast.success(res.message);
+        showPremiumToast.success("Estado actualizado", res.message);
       } else {
-        toast.error(res.error);
+        showPremiumToast.error("Error", res.error);
       }
     });
   }
@@ -144,7 +144,7 @@ export function OrderDetail({ order }: { order: OrderDetailType }) {
           <div className="flex items-center gap-3">
             <span
               className={cn(
-                "inline-flex items-center gap-2 px-3 py-2 rounded-xl text-sm font-bold border",
+                "inline-flex items-center gap-2 px-3 py-2 rounded-md text-sm font-bold border",
                 s.color
               )}
             >
@@ -165,7 +165,7 @@ export function OrderDetail({ order }: { order: OrderDetailType }) {
                 </Button>
 
                 {showStatusMenu && (
-                  <div className="absolute right-0 top-full mt-2 z-20 bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 rounded-2xl shadow-2xl overflow-hidden min-w-[180px] animate-in zoom-in-95 fade-in duration-150">
+                  <div className="absolute right-0 top-full mt-2 z-20 bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 rounded-md shadow-2xl overflow-hidden min-w-[180px] animate-in zoom-in-95 fade-in duration-150">
                     {nextStatuses.map((ns) => {
                       const meta = STATUS_META[ns];
                       const NSIcon = meta.icon;
@@ -191,9 +191,9 @@ export function OrderDetail({ order }: { order: OrderDetailType }) {
       {/* Grid: info cards */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Customer */}
-        <div className="bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 rounded-2xl p-6 flex flex-col gap-4">
+        <div className="bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 rounded-md p-6 flex flex-col gap-4">
           <div className="flex items-center gap-3">
-            <div className="w-9 h-9 rounded-xl bg-blue-500/10 flex items-center justify-center">
+            <div className="w-9 h-9 rounded-md bg-blue-500/10 flex items-center justify-center">
               <User className="w-4 h-4 text-blue-500" />
             </div>
             <h3 className="font-bold text-sm">Cliente</h3>
@@ -217,9 +217,9 @@ export function OrderDetail({ order }: { order: OrderDetailType }) {
         </div>
 
         {/* Payment */}
-        <div className="bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 rounded-2xl p-6 flex flex-col gap-4">
+        <div className="bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 rounded-md p-6 flex flex-col gap-4">
           <div className="flex items-center gap-3">
-            <div className="w-9 h-9 rounded-xl bg-emerald-500/10 flex items-center justify-center">
+            <div className="w-9 h-9 rounded-md bg-emerald-500/10 flex items-center justify-center">
               <CreditCard className="w-4 h-4 text-emerald-500" />
             </div>
             <h3 className="font-bold text-sm">Pago</h3>
@@ -252,9 +252,9 @@ export function OrderDetail({ order }: { order: OrderDetailType }) {
         </div>
 
         {/* Summary */}
-        <div className="bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 rounded-2xl p-6 flex flex-col gap-4">
+        <div className="bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 rounded-md p-6 flex flex-col gap-4">
           <div className="flex items-center gap-3">
-            <div className="w-9 h-9 rounded-xl bg-amber-500/10 flex items-center justify-center">
+            <div className="w-9 h-9 rounded-md bg-amber-500/10 flex items-center justify-center">
               <FileText className="w-4 h-4 text-amber-500" />
             </div>
             <h3 className="font-bold text-sm">Resumen</h3>
@@ -278,7 +278,7 @@ export function OrderDetail({ order }: { order: OrderDetailType }) {
       </div>
 
       {/* Items */}
-      <div className="bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 rounded-2xl overflow-hidden">
+      <div className="bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 rounded-md overflow-hidden">
         <div className="px-6 py-4 border-b border-neutral-100 dark:border-neutral-800 flex items-center gap-3">
           <Package className="w-4 h-4 text-neutral-400" />
           <h3 className="font-bold">Artículos ({order.items.length})</h3>
@@ -308,7 +308,7 @@ export function OrderDetail({ order }: { order: OrderDetailType }) {
 
       {/* Status timeline */}
       {order.statusHistory.length > 0 && (
-        <div className="bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 rounded-2xl p-6 flex flex-col gap-4">
+        <div className="bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 rounded-md p-6 flex flex-col gap-4">
           <h3 className="font-bold">Historial de estados</h3>
           <div className="relative flex flex-col gap-4 pl-6">
             <div className="absolute left-[7px] top-2 bottom-2 w-px bg-neutral-200 dark:bg-neutral-800" />
@@ -319,7 +319,7 @@ export function OrderDetail({ order }: { order: OrderDetailType }) {
                 <div key={h.id} className="flex items-start gap-3">
                   <div
                     className={cn(
-                      "w-3.5 h-3.5 rounded-full border-2 border-white dark:border-neutral-900 shrink-0 -ml-6 mt-0.5 ring-2",
+                      "w-3.5 h-3.5 rounded-lg border-2 border-white dark:border-neutral-900 shrink-0 -ml-6 mt-0.5 ring-2",
                       h.status === "CANCELADA"
                         ? "bg-red-500 ring-red-200"
                         : h.status === "COMPLETADA"
@@ -348,7 +348,7 @@ export function OrderDetail({ order }: { order: OrderDetailType }) {
 
       {/* Internal notes */}
       {order.internalNotes && (
-        <div className="flex gap-3 p-5 bg-amber-50 dark:bg-amber-500/5 border border-amber-200 dark:border-amber-500/20 rounded-2xl">
+        <div className="flex gap-3 p-5 bg-amber-50 dark:bg-amber-500/5 border border-amber-200 dark:border-amber-500/20 rounded-md">
           <AlertCircle className="w-5 h-5 text-amber-500 shrink-0 mt-0.5" />
           <div>
             <p className="text-sm font-bold text-amber-900 dark:text-amber-400 mb-1">

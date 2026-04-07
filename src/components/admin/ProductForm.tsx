@@ -9,7 +9,8 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useState, useTransition, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { toast } from "sonner";
+import Image from "next/image";
+import { showPremiumToast } from "@/components/ui/PremiumToast";
 import { cn } from "@/lib/utils";
 import { 
   Plus, 
@@ -29,6 +30,8 @@ import {
 import { UploadButton } from "@uploadthing/react";
 import { OurFileRouter } from "@/lib/uploadthing";
 import { PromptForm } from "./PromptForm";
+import { ProductPreviewModal } from "./ProductPreviewModal";
+import { Eye } from "lucide-react";
 
 interface Category {
   id: string;
@@ -50,6 +53,7 @@ export function ProductForm({ initialData, categories, suppliers }: ProductFormP
   const router = useRouter();
   const [isPending, startTransition] = useTransition();
   const [autoSlug, setAutoSlug] = useState(!initialData);
+  const [showPreview, setShowPreview] = useState(false);
 
   const {
     register,
@@ -131,11 +135,11 @@ export function ProductForm({ initialData, categories, suppliers }: ProductFormP
         : await createProductAction(data);
 
       if (res.success) {
-        toast.success(res.message);
+        showPremiumToast.success("¡Éxito!", res.message);
         router.push("/admin/productos");
         router.refresh();
       } else {
-        toast.error(res.error || "Ocurrió un error");
+        showPremiumToast.error("Error", res.error || "Ocurrió un error");
       }
     });
   };
@@ -155,6 +159,10 @@ export function ProductForm({ initialData, categories, suppliers }: ProductFormP
           <Button variant="outline" type="button" onClick={() => router.back()} disabled={isPending}>
             Cancelar
           </Button>
+          <Button variant="outline" type="button" onClick={() => setShowPreview(true)} className="gap-2 border-dashed">
+            <Eye className="w-4 h-4" />
+            Vista Previa
+          </Button>
           <Button type="submit" isLoading={isPending} className="gap-2">
             <Save className="w-4 h-4" />
             {initialData ? "Guardar Cambios" : "Crear Producto"}
@@ -166,9 +174,9 @@ export function ProductForm({ initialData, categories, suppliers }: ProductFormP
         {/* Left Column: Main info */}
         <div className="lg:col-span-2 flex flex-col gap-8">
           {/* Basic Info */}
-          <section className="bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 rounded-3xl p-8 flex flex-col gap-6 shadow-sm">
+          <section className="bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 rounded-lg p-8 flex flex-col gap-6 shadow-sm">
             <div className="flex items-center gap-3 mb-2">
-              <div className="w-8 h-8 rounded-xl bg-blue-500/10 flex items-center justify-center">
+              <div className="w-8 h-8 rounded-md bg-blue-500/10 flex items-center justify-center">
                 <Package className="w-4 h-4 text-blue-500" />
               </div>
               <h2 className="font-bold text-lg">Información Básica</h2>
@@ -207,7 +215,7 @@ export function ProductForm({ initialData, categories, suppliers }: ProductFormP
               <textarea
                 rows={5}
                 className={cn(
-                  "flex w-full rounded-2xl border-2 border-neutral-100 bg-white px-4 py-3 text-sm font-medium transition-all duration-300 placeholder:text-neutral-300 focus:outline-none focus:border-blue-600 focus:ring-4 focus:ring-blue-500/10 dark:bg-neutral-900 dark:border-neutral-800 dark:text-white dark:placeholder:text-neutral-600 resize-none",
+                  "flex w-full rounded-md border-2 border-neutral-100 bg-white px-4 py-3 text-sm font-medium transition-all duration-300 placeholder:text-neutral-300 focus:outline-none focus:border-blue-600 focus:ring-4 focus:ring-blue-500/10 dark:bg-neutral-900 dark:border-neutral-800 dark:text-white dark:placeholder:text-neutral-600 resize-none",
                   errors.description && "border-red-500"
                 )}
                 placeholder="Describe las características principales..."
@@ -222,36 +230,54 @@ export function ProductForm({ initialData, categories, suppliers }: ProductFormP
           </section>
 
           {/* Media */}
-          <section className="bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 rounded-3xl p-8 flex flex-col gap-6 shadow-sm">
+          <section className="bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 rounded-lg p-8 flex flex-col gap-6 shadow-sm">
             <div className="flex items-center gap-3 mb-2">
-              <div className="w-8 h-8 rounded-xl bg-purple-500/10 flex items-center justify-center">
+              <div className="w-8 h-8 rounded-md bg-purple-500/10 flex items-center justify-center">
                 <ImageIcon className="w-4 h-4 text-purple-500" />
               </div>
               <h2 className="font-bold text-lg">Galería de Imágenes</h2>
             </div>
 
             <div className="space-y-4">
-              {/* Display uploaded images */}
-              {fields.map((field, index) => (
-                <div key={field.id} className="flex items-start gap-4">
-                  <div className="flex-1">
-                    <Input
-                      placeholder="URL de imagen"
-                      {...register(`images.${index}` as any)}
-                      error={(errors.images as any)?.[index]?.message}
-                    />
-                  </div>
-                  {fields.length > 1 && (
-                    <button
-                      type="button"
-                      onClick={() => remove(index)}
-                      className="mt-4 p-2 text-neutral-400 hover:text-red-500 transition-colors"
-                    >
-                      <Trash2 className="w-5 h-5" />
-                    </button>
-                  )}
-                </div>
-              ))}
+              {/* Display uploaded images as a grid of previews */}
+              <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
+                {fields.map((field, index) => {
+                  const imageUrl = watch(`images.${index}` as any);
+                  return (
+                    <div key={field.id} className="relative group aspect-square rounded-md overflow-hidden border border-neutral-200 dark:border-neutral-800 bg-neutral-50 dark:bg-neutral-800/50">
+                      {imageUrl ? (
+                        <Image
+                          src={imageUrl}
+                          alt={`Producto ${index + 1}`}
+                          fill
+                          className="object-cover transition-transform duration-300 group-hover:scale-110"
+                        />
+                      ) : (
+                        <div className="flex items-center justify-center h-full text-neutral-300">
+                          <ImageIcon className="w-8 h-8 opacity-20" />
+                        </div>
+                      )}
+                      
+                      <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-2">
+                        <button
+                          type="button"
+                          onClick={() => remove(index)}
+                          className="p-2 bg-red-500 text-white rounded-md hover:bg-red-600 transition-colors shadow-lg"
+                          title="Eliminar imagen"
+                        >
+                          <Trash2 className="w-4 h-4" />
+                        </button>
+                      </div>
+                      
+                      {/* Hidden input to keep field in sync with react-hook-form */}
+                      <input 
+                        type="hidden" 
+                        {...register(`images.${index}` as any)} 
+                      />
+                    </div>
+                  );
+                })}
+              </div>
 
               {/* Upload Button */}
               <UploadButton<OurFileRouter, "productImage">
@@ -261,11 +287,11 @@ export function ProductForm({ initialData, categories, suppliers }: ProductFormP
                     const urls = res.map((file) => file.url);
                     const currentImages = watch("images") || [];
                     setValue("images", [...currentImages, ...urls]);
-                    toast.success("Imágenes subidas exitosamente");
+                    showPremiumToast.success("Subida completa", "Imágenes subidas exitosamente");
                   }
                 }}
                 onUploadError={(error: Error) => {
-                  toast.error(`Error al subir imagen: ${error.message}`);
+                  showPremiumToast.error("Error de subida", `Error al subir imagen: ${error.message}`);
                 }}
                 className="w-full"
               />
@@ -280,10 +306,10 @@ export function ProductForm({ initialData, categories, suppliers }: ProductFormP
 
           {/* AI Prompts Section (Only when editing) */}
           {initialData && (
-            <section className="bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 rounded-3xl overflow-hidden shadow-sm flex flex-col">
+            <section className="bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 rounded-lg overflow-hidden shadow-sm flex flex-col">
               <div className="p-8 border-b border-neutral-100 dark:border-neutral-800 flex items-center justify-between">
                 <div className="flex items-center gap-3">
-                  <div className="w-8 h-8 rounded-xl bg-blue-500/10 flex items-center justify-center">
+                  <div className="w-8 h-8 rounded-md bg-blue-500/10 flex items-center justify-center">
                     <Sparkles className="w-4 h-4 text-blue-500" />
                   </div>
                   <h2 className="font-bold text-lg">Prompts de IA para Imágenes</h2>
@@ -298,7 +324,7 @@ export function ProductForm({ initialData, categories, suppliers }: ProductFormP
                     <div className="grid grid-cols-1 gap-3">
                       {initialData.prompts.map((p: any) => (
                         <div key={p.id} className={cn(
-                          "p-4 rounded-2xl border transition-all",
+                          "p-4 rounded-md border transition-all",
                           p.isActive 
                             ? "bg-blue-50/50 border-blue-200 dark:bg-blue-500/5 dark:border-blue-500/20" 
                             : "bg-neutral-50 border-neutral-100 dark:bg-neutral-800/50 dark:border-neutral-800"
@@ -333,9 +359,9 @@ export function ProductForm({ initialData, categories, suppliers }: ProductFormP
           )}
 
           {/* SEO (Optional collapsible if needed, but for now flat) */}
-          <section className="bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 rounded-3xl p-8 flex flex-col gap-6 shadow-sm">
+          <section className="bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 rounded-lg p-8 flex flex-col gap-6 shadow-sm">
             <div className="flex items-center gap-3 mb-2">
-              <div className="w-8 h-8 rounded-xl bg-emerald-500/10 flex items-center justify-center">
+              <div className="w-8 h-8 rounded-md bg-emerald-500/10 flex items-center justify-center">
                 <Globe className="w-4 h-4 text-emerald-500" />
               </div>
               <h2 className="font-bold text-lg">Optimización SEO (Opcional)</h2>
@@ -348,9 +374,9 @@ export function ProductForm({ initialData, categories, suppliers }: ProductFormP
         {/* Right Column: Pricing, Inventory, Organization */}
         <div className="flex flex-col gap-8">
           {/* Pricing & Stock */}
-          <section className="bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 rounded-3xl p-8 flex flex-col gap-6 shadow-sm">
+          <section className="bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 rounded-lg p-8 flex flex-col gap-6 shadow-sm">
             <div className="flex items-center gap-3 mb-2">
-              <div className="w-8 h-8 rounded-xl bg-amber-500/10 flex items-center justify-center">
+              <div className="w-8 h-8 rounded-md bg-amber-500/10 flex items-center justify-center">
                 <Settings className="w-4 h-4 text-amber-500" />
               </div>
               <h2 className="font-bold text-lg">Precio e Inventario</h2>
@@ -370,9 +396,9 @@ export function ProductForm({ initialData, categories, suppliers }: ProductFormP
           </section>
 
           {/* Organization */}
-          <section className="bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 rounded-3xl p-8 flex flex-col gap-6 shadow-sm">
+          <section className="bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 rounded-lg p-8 flex flex-col gap-6 shadow-sm">
             <div className="flex items-center gap-3 mb-2">
-              <div className="w-8 h-8 rounded-xl bg-neutral-500/10 flex items-center justify-center">
+              <div className="w-8 h-8 rounded-md bg-neutral-500/10 flex items-center justify-center">
                 <Layers className="w-4 h-4 text-neutral-500" />
               </div>
               <h2 className="font-bold text-lg">Organización</h2>
@@ -385,7 +411,7 @@ export function ProductForm({ initialData, categories, suppliers }: ProductFormP
                 </label>
                 <div className="relative">
                   <select
-                    className="flex h-14 w-full rounded-2xl border-2 border-neutral-100 bg-white px-4 py-2 text-sm font-medium transition-all duration-300 focus:outline-none focus:border-blue-600 focus:ring-4 focus:ring-blue-500/10 dark:bg-neutral-900 dark:border-neutral-800 dark:text-white appearance-none pr-10"
+                    className="flex h-14 w-full rounded-md border-2 border-neutral-100 bg-white px-4 py-2 text-sm font-medium transition-all duration-300 focus:outline-none focus:border-blue-600 focus:ring-4 focus:ring-blue-500/10 dark:bg-neutral-900 dark:border-neutral-800 dark:text-white appearance-none pr-10"
                     {...register("categoryId")}
                   >
                     {categories.map((cat) => (
@@ -404,7 +430,7 @@ export function ProductForm({ initialData, categories, suppliers }: ProductFormP
                 </label>
                 <div className="relative">
                   <select
-                    className="flex h-14 w-full rounded-2xl border-2 border-neutral-100 bg-white px-4 py-2 text-sm font-medium transition-all duration-300 focus:outline-none focus:border-blue-600 focus:ring-4 focus:ring-blue-500/10 dark:bg-neutral-900 dark:border-neutral-800 dark:text-white appearance-none pr-10"
+                    className="flex h-14 w-full rounded-md border-2 border-neutral-100 bg-white px-4 py-2 text-sm font-medium transition-all duration-300 focus:outline-none focus:border-blue-600 focus:ring-4 focus:ring-blue-500/10 dark:bg-neutral-900 dark:border-neutral-800 dark:text-white appearance-none pr-10"
                     {...register("supplierId")}
                   >
                     <option value="">Ninguno</option>
@@ -421,7 +447,7 @@ export function ProductForm({ initialData, categories, suppliers }: ProductFormP
           </section>
 
           {/* Toggles */}
-          <section className="bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 rounded-3xl p-8 flex flex-col gap-4 shadow-sm">
+          <section className="bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 rounded-lg p-8 flex flex-col gap-4 shadow-sm">
             <h2 className="font-bold text-lg mb-2">Visibilidad y Marcadores</h2>
             
             <div className="space-y-4">
@@ -431,7 +457,7 @@ export function ProductForm({ initialData, categories, suppliers }: ProductFormP
                 { label: "Más Vendido", key: "isBestSeller" as const, desc: "Badge de Best Seller" },
                 { label: "Nuevo", key: "isNew" as const, desc: "Badge de Producto Nuevo" },
               ].map((toggle) => (
-                <label key={toggle.key} className="flex items-center justify-between p-3 rounded-2xl hover:bg-neutral-50 dark:hover:bg-white/5 transition-colors cursor-pointer group">
+                <label key={toggle.key} className="flex items-center justify-between p-3 rounded-md hover:bg-neutral-50 dark:hover:bg-white/5 transition-colors cursor-pointer group">
                   <div className="flex flex-col">
                     <span className="text-sm font-bold text-neutral-800 dark:text-neutral-200">{toggle.label}</span>
                     <span className="text-[10px] text-neutral-400 font-medium uppercase tracking-tight">{toggle.desc}</span>
@@ -447,6 +473,13 @@ export function ProductForm({ initialData, categories, suppliers }: ProductFormP
           </section>
         </div>
       </div>
+      
+      <ProductPreviewModal 
+        isOpen={showPreview} 
+        onClose={() => setShowPreview(false)} 
+        productData={watch()} 
+        categories={categories}
+      />
     </form>
   );
 }

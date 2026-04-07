@@ -35,7 +35,7 @@ export default async function PerfilPage() {
       <div className="space-y-10">
         
         {/* Información Personal */}
-        <section className="bg-white dark:bg-neutral-900 rounded-2xl border border-neutral-200 dark:border-neutral-800 shadow-sm overflow-hidden">
+        <section className="bg-white dark:bg-neutral-900 rounded-md border border-neutral-200 dark:border-neutral-800 shadow-sm overflow-hidden">
           <div className="p-6 border-b border-neutral-200 dark:border-neutral-800 flex items-center gap-3">
             <User className="w-5 h-5 text-neutral-500" />
             <h2 className="text-lg font-bold text-neutral-900 dark:text-white">Información Personal</h2>
@@ -47,7 +47,7 @@ export default async function PerfilPage() {
 
         {/* Seguridad */}
         {customer.password && (
-          <section className="bg-white dark:bg-neutral-900 rounded-2xl border border-neutral-200 dark:border-neutral-800 shadow-sm overflow-hidden">
+          <section className="bg-white dark:bg-neutral-900 rounded-md border border-neutral-200 dark:border-neutral-800 shadow-sm overflow-hidden">
             <div className="p-6 border-b border-neutral-200 dark:border-neutral-800 flex items-center gap-3">
               <ShieldCheck className="w-5 h-5 text-neutral-500" />
               <h2 className="text-lg font-bold text-neutral-900 dark:text-white">Seguridad</h2>

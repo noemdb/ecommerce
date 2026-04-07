@@ -46,7 +46,7 @@ export default async function ProductosPage({
         </div>
         <Link
           href="/admin/productos/nuevo"
-          className="inline-flex items-center justify-center h-11 px-6 rounded-xl bg-blue-600 text-white text-sm font-bold uppercase tracking-wider hover:bg-blue-700 transition-colors gap-2 shadow-lg shadow-blue-500/20"
+          className="inline-flex items-center justify-center h-11 px-6 rounded-md bg-blue-600 text-white text-sm font-bold uppercase tracking-wider hover:bg-blue-700 transition-colors gap-2 shadow-lg shadow-blue-500/20"
         >
           <Plus className="w-4 h-4" />
           Nuevo Producto
@@ -60,11 +60,11 @@ export default async function ProductosPage({
           type="search"
           placeholder="Buscar producto o SKU..."
           defaultValue={q}
-          className="h-11 w-full rounded-xl border border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-900 pl-11 pr-4 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/30 focus:border-blue-500 transition-all"
+          className="h-11 w-full rounded-md border border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-900 pl-11 pr-4 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/30 focus:border-blue-500 transition-all"
         />
       </form>
 
-      <div className="bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 rounded-2xl overflow-hidden shadow-sm">
+      <div className="bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 rounded-md overflow-hidden shadow-sm">
         {products.length === 0 ? (
           <div className="flex flex-col items-center py-20 gap-4 text-neutral-400">
             <Package className="w-12 h-12" />
@@ -113,7 +113,7 @@ export default async function ProductosPage({
                     </td>
                     <td className="px-5 py-4">
                       <span
-                        className={`text-[10px] uppercase font-black px-2.5 py-1 rounded-full ${
+                        className={`text-[10px] uppercase font-black px-2.5 py-1 rounded-lg ${
                           p.isActive
                             ? "text-emerald-600 bg-emerald-500/10"
                             : "text-neutral-400 bg-neutral-100 dark:bg-neutral-800"

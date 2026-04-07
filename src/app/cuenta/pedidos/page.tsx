@@ -69,7 +69,7 @@ export default async function PedidosPage({
             <Link
               key={status.value}
               href={status.value === "ALL" ? "/cuenta/pedidos" : `/cuenta/pedidos?status=${status.value}`}
-              className={`px-4 py-2 rounded-full text-sm font-semibold transition-colors ${
+              className={`px-4 py-2 rounded-lg text-sm font-semibold transition-colors ${
                 isActive
                   ? "bg-neutral-900 text-white dark:bg-white dark:text-neutral-900"
                   : "bg-white text-neutral-600 border border-neutral-200 hover:bg-neutral-50 dark:bg-neutral-900 dark:border-neutral-800 dark:text-neutral-400 dark:hover:bg-neutral-800"
@@ -82,7 +82,7 @@ export default async function PedidosPage({
       </div>
 
       {/* Lista de Pedidos */}
-      <div className="bg-white dark:bg-neutral-900 rounded-2xl border border-neutral-200 dark:border-neutral-800 shadow-sm overflow-hidden">
+      <div className="bg-white dark:bg-neutral-900 rounded-md border border-neutral-200 dark:border-neutral-800 shadow-sm overflow-hidden">
         {pedidos.length > 0 ? (
           <div className="overflow-x-auto">
             <table className="w-full text-sm text-left">
@@ -121,7 +121,7 @@ export default async function PedidosPage({
                         ${order.total.toFixed(2)}
                       </td>
                       <td className="px-6 py-4">
-                        <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold bg-neutral-100 text-neutral-800 dark:bg-neutral-800 dark:text-neutral-300">
+                        <span className="inline-flex items-center px-2.5 py-0.5 rounded-lg text-xs font-semibold bg-neutral-100 text-neutral-800 dark:bg-neutral-800 dark:text-neutral-300">
                           {order.status}
                         </span>
                       </td>
@@ -133,7 +133,7 @@ export default async function PedidosPage({
           </div>
         ) : (
           <div className="p-16 text-center focus:outline-none flex flex-col items-center">
-            <div className="w-16 h-16 bg-neutral-100 dark:bg-neutral-800 rounded-full flex items-center justify-center mb-4">
+            <div className="w-16 h-16 bg-neutral-100 dark:bg-neutral-800 rounded-lg flex items-center justify-center mb-4">
               <ShoppingBag className="w-8 h-8 text-neutral-400" />
             </div>
             <h3 className="text-xl font-bold text-neutral-900 dark:text-white mb-2">No se encontraron pedidos</h3>
@@ -143,7 +143,7 @@ export default async function PedidosPage({
                 : "Aún no has realizado ninguna compra en nuestra tienda."}
             </p>
             {(!statusFilterParam || statusFilterParam === "ALL") && (
-              <Link href="/catalogo" className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-full font-bold transition-colors">
+              <Link href="/catalogo" className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg font-bold transition-colors">
                 Explorar productos
               </Link>
             )}

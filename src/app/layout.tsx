@@ -34,7 +34,23 @@ export default function RootLayout({
         <ConfirmProvider>
           {children}
         </ConfirmProvider>
-        <Toaster position="top-right" richColors closeButton />
+        <Toaster 
+          position="bottom-right" 
+          toastOptions={{
+            duration: 4000,
+            style: {
+              background: 'rgba(255, 255, 255, 0.8)',
+              backdropFilter: 'blur(12px)',
+              border: '1px solid rgba(255, 255, 255, 0.2)',
+              borderRadius: '16px',
+              boxShadow: '0 8px 32px rgba(0, 0, 0, 0.1)',
+            },
+          }}
+          style={{
+            "--width": "420px",
+          } as any}
+          closeButton 
+        />
       </body>
     </html>
   );

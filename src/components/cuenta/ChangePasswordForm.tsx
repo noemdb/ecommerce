@@ -7,7 +7,7 @@ import { changeCustomerPasswordAction } from "@/actions/customer-account";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useState } from "react";
-import { toast } from "sonner";
+import { showPremiumToast } from "@/components/ui/PremiumToast";
 
 export function ChangePasswordForm() {
   const [isPending, setIsPending] = useState(false);
@@ -21,9 +21,9 @@ export function ChangePasswordForm() {
 
     const res = await changeCustomerPasswordAction(data);
     if (!res.success) {
-      toast.error(res.error || "Error al cambiar la contraseña");
+      showPremiumToast.error("Error", res.error || "Error al cambiar la contraseña");
     } else {
-      toast.success("Contraseña actualizada correctamente.");
+      showPremiumToast.success("¡Éxito!", "Contraseña actualizada correctamente.");
       reset();
     }
     setIsPending(false);

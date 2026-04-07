@@ -82,7 +82,7 @@ export default async function PedidoDetallePage({
           <div>
             <h1 className="text-3xl font-bold tracking-tight text-neutral-900 dark:text-white flex items-center gap-3">
               Pedido <span className="text-blue-600 dark:text-blue-500">#{order.orderNumber}</span>
-              <span className={`text-sm px-3 py-1 rounded-full font-bold ${getStatusColor(order.status)}`}>
+              <span className={`text-sm px-3 py-1 rounded-lg font-bold ${getStatusColor(order.status)}`}>
                 {order.status}
               </span>
             </h1>
@@ -94,7 +94,7 @@ export default async function PedidoDetallePage({
             href={whatsappUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center justify-center gap-2 px-6 py-2.5 bg-[#25D366] text-white font-bold rounded-xl hover:bg-[#128C7E] transition-colors shadow-sm"
+            className="inline-flex items-center justify-center gap-2 px-6 py-2.5 bg-[#25D366] text-white font-bold rounded-md hover:bg-[#128C7E] transition-colors shadow-sm"
           >
             <MessageCircle className="w-5 h-5" />
             Necesito Ayuda
@@ -108,7 +108,7 @@ export default async function PedidoDetallePage({
         <div className="lg:col-span-2 space-y-8">
           
           {/* Order Items */}
-          <div className="bg-white dark:bg-neutral-900 rounded-2xl border border-neutral-200 dark:border-neutral-800 shadow-sm overflow-hidden">
+          <div className="bg-white dark:bg-neutral-900 rounded-md border border-neutral-200 dark:border-neutral-800 shadow-sm overflow-hidden">
             <div className="p-6 border-b border-neutral-200 dark:border-neutral-800">
               <h2 className="text-lg font-bold text-neutral-900 dark:text-white">Artículos del Pedido</h2>
             </div>
@@ -117,7 +117,7 @@ export default async function PedidoDetallePage({
                 const img = item.product.images[0];
                 return (
                   <div key={item.id} className="p-6 flex flex-col sm:flex-row gap-6 items-start sm:items-center">
-                    <div className="w-20 h-20 bg-neutral-100 dark:bg-neutral-800 rounded-xl flex-shrink-0 overflow-hidden relative">
+                    <div className="w-20 h-20 bg-neutral-100 dark:bg-neutral-800 rounded-md flex-shrink-0 overflow-hidden relative">
                       {img ? (
                         <Image src={img.url} alt={img.alt || item.name} fill className="object-cover" sizes="80px" />
                       ) : (
@@ -155,7 +155,7 @@ export default async function PedidoDetallePage({
           </div>
 
           {/* Payment Information */}
-          <div className="bg-white dark:bg-neutral-900 rounded-2xl border border-neutral-200 dark:border-neutral-800 shadow-sm overflow-hidden">
+          <div className="bg-white dark:bg-neutral-900 rounded-md border border-neutral-200 dark:border-neutral-800 shadow-sm overflow-hidden">
              <div className="p-6 border-b border-neutral-200 dark:border-neutral-800 flex items-center gap-3">
               <FileText className="w-5 h-5 text-neutral-500" />
               <h2 className="text-lg font-bold text-neutral-900 dark:text-white">Detalles del Pago</h2>
@@ -201,7 +201,7 @@ export default async function PedidoDetallePage({
 
         {/* Right Column: Timeline */}
         <div className="space-y-8">
-          <div className="bg-white dark:bg-neutral-900 rounded-2xl border border-neutral-200 dark:border-neutral-800 shadow-sm p-6 sticky top-28">
+          <div className="bg-white dark:bg-neutral-900 rounded-md border border-neutral-200 dark:border-neutral-800 shadow-sm p-6 sticky top-28">
             <h2 className="text-lg font-bold text-neutral-900 dark:text-white mb-6">Historial de Estado</h2>
             
             <div className="relative border-l-2 border-neutral-100 dark:border-neutral-800 ml-3 space-y-8">
@@ -209,7 +209,7 @@ export default async function PedidoDetallePage({
                 const isLatest = idx === 0;
                 return (
                   <div key={history.id} className="relative pl-6">
-                    <div className={`absolute -left-[17px] top-1 w-8 h-8 rounded-full border-4 border-white dark:border-neutral-900 flex items-center justify-center shadow-sm
+                    <div className={`absolute -left-[17px] top-1 w-8 h-8 rounded-lg border-4 border-white dark:border-neutral-900 flex items-center justify-center shadow-sm
                       ${isLatest ? 'bg-blue-100 text-blue-600 dark:bg-blue-900 dark:text-blue-400' : 'bg-neutral-100 text-neutral-500 dark:bg-neutral-800'}`
                     }>
                       {getStatusIcon(history.status)}

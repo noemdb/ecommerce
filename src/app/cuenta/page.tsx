@@ -91,8 +91,8 @@ export default async function CustomerDashboardPage() {
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-10">
         {KPIs.map((kpi, index) => (
-          <div key={index} className="bg-white dark:bg-neutral-900 p-6 rounded-2xl border border-neutral-200 dark:border-neutral-800 shadow-sm flex items-center gap-4">
-            <div className={`p-4 rounded-xl ${kpi.bg}`}>
+          <div key={index} className="bg-white dark:bg-neutral-900 p-6 rounded-md border border-neutral-200 dark:border-neutral-800 shadow-sm flex items-center gap-4">
+            <div className={`p-4 rounded-md ${kpi.bg}`}>
               <kpi.icon className={`w-6 h-6 ${kpi.color}`} />
             </div>
             <div>
@@ -103,7 +103,7 @@ export default async function CustomerDashboardPage() {
         ))}
       </div>
 
-      <div className="bg-white dark:bg-neutral-900 rounded-2xl border border-neutral-200 dark:border-neutral-800 shadow-sm overflow-hidden">
+      <div className="bg-white dark:bg-neutral-900 rounded-md border border-neutral-200 dark:border-neutral-800 shadow-sm overflow-hidden">
         <div className="p-6 border-b border-neutral-200 dark:border-neutral-800 flex justify-between items-center">
           <h2 className="text-xl font-bold text-neutral-900 dark:text-white">Compras Recientes</h2>
           <Link href="/cuenta/pedidos" className="text-sm font-semibold text-blue-600 dark:text-blue-500 hover:underline">
@@ -138,7 +138,7 @@ export default async function CustomerDashboardPage() {
                         ${order.total.toFixed(2)}
                       </td>
                       <td className="px-6 py-4">
-                        <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold bg-neutral-100 text-neutral-800 dark:bg-neutral-800 dark:text-neutral-300">
+                        <span className="inline-flex items-center px-2.5 py-0.5 rounded-lg text-xs font-semibold bg-neutral-100 text-neutral-800 dark:bg-neutral-800 dark:text-neutral-300">
                           {order.status}
                         </span>
                       </td>

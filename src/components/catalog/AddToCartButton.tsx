@@ -4,7 +4,7 @@ import { useCartStore, CartItem } from "@/store/cart";
 import { Plus, Check, ShoppingCart } from "lucide-react";
 import { useState } from "react";
 import { cn } from "@/lib/utils";
-import { toast } from "sonner";
+import { showPremiumToast } from "@/components/ui/PremiumToast";
 
 interface AddToCartButtonProps {
   product: {
@@ -53,12 +53,11 @@ export function AddToCartButton({
 
     addItem(item);
     setAdded(true);
-    toast.success(`${product.name} añadido al carrito`, {
-      action: {
-        label: "Ver carrito",
-        onClick: () => toggleCart(),
-      },
-    });
+    
+    showPremiumToast.cart(
+      { name: product.name, image: product.images[0]?.url },
+      () => toggleCart()
+    );
 
     setTimeout(() => setAdded(false), 2000);
   };
@@ -74,7 +73,7 @@ export function AddToCartButton({
       onClick={handleAdd}
       disabled={product.stock <= 0 || disabled}
       className={cn(
-        "flex items-center justify-center rounded-full transition-all duration-300 font-semibold disabled:opacity-50 disabled:cursor-not-allowed",
+        "flex items-center justify-center rounded-lg transition-all duration-300 font-semibold disabled:opacity-50 disabled:cursor-not-allowed",
         sizeClasses[size],
         added 
           ? "bg-emerald-500 text-white" 

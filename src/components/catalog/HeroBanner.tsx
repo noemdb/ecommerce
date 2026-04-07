@@ -68,7 +68,7 @@ export function HeroBanner({ products }: HeroBannerProps) {
       {mounted && particles.map((p) => (
         <motion.div
           key={p.id}
-          className="absolute rounded-full bg-white/10 backdrop-blur-sm pointer-events-none"
+          className="absolute rounded-lg bg-white/10 backdrop-blur-sm pointer-events-none"
           style={{
             left: `${p.x}%`,
             top: `${p.y}%`,
@@ -123,7 +123,7 @@ export function HeroBanner({ products }: HeroBannerProps) {
           transition={{ duration: 0.6, ease: "easeOut", delay: 0.1 }}
         >
           {current?.promoPrice && (
-            <span className="inline-block px-3 py-1 rounded-full bg-blue-600 text-white text-xs font-semibold uppercase tracking-widest mb-4">
+            <span className="inline-block px-3 py-1 rounded-lg bg-blue-600 text-white text-xs font-semibold uppercase tracking-widest mb-4">
               Oferta especial
             </span>
           )}
@@ -140,7 +140,7 @@ export function HeroBanner({ products }: HeroBannerProps) {
             {current ? (
               <Link
                 href={`/producto/${current.slug}`}
-                className="inline-flex items-center gap-2 px-6 py-3 bg-white text-black font-semibold rounded-full hover:bg-neutral-100 transition-colors"
+                className="inline-flex items-center gap-2 px-6 py-3 bg-white text-black font-semibold rounded-lg hover:bg-neutral-100 transition-colors"
               >
                 Ver producto
                 <span aria-hidden>→</span>
@@ -148,7 +148,7 @@ export function HeroBanner({ products }: HeroBannerProps) {
             ) : (
               <Link
                 href="/catalogo"
-                className="inline-flex items-center gap-2 px-6 py-3 bg-white text-black font-semibold rounded-full hover:bg-neutral-100 transition-colors"
+                className="inline-flex items-center gap-2 px-6 py-3 bg-white text-black font-semibold rounded-lg hover:bg-neutral-100 transition-colors"
               >
                 Ver colección
                 <span aria-hidden>→</span>
@@ -156,7 +156,7 @@ export function HeroBanner({ products }: HeroBannerProps) {
             )}
             <Link
               href="/#catalogo"
-              className="inline-flex items-center gap-2 px-6 py-3 border-2 border-white text-white font-semibold rounded-full hover:bg-white/10 transition-colors"
+              className="inline-flex items-center gap-2 px-6 py-3 border-2 border-white text-white font-semibold rounded-lg hover:bg-white/10 transition-colors"
             >
               Explorar
             </Link>
@@ -183,7 +183,7 @@ export function HeroBanner({ products }: HeroBannerProps) {
                 key={i}
                 onClick={() => setCurrentIndex(i)}
                 aria-label={`Ir al producto ${i + 1}`}
-                className={`h-2 rounded-full transition-all duration-300 ${
+                className={`h-2 rounded-lg transition-all duration-300 ${
                   i === currentIndex ? "w-8 bg-white" : "w-2 bg-white/40 hover:bg-white/60"
                 }`}
               />

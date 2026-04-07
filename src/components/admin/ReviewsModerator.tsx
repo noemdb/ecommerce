@@ -67,7 +67,7 @@ export function ReviewsModerator({
             key={tab.status}
             href={`?status=${tab.status}`}
             className={cn(
-              "flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-medium transition-all",
+              "flex items-center gap-2 px-4 py-2 rounded-md text-sm font-medium transition-all",
               currentStatus === tab.status
                 ? "bg-neutral-900 text-white dark:bg-white dark:text-neutral-900"
                 : "text-neutral-500 hover:bg-neutral-100 dark:hover:bg-neutral-800"
@@ -76,7 +76,7 @@ export function ReviewsModerator({
             {tab.label}
             <span
               className={cn(
-                "text-xs rounded-full px-1.5 py-0.5 min-w-[20px] text-center",
+                "text-xs rounded-lg px-1.5 py-0.5 min-w-[20px] text-center",
                 currentStatus === tab.status
                   ? "bg-white/20 dark:bg-black/20"
                   : "bg-neutral-100 dark:bg-neutral-800 text-neutral-500"
@@ -90,7 +90,7 @@ export function ReviewsModerator({
 
       {/* Reviews list */}
       {reviews.length === 0 ? (
-        <div className="flex flex-col items-center py-20 gap-4 text-neutral-400 bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 rounded-2xl">
+        <div className="flex flex-col items-center py-20 gap-4 text-neutral-400 bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 rounded-md">
           <MessageSquare className="w-12 h-12" />
           <p className="font-medium">No hay reseñas en este estado.</p>
         </div>
@@ -100,7 +100,7 @@ export function ReviewsModerator({
             <div
               key={review.id}
               className={cn(
-                "bg-white dark:bg-neutral-900 border rounded-2xl p-6 flex flex-col gap-4 transition-opacity",
+                "bg-white dark:bg-neutral-900 border rounded-md p-6 flex flex-col gap-4 transition-opacity",
                 isPending && "opacity-60",
                 "border-neutral-200 dark:border-neutral-800"
               )}
@@ -135,7 +135,7 @@ export function ReviewsModerator({
               </p>
 
               {review.adminResponse && (
-                <div className="flex gap-2 p-3 bg-blue-50 dark:bg-blue-500/5 rounded-xl border border-blue-100 dark:border-blue-500/20">
+                <div className="flex gap-2 p-3 bg-blue-50 dark:bg-blue-500/5 rounded-md border border-blue-100 dark:border-blue-500/20">
                   <AlertCircle className="w-4 h-4 text-blue-500 shrink-0 mt-0.5" />
                   <p className="text-xs text-blue-700 dark:text-blue-400">
                     {review.adminResponse}
@@ -157,7 +157,7 @@ export function ReviewsModerator({
                     <button
                       onClick={() => moderate(review.id, "REJECTED")}
                       disabled={isPending}
-                      className="inline-flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs font-bold text-red-600 bg-red-50 dark:bg-red-500/10 hover:bg-red-100 dark:hover:bg-red-500/20 transition-colors disabled:opacity-50"
+                      className="inline-flex items-center gap-1.5 px-3 py-2 rounded-md text-xs font-bold text-red-600 bg-red-50 dark:bg-red-500/10 hover:bg-red-100 dark:hover:bg-red-500/20 transition-colors disabled:opacity-50"
                     >
                       <XCircle className="w-3.5 h-3.5" />
                       Rechazar
@@ -165,7 +165,7 @@ export function ReviewsModerator({
                     <button
                       onClick={() => moderate(review.id, "APPROVED")}
                       disabled={isPending}
-                      className="inline-flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs font-bold text-emerald-600 bg-emerald-50 dark:bg-emerald-500/10 hover:bg-emerald-100 dark:hover:bg-emerald-500/20 transition-colors disabled:opacity-50"
+                      className="inline-flex items-center gap-1.5 px-3 py-2 rounded-md text-xs font-bold text-emerald-600 bg-emerald-50 dark:bg-emerald-500/10 hover:bg-emerald-100 dark:hover:bg-emerald-500/20 transition-colors disabled:opacity-50"
                     >
                       <CheckCircle2 className="w-3.5 h-3.5" />
                       Aprobar
