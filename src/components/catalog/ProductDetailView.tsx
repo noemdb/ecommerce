@@ -43,7 +43,10 @@ export function ProductDetailView({ product, isPreview = false }: ProductDetailV
         </Link>
       )}
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16">
+      <div className={cn(
+        "grid grid-cols-1 gap-12 lg:gap-16",
+        !isPreview ? "lg:grid-cols-2" : "@lg:grid-cols-2 gap-4 @sm:gap-6 @lg:gap-10"
+      )}>
         {/* Left: Gallery */}
         <div className="space-y-4">
           <div className="aspect-square relative bg-neutral-50 dark:bg-neutral-900 rounded-lg overflow-hidden border dark:border-neutral-800 shadow-sm group">
@@ -89,14 +92,21 @@ export function ProductDetailView({ product, isPreview = false }: ProductDetailV
             <span className="text-xs font-bold text-blue-600 uppercase tracking-widest bg-blue-50 dark:bg-blue-900/30 px-3 py-1 rounded-lg inline-block mb-4">
               {product.category?.name || "Categoría"}
             </span>
-            <h1 className="text-3xl md:text-4xl lg:text-5xl font-black tracking-tighter mb-4 text-neutral-900 dark:text-white leading-tight">
+            <h1 className={cn(
+              "text-3xl md:text-4xl lg:text-5xl font-black tracking-tighter mb-4 text-neutral-900 dark:text-white leading-[1.1]",
+              !isPreview ? "" : "@lg:text-4xl @2xl:text-5xl",
+              isPreview && "text-xl sm:text-2xl lg:text-3xl @sm:text-2xl @lg:text-3xl mb-2"
+            )}>
               {product.name || "Nombre del Producto"}
             </h1>
-            <div className="flex flex-wrap items-center gap-4 text-sm">
+            <div className={cn(
+              "flex flex-wrap items-center gap-4 text-sm",
+              isPreview && "gap-2 text-xs @sm:text-sm"
+            )}>
               <div className="flex items-center gap-2">
                 <RatingStars rating={avgRating} />
                 <span className="font-bold text-neutral-900 dark:text-neutral-200">{avgRating.toFixed(1)}</span>
-                <span className="text-neutral-400">({product.reviews.length} reseñas)</span>
+                {!isPreview && <span className="text-neutral-400">({product.reviews.length} reseñas)</span>}
               </div>
               <div className="h-4 w-px bg-neutral-200 dark:bg-neutral-800 hidden sm:block" />
               <div className={cn("flex items-center gap-2 font-bold", product.stock > 0 ? "text-emerald-600" : "text-red-500")}>
@@ -106,13 +116,25 @@ export function ProductDetailView({ product, isPreview = false }: ProductDetailV
             </div>
           </div>
 
-          <div className="mb-10 p-6 bg-neutral-50 dark:bg-neutral-900/50 rounded-lg border dark:border-neutral-800">
-            <div className="flex items-baseline gap-4 mb-6">
-              <span className="text-4xl font-black tracking-tighter text-blue-600">
+          <div className={cn(
+            "mb-8 p-6 bg-neutral-50 dark:bg-neutral-900/50 rounded-xl border dark:border-neutral-800",
+            isPreview && "mb-5 p-4 sm:p-5"
+          )}>
+            <div className={cn(
+              "flex items-baseline gap-4 mb-6",
+              isPreview && "mb-4 gap-2"
+            )}>
+              <span className={cn(
+                "text-4xl font-black tracking-tighter text-blue-600",
+                isPreview && "text-3xl"
+              )}>
                 {formatPrice(product.promoPrice || product.price)}
               </span>
               {product.promoPrice && (
-                <span className="text-xl text-neutral-400 line-through font-medium italic opacity-60">
+                <span className={cn(
+                  "text-xl text-neutral-400 line-through font-medium italic opacity-60",
+                  isPreview && "text-lg"
+                )}>
                   {formatPrice(product.price)}
                 </span>
               )}

@@ -19,6 +19,7 @@ export const metadata: Metadata = {
 
 import { Toaster } from "sonner";
 import { ConfirmProvider } from "@/components/providers/ConfirmProvider";
+import { ThemeProvider } from "@/components/providers/ThemeProvider";
 
 export default function RootLayout({
   children,
@@ -29,11 +30,19 @@ export default function RootLayout({
     <html
       lang="es"
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
+      suppressHydrationWarning
     >
       <body className="min-h-full flex flex-col">
-        <ConfirmProvider>
-          {children}
-        </ConfirmProvider>
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
+          <ConfirmProvider>
+            {children}
+          </ConfirmProvider>
+        </ThemeProvider>
         <Toaster 
           position="bottom-right" 
           toastOptions={{

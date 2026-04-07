@@ -72,9 +72,9 @@ export function ProductPreviewModal({ isOpen, onClose, productData, categories }
                 <DialogPrimitive.Title className="text-lg font-bold tracking-tight text-neutral-900 dark:text-white">
                   Vista Previa
                 </DialogPrimitive.Title>
-                <p className="text-xs text-neutral-500 dark:text-neutral-400 font-medium">
+                <DialogPrimitive.Description className="text-xs text-neutral-500 dark:text-neutral-400 font-medium">
                   Visualiza el producto antes de guardar los cambios.
-                </p>
+                </DialogPrimitive.Description>
               </div>
             </div>
 
@@ -133,20 +133,23 @@ export function ProductPreviewModal({ isOpen, onClose, productData, categories }
 
           {/* Content Area */}
           <div className={cn(
-            "flex-1 overflow-auto bg-neutral-50 dark:bg-neutral-900/50 p-6 sm:p-12 flex items-start justify-center",
+            "flex-1 overflow-auto bg-neutral-100 dark:bg-neutral-900/20 p-4 sm:p-8 lg:p-12 flex items-start justify-center transition-all duration-300",
             viewType === "detail" && "p-0"
           )}>
             <div className={cn(
               "transition-all duration-500 ease-in-out bg-white dark:bg-neutral-900 shadow-xl overflow-hidden",
               viewType === "card" && deviceMode === "desktop" && "w-72 rounded-md",
-              viewType === "card" && deviceMode === "mobile" && "w-[320px] rounded-md",
+              viewType === "card" && deviceMode === "mobile" && "w-[320px] rounded-2xl",
               viewType === "detail" && deviceMode === "desktop" && "w-full min-h-full",
-              viewType === "detail" && deviceMode === "mobile" && "w-[400px] min-h-full border-x dark:border-neutral-800"
+              viewType === "detail" && deviceMode === "mobile" && "w-[400px] min-h-[calc(100%-4rem)] my-8 border-[12px] border-neutral-900 dark:border-neutral-800 rounded-[3.5rem] shadow-2xl relative overflow-hidden ring-1 ring-white/10"
             )}>
                {viewType === "card" ? (
                  <ProductCard product={productForPreview as any} />
                ) : (
-                 <div className="p-8 sm:p-20">
+                 <div className={cn(
+                   "p-4 sm:p-10 lg:p-16 transition-all duration-300 @container",
+                   deviceMode === "mobile" && "p-4 pt-10"
+                 )}>
                     <ProductDetailView product={productForPreview as any} isPreview />
                  </div>
                )}

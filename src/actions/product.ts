@@ -6,7 +6,7 @@ import { prisma } from "@/lib/prisma";
 import { revalidatePath } from "next/cache";
 import { requirePermission } from "@/lib/rbac";
 
-export async function createProductAction(data: ProductInput & { images: string[] }) {
+export async function createProductAction(data: ProductInput & { images: string[], primaryUrl?: string }) {
   try {
     await requirePermission("products:write");
     const validatedData = productSchema.parse(data);
@@ -18,7 +18,7 @@ export async function createProductAction(data: ProductInput & { images: string[
         images: {
           create: data.images.map((url, index) => ({
             url,
-            isPrimary: index === 0,
+            isPrimary: data.primaryUrl ? url === data.primaryUrl : index === 0,
             order: index,
           })),
         },
@@ -36,7 +36,7 @@ export async function createProductAction(data: ProductInput & { images: string[
   }
 }
 
-export async function updateProductAction(id: string, data: ProductInput & { images: string[] }) {
+export async function updateProductAction(id: string, data: ProductInput & { images: string[], primaryUrl?: string }) {
   try {
     await requirePermission("products:write");
     const validatedData = productSchema.parse(data);
@@ -52,7 +52,7 @@ export async function updateProductAction(id: string, data: ProductInput & { ima
           images: {
             create: data.images.map((url, index) => ({
               url,
-              isPrimary: index === 0,
+              isPrimary: data.primaryUrl ? url === data.primaryUrl : index === 0,
               order: index,
             })),
           },

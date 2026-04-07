@@ -25,13 +25,15 @@ import {
   Layers,
   Settings,
   Globe,
-  Sparkles
+  Sparkles,
+  Star,
+  CheckCircle2,
+  Eye
 } from "lucide-react";
 import { UploadButton } from "@uploadthing/react";
 import { OurFileRouter } from "@/lib/uploadthing";
 import { PromptForm } from "./PromptForm";
 import { ProductPreviewModal } from "./ProductPreviewModal";
-import { Eye } from "lucide-react";
 
 interface Category {
   id: string;
@@ -54,6 +56,11 @@ export function ProductForm({ initialData, categories, suppliers }: ProductFormP
   const [isPending, startTransition] = useTransition();
   const [autoSlug, setAutoSlug] = useState(!initialData);
   const [showPreview, setShowPreview] = useState(false);
+  const [primaryUrl, setPrimaryUrl] = useState<string>(
+    initialData?.images?.find((img: any) => img.isPrimary)?.url || 
+    initialData?.images?.[0]?.url || 
+    ""
+  );
 
   const {
     register,
@@ -130,9 +137,14 @@ export function ProductForm({ initialData, categories, suppliers }: ProductFormP
 
   const onSubmit = (data: any) => {
     startTransition(async () => {
+      const payload = {
+        ...data,
+        primaryUrl
+      };
+
       const res = initialData 
-        ? await updateProductAction(initialData.id, data)
-        : await createProductAction(data);
+        ? await updateProductAction(initialData.id, payload)
+        : await createProductAction(payload);
 
       if (res.success) {
         showPremiumToast.success("¡Éxito!", res.message);
@@ -246,35 +258,68 @@ export function ProductForm({ initialData, categories, suppliers }: ProductFormP
                   return (
                     <div
                       key={field.id}
-                      className="group relative overflow-hidden rounded-lg border border-neutral-200 bg-neutral-100 shadow-sm transition-shadow hover:shadow-lg dark:border-neutral-800 dark:bg-neutral-950"
+                      className={cn(
+                        "group relative overflow-hidden rounded-xl border bg-white shadow-sm transition-all hover:shadow-md dark:bg-neutral-900",
+                        imageUrl === primaryUrl ? "border-blue-500 ring-2 ring-blue-500/20" : "border-neutral-200 dark:border-neutral-800"
+                      )}
                     >
                       <input
                         type="hidden"
                         value={imageUrl}
                         {...register(`images.${index}` as any)}
                       />
-                      <div className="relative h-40 w-full bg-neutral-200 dark:bg-neutral-900">
+                      <div className="relative h-44 w-full bg-neutral-100 dark:bg-neutral-800/50">
                         {imageUrl ? (
-                          <Image
-                            src={imageUrl}
-                            alt={`Imagen ${index + 1}`}
-                            fill
-                            sizes="(max-width: 768px) 100vw, 33vw"
-                            className="object-cover"
-                          />
+                          <>
+                            <Image
+                              src={imageUrl}
+                              alt={`Imagen ${index + 1}`}
+                              fill
+                              sizes="(max-width: 768px) 100vw, 33vw"
+                              className="object-cover"
+                            />
+                            {/* Primary Badge */}
+                            {imageUrl === primaryUrl && (
+                              <div className="absolute top-3 left-3 flex items-center gap-1.5 px-2.5 py-1 bg-blue-600 text-white rounded-full text-[10px] font-black uppercase tracking-widest shadow-lg animate-in fade-in zoom-in duration-300">
+                                <Star className="w-3 h-3 fill-current" />
+                                Principal
+                              </div>
+                            )}
+                            
+                            {/* Overlay Controls */}
+                            <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-2">
+                              {imageUrl !== primaryUrl && (
+                                <button
+                                  type="button"
+                                  onClick={() => setPrimaryUrl(imageUrl)}
+                                  className="h-10 px-4 bg-white text-blue-600 rounded-lg text-[10px] font-black uppercase tracking-widest hover:bg-blue-50 transition-all flex items-center gap-2"
+                                >
+                                  <CheckCircle2 className="w-4 h-4" />
+                                  Usar como principal
+                                </button>
+                              )}
+                              <button
+                                type="button"
+                                onClick={() => {
+                                  if (imageUrl === primaryUrl) {
+                                    const nextImage = watch("images")?.find((img: string) => img !== imageUrl);
+                                    setPrimaryUrl(nextImage || "");
+                                  }
+                                  remove(index);
+                                }}
+                                className="w-10 h-10 bg-red-600 text-white rounded-lg flex items-center justify-center hover:bg-red-700 transition-all shadow-lg"
+                                title="Eliminar imagen"
+                              >
+                                <Trash2 className="w-4 h-4" />
+                              </button>
+                            </div>
+                          </>
                         ) : (
                           <div className="flex h-full w-full items-center justify-center text-sm text-neutral-500">
                             No hay imagen
                           </div>
                         )}
                       </div>
-                      <button
-                        type="button"
-                        onClick={() => remove(index)}
-                        className="absolute right-3 top-3 z-10 inline-flex h-10 w-10 items-center justify-center rounded-full bg-black/60 text-white opacity-0 transition-opacity duration-200 hover:bg-black/80 group-hover:opacity-100"
-                      >
-                        <Trash2 className="w-4 h-4" />
-                      </button>
                     </div>
                   );
                 })}
@@ -290,6 +335,12 @@ export function ProductForm({ initialData, categories, suppliers }: ProductFormP
                     const urls = res.map((file: any) => file.url);
                     const currentImages = watch("images") || [];
                     setValue("images", [...currentImages, ...urls]);
+                    
+                    // Set primary if none exists
+                    if (!primaryUrl && urls.length > 0) {
+                      setPrimaryUrl(urls[0]);
+                    }
+                    
                     showPremiumToast.success("Subida completa", "Imágenes subidas exitosamente");
                   }
                 }}

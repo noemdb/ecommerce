@@ -4,6 +4,11 @@ import Link from "next/link";
 import { Plus, Package, Search } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { ProductActions } from "@/components/admin/ProductActions";
+import { ProductImageCell } from "@/components/admin/ProductImageCell";
+import { ProductFilterBar } from "@/components/admin/ProductFilterBar";
+import { ProductSearchBar } from "@/components/admin/ProductSearchBar";
+import { TableSortHeader } from "@/components/admin/TableSortHeader";
+import { TablePagination } from "@/components/admin/TablePagination";
 
 export const metadata = {
   title: "Productos | Admin",
@@ -13,27 +18,69 @@ export const metadata = {
 export default async function ProductosPage({
   searchParams,
 }: {
-  searchParams: Promise<{ q?: string }>;
+  searchParams: Promise<{ 
+    q?: string; 
+    sort?: string; 
+    page?: string; 
+    category?: string; 
+    status?: string 
+  }>;
 }) {
   await requirePermission("products:read");
   const params = await searchParams;
+  
   const q = params.q ?? "";
+  const sort = params.sort ?? "createdAt_desc";
+  const page = Number(params.page ?? "1");
+  const category = params.category ?? "";
+  const status = params.status ?? "";
+  const pageSize = 10;
 
-  const products = await prisma.product.findMany({
-    where: q
-      ? {
-          OR: [
-            { name: { contains: q, mode: "insensitive" as const } },
-            { sku: { contains: q, mode: "insensitive" as const } },
-          ],
-        }
-      : {},
-    orderBy: { createdAt: "desc" },
-    include: {
-      category: { select: { name: true } },
-      _count: { select: { variants: true } },
-    },
-  });
+  const where: any = {
+    AND: [
+      q ? {
+        OR: [
+          { name: { contains: q, mode: "insensitive" as const } },
+          { sku: { contains: q, mode: "insensitive" as const } },
+        ],
+      } : {},
+      category ? { categoryId: category } : {},
+      status ? { isActive: status === "active" } : {},
+    ]
+  };
+
+  const [sortField, sortOrder] = sort.split("_");
+  const orderBy: any = {};
+  
+  if (sortField === "category") {
+    orderBy.category = { name: sortOrder as "asc" | "desc" };
+  } else if (["name", "price", "stock", "sku", "createdAt"].includes(sortField)) {
+    orderBy[sortField] = sortOrder as "asc" | "desc";
+  } else {
+    orderBy.createdAt = "desc";
+  }
+
+  const [products, totalCount, categories] = await Promise.all([
+    prisma.product.findMany({
+      where,
+      orderBy,
+      skip: (page - 1) * pageSize,
+      take: pageSize,
+      include: {
+        category: { select: { id: true, name: true } },
+        images: { select: { url: true, isPrimary: true } },
+        _count: { select: { variants: true } },
+      },
+    }),
+    prisma.product.count({ where }),
+    prisma.category.findMany({
+      select: { id: true, name: true },
+      where: { isActive: true },
+      orderBy: { name: "asc" }
+    })
+  ]);
+
+  const totalPages = Math.ceil(totalCount / pageSize);
 
   return (
     <div className="flex flex-col gap-8 p-8">
@@ -53,16 +100,10 @@ export default async function ProductosPage({
         </Link>
       </div>
 
-      <form method="GET" className="relative max-w-sm">
-        <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-neutral-400 pointer-events-none" />
-        <input
-          name="q"
-          type="search"
-          placeholder="Buscar producto o SKU..."
-          defaultValue={q}
-          className="h-11 w-full rounded-md border border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-900 pl-11 pr-4 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/30 focus:border-blue-500 transition-all"
-        />
-      </form>
+      <div className="flex flex-col lg:flex-row lg:items-center gap-4 justify-between">
+        <ProductSearchBar />
+        <ProductFilterBar categories={categories} />
+      </div>
 
       <div className="bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 rounded-md overflow-hidden shadow-sm">
         {products.length === 0 ? (
@@ -74,17 +115,15 @@ export default async function ProductosPage({
           <div className="overflow-x-auto">
             <table className="w-full text-sm">
               <thead>
-                <tr className="border-b border-neutral-100 dark:border-neutral-800 bg-neutral-50/50 dark:bg-white/5">
-                  {["Producto", "SKU", "Categoría", "Precio", "Stock", "Estado", "Acciones"].map(
-                    (h) => (
-                      <th
-                        key={h}
-                        className="px-5 py-4 text-left text-xs font-black uppercase tracking-widest text-neutral-400"
-                      >
-                        {h}
-                      </th>
-                    )
-                  )}
+                <tr className="border-b border-neutral-100 dark:border-neutral-800 bg-neutral-50/50 dark:bg-white/5 uppercase tracking-[0.2em] font-black text-[9px] text-neutral-400">
+                  <th className="px-5 py-4 text-left">Imagen</th>
+                  <th className="px-5 py-4 text-left"><TableSortHeader label="Producto" sortKey="name" /></th>
+                  <th className="px-5 py-4 text-left"><TableSortHeader label="SKU" sortKey="sku" /></th>
+                  <th className="px-5 py-4 text-left"><TableSortHeader label="Categoría" sortKey="category" /></th>
+                  <th className="px-5 py-4 text-left"><TableSortHeader label="Precio" sortKey="price" /></th>
+                  <th className="px-5 py-4 text-left"><TableSortHeader label="Stock" sortKey="stock" /></th>
+                  <th className="px-5 py-4 text-left">Estado</th>
+                  <th className="px-5 py-4 text-right pr-8 whitespace-nowrap">Acciones</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-neutral-100 dark:divide-neutral-800">
@@ -96,18 +135,25 @@ export default async function ProductosPage({
                       !p.isActive && "opacity-60 grayscale-[0.5]"
                     )}
                   >
-                    <td className="px-5 py-4 font-semibold">{p.name}</td>
+                    <td className="px-5 py-4">
+                      <ProductImageCell 
+                        url={p.images.find(img => img.isPrimary)?.url || p.images[0]?.url || null} 
+                        name={p.name} 
+                      />
+                    </td>
+                    <td className="px-5 py-4 font-semibold text-neutral-900 dark:text-neutral-100">{p.name}</td>
                     <td className="px-5 py-4">
                       <code className="text-[10px] uppercase font-bold bg-neutral-100 dark:bg-neutral-800 px-2 py-1 rounded text-neutral-500">
                         {p.sku}
                       </code>
                     </td>
-                    <td className="px-5 py-4 text-neutral-500 text-xs">{p.category.name}</td>
-                    <td className="px-5 py-4 font-bold tabular-nums">
+                    <td className="px-5 py-4 text-neutral-500 text-xs font-medium">{p.category.name}</td>
+                    <td className="px-5 py-4 font-black tracking-tighter text-blue-600 dark:text-blue-400 text-base">
                       ${p.price.toFixed(2)}
                     </td>
                     <td className="px-5 py-4 tabular-nums">
-                      <span className={cn(p.stock <= p.lowStockThreshold && "text-red-500 font-bold")}>
+                      <span className={cn("inline-flex items-center gap-1.5 font-bold", p.stock <= p.lowStockThreshold ? "text-red-500" : "text-neutral-600 dark:text-neutral-400")}>
+                        <div className={cn("w-1.5 h-1.5 rounded-full shrink-0", p.stock <= p.lowStockThreshold ? "bg-red-500 animate-pulse" : "bg-neutral-300 dark:bg-neutral-700")} />
                         {p.stock}
                       </span>
                     </td>
@@ -127,6 +173,8 @@ export default async function ProductosPage({
                         productId={p.id} 
                         isActive={p.isActive} 
                         productName={p.name} 
+                        product={p}
+                        categories={categories}
                       />
                     </td>
                   </tr>
@@ -135,6 +183,12 @@ export default async function ProductosPage({
             </table>
           </div>
         )}
+        <TablePagination 
+          currentPage={page} 
+          totalPages={totalPages} 
+          totalItems={totalCount} 
+          pageSize={pageSize} 
+        />
       </div>
     </div>
   );

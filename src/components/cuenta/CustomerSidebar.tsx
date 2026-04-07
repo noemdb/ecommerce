@@ -16,6 +16,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { useState, useEffect } from "react";
 import { cn } from "@/lib/utils";
+import { ThemeToggle } from "@/components/shared/ThemeToggle";
 
 const SIDEBAR_ITEMS = [
   { label: "Dashboard", href: "/cuenta", icon: LayoutDashboard },
@@ -106,8 +107,9 @@ export function CustomerSidebar() {
         })}
       </div>
 
-      {/* Footer / Logout */}
-      <div className="p-3 border-t border-neutral-200 dark:border-neutral-800 shrink-0">
+      {/* Footer / Theme & Logout */}
+      <div className="p-3 border-t border-neutral-200 dark:border-neutral-800 shrink-0 space-y-1">
+        <ThemeToggle isCollapsed={isCollapsed} />
         <Button 
           variant="ghost" 
           onClick={() => signOut({ callbackUrl: "/login" })}

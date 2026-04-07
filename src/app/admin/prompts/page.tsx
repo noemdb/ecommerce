@@ -19,13 +19,22 @@ export default async function PromptsPage() {
   await requirePermission("products:read");
 
   // Fetch data
-  const [prompts, products] = await Promise.all([
+  const [prompts, products, categories] = await Promise.all([
     prisma.productPrompt.findMany({
       include: {
         product: {
-          select: {
-            name: true,
-            sku: true
+          include: {
+            images: {
+              select: {
+                url: true,
+                isPrimary: true
+              }
+            },
+            category: {
+              select: {
+                name: true
+              }
+            }
           }
         }
       },
@@ -37,6 +46,14 @@ export default async function PromptsPage() {
         name: true,
         sku: true
       },
+      orderBy: { name: "asc" }
+    }),
+    prisma.category.findMany({
+      select: {
+        id: true,
+        name: true
+      },
+      where: { isActive: true },
       orderBy: { name: "asc" }
     })
   ]);
@@ -78,7 +95,7 @@ export default async function PromptsPage() {
           </div>
 
           <TabsContent value="list" className="mt-0 focus-visible:outline-none focus:outline-none ring-0">
-            <PromptList initialPrompts={prompts} />
+            <PromptList initialPrompts={prompts as any} categories={categories} />
           </TabsContent>
 
           <TabsContent value="new" className="mt-0 focus-visible:outline-none focus:outline-none ring-0">
