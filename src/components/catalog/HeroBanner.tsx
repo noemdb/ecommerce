@@ -58,7 +58,7 @@ export function HeroBanner({ products }: HeroBannerProps) {
 
   return (
     <section
-      className="relative h-[85vh] min-h-[600px] max-h-[900px] overflow-hidden flex items-center"
+      className="relative h-[70vh] md:h-[85vh] min-h-[500px] md:min-h-[600px] max-h-[900px] overflow-hidden flex items-center"
       aria-label="Productos destacados"
     >
       {/* Capa 1: Gradient mesh animado (CSS puro) */}
@@ -90,16 +90,16 @@ export function HeroBanner({ products }: HeroBannerProps) {
       ))}
 
       {/* Overlay oscuro sobre gradiente para legibilidad del texto */}
-      <div className="absolute inset-0 z-10 bg-black/40" />
+      <div className="absolute inset-0 z-10 bg-black/30" />
 
       {/* Capa 3: Imagen del producto actual (transición fade) */}
       {current?.images?.[0] && (
         <motion.div
           key={currentIndex}
-          className="absolute right-0 top-0 h-full w-1/2 z-10"
-          initial={{ opacity: 0, x: 40 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.7, ease: "easeOut" }}
+          className="absolute inset-0 md:inset-y-0 md:right-0 md:w-1/2 z-10"
+          initial={{ opacity: 0, scale: 1.05 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 1.2, ease: "easeOut" }}
         >
           <Image
             src={current.images[0].url}
@@ -107,43 +107,48 @@ export function HeroBanner({ products }: HeroBannerProps) {
             fill
             className="object-cover object-center"
             priority
-            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 50vw"
+            sizes="(max-width: 768px) 100vw, 50vw"
           />
-          {/* Degradado para fusionar imagen con el fondo */}
-          <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/40 to-transparent" />
+          {/* Degradado para fusionar imagen con el fondo - Más intenso en móvil para legibilidad */}
+          <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-black/20 md:bg-gradient-to-r md:from-black/90 md:via-black/50 md:to-transparent" />
         </motion.div>
       )}
 
       {/* Capa 4: Contenido del hero */}
-      <div className="relative z-20 container mx-auto px-4 lg:px-8 max-w-2xl">
+      <div className="relative z-20 container mx-auto px-6 md:px-12">
         <motion.div
           key={`content-${currentIndex}`}
-          initial={{ opacity: 0, y: 24 }}
+          className="max-w-2xl mx-auto md:mx-0 text-center md:text-left"
+          initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, ease: "easeOut", delay: 0.1 }}
+          transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1], delay: 0.2 }}
         >
           {current?.promoPrice && (
-            <span className="inline-block px-3 py-1 rounded-lg bg-blue-600 text-white text-xs font-semibold uppercase tracking-widest mb-4">
-              Oferta especial
-            </span>
+            <motion.span 
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              className="inline-block px-4 py-1.5 rounded-full bg-blue-600/90 backdrop-blur-md text-white text-[10px] font-bold uppercase tracking-widest mb-6 shadow-lg shadow-blue-500/20"
+            >
+              Oferta exclusiva
+            </motion.span>
           )}
 
-          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white leading-tight mb-4">
+          <h1 className="text-4xl sm:text-5xl lg:text-7xl font-extrabold text-white leading-[1.1] mb-6 tracking-tight">
             {current?.name ?? "Descubre nuestra colección premium"}
           </h1>
 
-          <p className="text-white/80 text-lg mb-8 max-w-md">
+          <p className="text-white/70 text-base md:text-xl mb-8 md:mb-10 max-w-md mx-auto md:mx-0 leading-relaxed">
             Productos de calidad excepcional con envío garantizado a todo el país.
           </p>
 
-          <div className="flex flex-wrap gap-3">
+          <div className="flex flex-col sm:flex-row items-center justify-center md:justify-start gap-4">
             {current ? (
               <Link
                 href={`/producto/${current.slug}`}
-                className="inline-flex items-center gap-2 px-6 py-3 bg-white text-black font-semibold rounded-lg hover:bg-neutral-100 transition-colors"
+                className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-8 py-4 bg-white text-black font-bold rounded-xl hover:bg-neutral-100 transition-all active:scale-95 shadow-xl shadow-white/10"
               >
                 Ver producto
-                <span aria-hidden>→</span>
+                <span className="text-xl" aria-hidden>→</span>
               </Link>
             ) : (
               <Link
@@ -163,7 +168,7 @@ export function HeroBanner({ products }: HeroBannerProps) {
           </div>
 
           {current && (
-            <div className="mt-6 flex items-baseline gap-3">
+            <div className="mt-6 flex items-baseline justify-center md:justify-start gap-3">
               {current.promoPrice ? (
                 <>
                   <span className="text-3xl font-bold text-white">${current.promoPrice}</span>
@@ -177,7 +182,7 @@ export function HeroBanner({ products }: HeroBannerProps) {
         </motion.div>
 
         {products && products.length > 1 && (
-          <div className="flex gap-2 mt-8">
+          <div className="flex justify-center md:justify-start gap-2 mt-6 md:mt-8">
             {products.map((_, i) => (
               <button
                 key={i}

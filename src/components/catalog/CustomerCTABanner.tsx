@@ -3,7 +3,7 @@ import { UserPlus, LogIn } from "lucide-react";
 
 export function CustomerCTABanner() {
   return (
-    <section className="py-12 bg-neutral-50 dark:bg-neutral-900/50 border-y border-neutral-100 dark:border-neutral-800 my-16">
+    <section className="py-12 bg-neutral-50 dark:bg-neutral-900/50 border-y border-neutral-200 dark:border-neutral-800 my-16">
       <div className="container mx-auto px-4 max-w-3xl text-center">
         <h2 className="text-2xl md:text-3xl font-bold tracking-tight mb-3">
           Crea tu cuenta y mejora tu experiencia

@@ -123,7 +123,7 @@ export default async function HomePage({
       <CategoryBar categories={categories} activeCategoryId={filters.categoryId} />
       <SocialProofBanner totalCustomers={totalCustomers} totalProducts={totalProductsCount} />
       
-      <div className="flex flex-col gap-1y">
+      <div className="flex flex-col gap-8 md:gap-16">
         <FeaturedSection title="Más Vendidos" subtitle="Lo que nuestros clientes eligen" products={bestSellers as any} />
         <FeaturedSection title="Novedades" subtitle="Recién llegados" products={newArrivals as any} badge="NUEVO" />
         
@@ -131,8 +131,8 @@ export default async function HomePage({
         
         <FeaturedSection title="Tendencias" subtitle="Lo más buscado ahora" products={trending as any} />
 
-        <section id="catalogo" className="container mx-auto px-4 py-16 md:py-24">
-          <div className="mb-12">
+        <section id="catalogo" className="container mx-auto px-4 pt-4 pb-8 md:pt-8 md:pb-16">
+          <div className="mb-8 md:mb-12">
             <h2 className="text-3xl font-bold tracking-tight mb-2">Nuestro Catálogo</h2>
             <p className="text-neutral-500 dark:text-neutral-400">Encuentra exactamente lo que buscas en nuestra colección completa.</p>
           </div>

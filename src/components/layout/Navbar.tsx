@@ -28,7 +28,7 @@ export function Navbar() {
       className={cn(
         "sticky top-0 z-[80] w-full transition-all duration-300",
         isScrolled 
-          ? "bg-white/80 dark:bg-neutral-900/80 backdrop-blur-md border-b py-3 shadow-sm" 
+          ? "bg-white/80 dark:bg-neutral-900/80 backdrop-blur-md border-b border-neutral-200/50 dark:border-neutral-800/50 py-3 shadow-sm" 
           : "bg-transparent py-5"
       )}
     >

@@ -14,7 +14,7 @@ interface CategoryBarProps {
 
 export function CategoryBar({ categories, activeCategoryId }: CategoryBarProps) {
   return (
-    <div className="sticky top-16 z-40 w-full bg-white/95 dark:bg-neutral-950/95 backdrop-blur border-b shadow-sm overflow-x-auto no-scrollbar">
+    <div className="sticky top-16 z-40 w-full bg-white/95 dark:bg-neutral-950/95 backdrop-blur border-y border-neutral-200 dark:border-neutral-800 shadow-sm overflow-x-auto no-scrollbar">
       <div className="container mx-auto px-4">
         <div className="flex items-center gap-2 py-3 min-w-max">
           <Link
