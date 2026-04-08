@@ -153,6 +153,37 @@ async function main() {
   }
   console.log("✅ Products and images created/updated.");
 
+  // 5. SiteConfig singleton
+  await prisma.siteConfig.upsert({
+    where: { id: 1 },
+    update: {},
+    create: {
+      id: 1,
+      appName: "Ecommerce Premium",
+      metadataTitle: "Ecommerce NoDoz",
+      metadataDescription: "Ecommerce Premium",
+      colorBgPrimary: "#FFFFFF",
+      colorBgSecondary: "#F8FAFC",
+      colorTextPrimary: "#0F172A",
+      colorTextSecondary: "#475569",
+      colorAccentPrimary: "#111827",
+      colorAccentSecondary: "#6366F1",
+      colorButtonPrimary: "#111827",
+      colorBorder: "#E2E8F0",
+      showHeroBanner: true,
+      showCategoryBar: true,
+      showSocialProofBanner: true,
+      showFeaturedBestSellers: true,
+      showFeaturedNewArrivals: true,
+      showCustomerCTABanner: true,
+      showFeaturedTrending: true,
+      showCatalogSection: true,
+      showTrustBadges: true,
+      showWhatsAppFAB: true,
+    },
+  });
+  console.log("✅ SiteConfig singleton created/updated.");
+
   console.log("🌟 Seeding completed successfully!");
 }
 

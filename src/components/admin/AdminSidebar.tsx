@@ -35,6 +35,7 @@ const SIDEBAR_ITEMS = [
   { label: "Prompts AI", href: "/admin/prompts", icon: Sparkles },
   { label: "Usuarios", href: "/admin/usuarios", icon: ShieldCheck },
   { label: "Métricas", href: "/admin/metricas", icon: Settings },
+  { label: "Config. Sitio", href: "/admin/site-config", icon: Settings },
 ];
 
 export function AdminSidebar() {

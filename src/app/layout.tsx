@@ -12,24 +12,46 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-export const metadata: Metadata = {
-  title: "Ecommerce NoDoz",
-  description: "Ecommerce Premium",
-};
-
 import { Toaster } from "sonner";
 import { ConfirmProvider } from "@/components/providers/ConfirmProvider";
 import { ThemeProvider } from "@/components/providers/ThemeProvider";
+import { getSiteConfig } from "@/lib/site-config/get-site-config";
 
-export default function RootLayout({
+// Dynamic metadata — reads from DB via getSiteConfig().
+// Cached with "site-config" tag and revalidated after admin saves.
+export async function generateMetadata(): Promise<Metadata> {
+  const config = await getSiteConfig();
+  return {
+    title: config.metadataTitle,
+    description: config.metadataDescription,
+  };
+}
+
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const config = await getSiteConfig();
+
+  // CSS custom properties injected at the root so all pages can consume them.
+  // These are additive and do not override existing Tailwind or dark-mode styles.
+  const cssVars = {
+    "--color-bg-primary": config.colorBgPrimary,
+    "--color-bg-secondary": config.colorBgSecondary,
+    "--color-text-primary": config.colorTextPrimary,
+    "--color-text-secondary": config.colorTextSecondary,
+    "--color-accent-primary": config.colorAccentPrimary,
+    "--color-accent-secondary": config.colorAccentSecondary,
+    "--color-button-primary": config.colorButtonPrimary,
+    "--color-border": config.colorBorder,
+  } as React.CSSProperties;
+
   return (
     <html
       lang="es"
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
+      style={cssVars}
       suppressHydrationWarning
     >
       <body className="min-h-full flex flex-col">

@@ -3,6 +3,7 @@ import { catalogFiltersSchema } from "@/lib/validators/filters";
 import { prisma } from "@/lib/prisma";
 import { auth } from "@/auth";
 import { ReviewStatus } from "@prisma/client";
+import { getSiteConfig } from "@/lib/site-config/get-site-config";
 import { HeroBanner } from "@/components/catalog/HeroBanner";
 import { CategoryBar } from "@/components/catalog/CategoryBar";
 import { SocialProofBanner } from "@/components/catalog/SocialProofBanner";
@@ -38,7 +39,7 @@ export default async function HomePage({
     price_desc: { price: "desc" as const },
     newest: { createdAt: "desc" as const },
     featured: { isFeatured: "desc" as const },
-    rating: { reviews: { _count: "desc" as const } }, // Approximating rating sort by review count/average would be more complex
+    rating: { reviews: { _count: "desc" as const } },
   }[filters.sort ?? "newest"] ?? { createdAt: "desc" as const };
 
   const productSelect = {
@@ -72,6 +73,7 @@ export default async function HomePage({
     categories,
     totalCustomers,
     totalProductsCount,
+    siteConfig,
   ] = await Promise.all([
     prisma.product.findMany({
       where,
@@ -115,34 +117,56 @@ export default async function HomePage({
     // Métricas para SocialProofBanner
     prisma.customer.count(),
     prisma.product.count({ where: { isActive: true } }),
+    // Configuración del sitio (visibilidad de secciones)
+    getSiteConfig(),
   ]);
 
   return (
     <>
-      <HeroBanner products={heroProducts as any} />
-      <CategoryBar categories={categories} activeCategoryId={filters.categoryId} />
-      <SocialProofBanner totalCustomers={totalCustomers} totalProducts={totalProductsCount} />
-      
-      <div className="flex flex-col gap-8 md:gap-16">
-        <FeaturedSection title="Más Vendidos" subtitle="Lo que nuestros clientes eligen" products={bestSellers as any} />
-        <FeaturedSection title="Novedades" subtitle="Recién llegados" products={newArrivals as any} badge="NUEVO" />
-        
-        {!isCustomerLoggedIn && <CustomerCTABanner />}
-        
-        <FeaturedSection title="Tendencias" subtitle="Lo más buscado ahora" products={trending as any} />
+      {siteConfig.showHeroBanner && (
+        <HeroBanner products={heroProducts as any} />
+      )}
 
-        <section id="catalogo" className="container mx-auto px-4 pt-4 pb-8 md:pt-8 md:pb-16">
-          <div className="mb-8 md:mb-12">
-            <h2 className="text-3xl font-bold tracking-tight mb-2">Nuestro Catálogo</h2>
-            <p className="text-neutral-500 dark:text-neutral-400">Encuentra exactamente lo que buscas en nuestra colección completa.</p>
-          </div>
-          <CatalogFilters categories={categories} currentFilters={filters} />
-          <ProductGrid products={products as any} total={total} page={filters.page} pageSize={PAGE_SIZE} />
-        </section>
+      {siteConfig.showCategoryBar && (
+        <CategoryBar categories={categories} activeCategoryId={filters.categoryId} />
+      )}
+
+      {siteConfig.showSocialProofBanner && (
+        <SocialProofBanner totalCustomers={totalCustomers} totalProducts={totalProductsCount} />
+      )}
+
+      <div className="flex flex-col gap-8 md:gap-16">
+        {siteConfig.showFeaturedBestSellers && (
+          <FeaturedSection title="Más Vendidos" subtitle="Lo que nuestros clientes eligen" products={bestSellers as any} />
+        )}
+
+        {siteConfig.showFeaturedNewArrivals && (
+          <FeaturedSection title="Novedades" subtitle="Recién llegados" products={newArrivals as any} badge="NUEVO" />
+        )}
+
+        {/* CTA banner: respects both the config flag AND the auth state */}
+        {siteConfig.showCustomerCTABanner && !isCustomerLoggedIn && (
+          <CustomerCTABanner />
+        )}
+
+        {siteConfig.showFeaturedTrending && (
+          <FeaturedSection title="Tendencias" subtitle="Lo más buscado ahora" products={trending as any} />
+        )}
+
+        {siteConfig.showCatalogSection && (
+          <section id="catalogo" className="container mx-auto px-4 pt-4 pb-8 md:pt-8 md:pb-16">
+            <div className="mb-8 md:mb-12">
+              <h2 className="text-3xl font-bold tracking-tight mb-2">Nuestro Catálogo</h2>
+              <p className="text-neutral-500 dark:text-neutral-400">Encuentra exactamente lo que buscas en nuestra colección completa.</p>
+            </div>
+            <CatalogFilters categories={categories} currentFilters={filters} />
+            <ProductGrid products={products as any} total={total} page={filters.page} pageSize={PAGE_SIZE} />
+          </section>
+        )}
       </div>
 
-      <TrustBadges />
-      <WhatsAppFAB />
+      {siteConfig.showTrustBadges && <TrustBadges />}
+      {siteConfig.showWhatsAppFAB && <WhatsAppFAB />}
     </>
   );
 }

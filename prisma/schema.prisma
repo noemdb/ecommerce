@@ -399,6 +399,43 @@ model Review {
 }
 
 // ═══════════════════════════════════════════════════════════════
+// CONFIGURACIÓN DEL SITIO (singleton)
+// ═══════════════════════════════════════════════════════════════
+
+model SiteConfig {
+  id                      Int      @id @default(1)
+
+  appName                 String   @default("Ecommerce Premium")
+  metadataTitle           String   @default("Ecommerce NoDoz")
+  metadataDescription     String   @default("Ecommerce Premium")
+
+  colorBgPrimary          String   @default("#FFFFFF")
+  colorBgSecondary        String   @default("#F8FAFC")
+  colorTextPrimary        String   @default("#0F172A")
+  colorTextSecondary      String   @default("#475569")
+  colorAccentPrimary      String   @default("#111827")
+  colorAccentSecondary    String   @default("#6366F1")
+  colorButtonPrimary      String   @default("#111827")
+  colorBorder             String   @default("#E2E8F0")
+
+  showHeroBanner          Boolean  @default(true)
+  showCategoryBar         Boolean  @default(true)
+  showSocialProofBanner   Boolean  @default(true)
+  showFeaturedBestSellers Boolean  @default(true)
+  showFeaturedNewArrivals Boolean  @default(true)
+  showCustomerCTABanner   Boolean  @default(true)
+  showFeaturedTrending    Boolean  @default(true)
+  showCatalogSection      Boolean  @default(true)
+  showTrustBadges         Boolean  @default(true)
+  showWhatsAppFAB         Boolean  @default(true)
+
+  createdAt               DateTime @default(now())
+  updatedAt               DateTime @updatedAt
+
+  @@map("site_config")
+}
+
+// ═══════════════════════════════════════════════════════════════
 // AUDITORÍA
 // ═══════════════════════════════════════════════════════════════
 
