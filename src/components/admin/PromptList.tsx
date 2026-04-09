@@ -5,6 +5,7 @@ import { Sparkles, Search, ExternalLink, Calendar, Eye, ArrowUpDown, ChevronUp, 
 import { cn } from "@/lib/utils";
 import { PromptActions } from "./PromptActions";
 import { ProductPreviewModal } from "./ProductPreviewModal";
+import { PromptDetailModal } from "./PromptDetailModal";
 import { Button as UIButton } from "@/components/ui/button";
 import Link from "next/link";
 
@@ -45,6 +46,7 @@ interface PromptListProps {
 export function PromptList({ initialPrompts, categories }: PromptListProps) {
   const [searchTerm, setSearchTerm] = useState("");
   const [previewProduct, setPreviewProduct] = useState<any>(null);
+  const [detailPrompt, setDetailPrompt] = useState<PromptWithProduct | null>(null);
   
   // New States: Pagination, Sorting, Filtering
   const [currentPage, setCurrentPage] = useState(1);
@@ -237,10 +239,18 @@ export function PromptList({ initialPrompts, categories }: PromptListProps) {
                           size="sm"
                           onClick={() => setPreviewProduct(p.product)}
                           className="h-9 px-3 gap-2 border-neutral-200 dark:border-neutral-800 text-neutral-600 dark:text-neutral-400 font-bold hover:bg-neutral-100 dark:hover:bg-neutral-800 transition-all shadow-sm"
-                          title="Vista Previa"
+                          title="Vista Previa de Producto"
                         >
                           <Eye className="w-4 h-4 text-blue-500" />
-                          {/* <span className="hidden sm:inline">Vista Previa</span> */}
+                        </UIButton>
+                        <UIButton
+                          variant="outline"
+                          size="sm"
+                          onClick={() => setDetailPrompt(p)}
+                          className="h-9 px-3 gap-2 border-neutral-200 dark:border-neutral-800 text-neutral-600 dark:text-neutral-400 font-bold hover:bg-neutral-100 dark:hover:bg-neutral-800 transition-all shadow-sm"
+                          title="Ver Detalles de Prompt"
+                        >
+                          <Sparkles className="w-4 h-4 text-emerald-500" />
                         </UIButton>
                         <PromptActions id={p.id} isActive={p.isActive} productName={p.product.name} />
                       </div>
@@ -304,6 +314,14 @@ export function PromptList({ initialPrompts, categories }: PromptListProps) {
             images: previewProduct.images.map((img: any) => img.url)
           }} 
           categories={categories} 
+        />
+      )}
+
+      {detailPrompt && (
+        <PromptDetailModal
+          isOpen={!!detailPrompt}
+          onClose={() => setDetailPrompt(null)}
+          prompt={detailPrompt}
         />
       )}
     </div>
