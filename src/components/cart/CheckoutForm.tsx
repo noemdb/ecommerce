@@ -3,7 +3,7 @@
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { checkoutSchema, type CheckoutInput } from "@/lib/validators/checkout";
-import { createOrderAction } from "@/actions/order";
+import { createOrderAction } from "@/actions/checkout";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useCartStore } from "@/store/cart";

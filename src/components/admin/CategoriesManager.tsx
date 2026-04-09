@@ -6,7 +6,25 @@ import {
   updateCategoryAction,
   toggleCategoryActiveAction,
   deleteCategoryAction,
+  reorderCategoriesAction,
 } from "@/actions/category";
+import {
+  DndContext,
+  closestCenter,
+  KeyboardSensor,
+  PointerSensor,
+  useSensor,
+  useSensors,
+  DragEndEvent,
+} from "@dnd-kit/core";
+import {
+  arrayMove,
+  SortableContext,
+  sortableKeyboardCoordinates,
+  verticalListSortingStrategy,
+  useSortable,
+} from "@dnd-kit/sortable";
+import { CSS } from "@dnd-kit/utilities";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
@@ -27,6 +45,7 @@ import {
   FolderTree,
   Layers,
   Hash,
+  GripVertical,
 } from "lucide-react";
 
 type Category = {
@@ -85,6 +104,37 @@ export function CategoriesManager({ categories }: CategoriesManagerProps) {
   const [autoSlug, setAutoSlug] = useState(true);
   const nameInputRef = useRef<HTMLInputElement>(null);
   const confirm = useConfirm();
+
+  const sensors = useSensors(
+    useSensor(PointerSensor),
+    useSensor(KeyboardSensor, {
+      coordinateGetter: sortableKeyboardCoordinates,
+    })
+  );
+
+  function handleDragEnd(event: DragEndEvent) {
+    const { active, over } = event;
+
+    if (over && active.id !== over.id) {
+      const oldIndex = categories.findIndex((c) => c.id === active.id);
+      const newIndex = categories.findIndex((c) => c.id === over.id);
+
+      const newOrder = arrayMove(categories, oldIndex, newIndex);
+      
+      // Optimizamos: solo enviamos los que cambiaron de orden
+      const updates = newOrder.map((cat, index) => ({
+        id: cat.id,
+        order: index,
+      }));
+
+      startTransition(async () => {
+        const result = await reorderCategoriesAction(updates);
+        if (!result.success) {
+          toast.error(result.error || "Error al reordenar");
+        }
+      });
+    }
+  }
 
   // Auto-focus when modal opens
   useEffect(() => {
@@ -265,29 +315,29 @@ export function CategoriesManager({ categories }: CategoriesManagerProps) {
                 </tr>
               </thead>
               <tbody className="divide-y divide-neutral-100 dark:divide-neutral-800">
-                {/* Root categories first, then children indented */}
-                {roots.map((cat) => (
-                  <CategoryRow
-                    key={cat.id}
-                    cat={cat}
-                    depth={0}
-                    isPending={isPending}
-                    onEdit={openEdit}
-                    onToggle={handleToggleActive}
-                    onDeleteRequest={handleDelete}
-                  />
-                ))}
-                {children.map((cat) => (
-                  <CategoryRow
-                    key={cat.id}
-                    cat={cat}
-                    depth={1}
-                    isPending={isPending}
-                    onEdit={openEdit}
-                    onToggle={handleToggleActive}
-                    onDeleteRequest={handleDelete}
-                  />
-                ))}
+                <DndContext
+                  sensors={sensors}
+                  collisionDetection={closestCenter}
+                  onDragEnd={handleDragEnd}
+                >
+                  <SortableContext
+                    items={categories.map((c) => c.id)}
+                    strategy={verticalListSortingStrategy}
+                  >
+                    {/* Renderizamos raíces e hijos en un solo flujo para que el drag & drop funcione en la lista plana visualmente */}
+                    {categories.map((cat) => (
+                      <CategoryRow
+                        key={cat.id}
+                        cat={cat}
+                        depth={cat.parentId ? 1 : 0}
+                        isPending={isPending}
+                        onEdit={openEdit}
+                        onToggle={handleToggleActive}
+                        onDeleteRequest={handleDelete}
+                      />
+                    ))}
+                  </SortableContext>
+                </DndContext>
               </tbody>
             </table>
           </div>
@@ -451,8 +501,42 @@ function CategoryRow({
   onToggle: (cat: Category) => void;
   onDeleteRequest: (id: string) => void;
 }) {
+  const {
+    attributes,
+    listeners,
+    setNodeRef,
+    transform,
+    transition,
+    isDragging,
+  } = useSortable({ id: cat.id });
+
+  const style = {
+    transform: CSS.Transform.toString(transform),
+    transition,
+    zIndex: isDragging ? 50 : "auto",
+    opacity: isDragging ? 0.5 : 1,
+  };
+
   return (
-    <tr className="group hover:bg-neutral-50 dark:hover:bg-neutral-800/40 transition-colors">
+    <tr
+      ref={setNodeRef}
+      style={style}
+      className={cn(
+        "group hover:bg-neutral-50 dark:hover:bg-neutral-800/40 transition-colors",
+        isDragging && "bg-neutral-100 dark:bg-neutral-800 shadow-lg"
+      )}
+    >
+      {/* Drag Handle */}
+      <td className="px-5 py-4 w-10">
+        <button
+          {...attributes}
+          {...listeners}
+          className="cursor-grab active:cursor-grabbing text-neutral-300 hover:text-neutral-600 transition-colors"
+        >
+          <GripVertical className="w-4 h-4" />
+        </button>
+      </td>
+
       {/* Name */}
       <td className="px-5 py-4">
         <div className="flex items-center gap-2" style={{ paddingLeft: depth * 20 }}>

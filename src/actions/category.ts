@@ -176,3 +176,28 @@ export async function deleteCategoryAction(id: string): Promise<ActionResult> {
     return { success: false, error: "Error al eliminar la categoría" };
   }
 }
+
+export async function reorderCategoriesAction(
+  items: { id: string; order: number }[]
+): Promise<ActionResult> {
+  await requirePermission("categories:write");
+
+  try {
+    await prisma.$transaction(
+      items.map((item) =>
+        prisma.category.update({
+          where: { id: item.id },
+          data: { order: item.order },
+        })
+      )
+    );
+
+    revalidatePath("/admin/categorias");
+    revalidatePath("/");
+
+    return { success: true, message: "Orden actualizado correctamente" };
+  } catch (error) {
+    console.error("[REORDER_CATEGORIES_ERROR]", error);
+    return { success: false, error: "Error al actualizar el orden" };
+  }
+}

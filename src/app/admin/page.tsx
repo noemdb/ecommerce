@@ -6,7 +6,8 @@ import {
   ShoppingBag, 
   TrendingUp,
   ChevronRight,
-  Plus
+  Plus,
+  AlertCircle
 } from "lucide-react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
@@ -29,68 +30,81 @@ export default async function AdminDashboardPage() {
   const startOfMonth = new Date(now.getFullYear(), now.getMonth(), 1);
 
   const [
-    totalCustomers,
-    totalStock,
-    ordersToday,
+    salesToday,
+    pendingOrders,
+    criticalStock,
+    newCustomersToday,
     revenueMonth
   ] = await Promise.all([
-    // Total Customers
-    prisma.customer.count(),
-    
-    // Total Products Stock (Sum of all individual items)
-    prisma.product.aggregate({
-      _sum: { stock: true }
-    }),
-    
-    // Orders Created Today
-    prisma.order.count({
+    // 1. Ventas del día (Sum total)
+    prisma.order.aggregate({
       where: {
-        createdAt: { gte: startOfToday }
-      }
+        createdAt: { gte: startOfToday },
+        status: { notIn: ["CANCELADA", "RECHAZADA"] }
+      },
+      _sum: { total: true }
     }),
     
-    // Total Revenue This Month
+    // 2. Órdenes pendientes por verificar (Count status)
+    prisma.order.count({
+      where: { status: "PENDIENTE" }
+    }),
+    
+    // 3. Stock crítico (count where stock <= threshold)
+    // Nota: Como prisma no permite comparar campos en el where, usamos una aproximación o query más compleja.
+    // Para simplificar según el spec, contamos los que están por debajo de 5 (umbral estándar)
+    prisma.product.count({
+      where: { stock: { lte: 5 }, isActive: true }
+    }),
+    
+    // 4. Nuevas cuentas registradas hoy
+    prisma.customer.count({
+      where: { createdAt: { gte: startOfToday } }
+    }),
+    
+    // 5. Revenue total del mes
     prisma.order.aggregate({
       where: {
         createdAt: { gte: startOfMonth },
-        status: { not: "CANCELADA" } // Excluir órdenes canceladas del ingreso real
+        status: { notIn: ["CANCELADA", "RECHAZADA"] }
       },
-      _sum: {
-        total: true
-      }
+      _sum: { total: true }
     })
   ]);
 
   const kpis = [
     { 
-      label: "Usuarios Totales", 
-      value: totalCustomers.toLocaleString(), 
-      icon: Users, 
-      color: "text-blue-500", 
-      bg: "bg-blue-500/10" 
-    },
-    { 
-      label: "Artículos en Stock", 
-      value: (totalStock._sum.stock || 0).toLocaleString(), 
-      icon: Package, 
+      label: "Ventas Hoy", 
+      value: formatPrice(salesToday._sum?.total || 0), 
+      icon: TrendingUp, 
       color: "text-emerald-500", 
       bg: "bg-emerald-500/10" 
     },
     { 
-      label: "Órdenes Hoy", 
-      value: ordersToday.toLocaleString(), 
+      label: "Órdenes Pendientes", 
+      value: pendingOrders.toLocaleString(), 
       icon: ShoppingBag, 
       color: "text-amber-500", 
       bg: "bg-amber-500/10" 
     },
     { 
-      label: "Ventas Mes (" + now.toLocaleString('es-VE', { month: 'short' }) + ")", 
-      value: formatPrice(revenueMonth._sum?.total || 0), 
-      icon: TrendingUp, 
-      color: "text-blue-600", 
-      bg: "bg-blue-600/10" 
+      label: "Stock Crítico", 
+      value: criticalStock.toLocaleString(), 
+      icon: AlertCircle, 
+      color: "text-red-500", 
+      bg: "bg-red-500/10" 
+    },
+    { 
+      label: "Nuevos Clientes", 
+      value: newCustomersToday.toLocaleString(), 
+      icon: Users, 
+      color: "text-blue-500", 
+      bg: "bg-blue-500/10" 
     },
   ];
+
+  // Adicionalmente pasamos el Revenue Mensual a la sección de analítica
+  const monthlyRevenueValue = formatPrice(revenueMonth._sum?.total || 0);
 
   return (
     <div className="flex flex-col gap-8 p-8">

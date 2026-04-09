@@ -14,7 +14,8 @@ type Permission =
   | "customers:write"
   | "users:manage"
   | "settings:write"
-  | "account:read";
+  | "account:read"
+  | "metrics:view";
 
 const ROLE_PERMISSIONS: Record<string, Permission[]> = {
   ADMIN: [
@@ -29,6 +30,7 @@ const ROLE_PERMISSIONS: Record<string, Permission[]> = {
     "customers:write",
     "users:manage",
     "settings:write",
+    "metrics:view",
   ],
   STAFF: [
     "orders:read",

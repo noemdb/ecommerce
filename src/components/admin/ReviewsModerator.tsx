@@ -1,6 +1,6 @@
 "use client";
 
-import { useTransition } from "react";
+import { useTransition, useState } from "react";
 import Link from "next/link";
 import { moderateReviewAction } from "@/actions/review";
 import { cn } from "@/lib/utils";
@@ -38,17 +38,26 @@ export function ReviewsModerator({
   currentStatus,
 }: ReviewsModeratorProps) {
   const [isPending, startTransition] = useTransition();
+  const [responses, setResponses] = useState<Record<string, string>>({});
 
   function moderate(reviewId: string, status: ReviewStatus) {
+    const adminResponse = responses[reviewId];
+    
     startTransition(async () => {
-      const res = await moderateReviewAction(reviewId, status);
+      const res = await moderateReviewAction(reviewId, status, adminResponse);
       if (res.success) {
         toast.success(res.message);
+        setResponses(prev => {
+          const next = { ...prev };
+          delete next[reviewId];
+          return next;
+        });
       } else {
         toast.error(res.error);
       }
     });
   }
+
 
   return (
     <div className="flex flex-col gap-8">
@@ -134,14 +143,36 @@ export function ReviewsModerator({
                 {review.comment}
               </p>
 
-              {review.adminResponse && (
-                <div className="flex gap-2 p-3 bg-blue-50 dark:bg-blue-500/5 rounded-md border border-blue-100 dark:border-blue-500/20">
-                  <AlertCircle className="w-4 h-4 text-blue-500 shrink-0 mt-0.5" />
-                  <p className="text-xs text-blue-700 dark:text-blue-400">
-                    {review.adminResponse}
-                  </p>
-                </div>
-              )}
+              <div className="flex flex-col gap-2">
+                {review.adminResponse && (
+                  <div className="flex flex-col gap-1 p-3 bg-blue-50 dark:bg-blue-500/5 rounded-md border border-blue-100 dark:border-blue-500/20">
+                    <p className="text-[10px] font-bold text-blue-600 dark:text-blue-400 flex items-center gap-1 uppercase tracking-wider">
+                      <MessageSquare className="w-3 h-3" /> Respuesta Admin
+                    </p>
+                    <p className="text-xs text-blue-700 dark:text-blue-400">
+                      {review.adminResponse}
+                    </p>
+                  </div>
+                )}
+                
+                {currentStatus !== "PENDING" && !review.adminResponse && (
+                  <div className="flex flex-col gap-2">
+                    <textarea
+                      placeholder="Responder a esta reseña..."
+                      className="w-full p-2 text-xs rounded-md border border-neutral-200 dark:border-neutral-800 bg-neutral-50 dark:bg-neutral-900 resize-none h-16"
+                      value={responses[review.id] ?? ""}
+                      onChange={(e) => setResponses(prev => ({ ...prev, [review.id]: e.target.value }))}
+                    />
+                    <button
+                      onClick={() => moderate(review.id, review.status)}
+                      disabled={isPending || !responses[review.id]}
+                      className="self-end px-3 py-1.5 bg-neutral-900 text-white dark:bg-white dark:text-neutral-900 rounded-md text-[10px] font-bold hover:opacity-90 disabled:opacity-50 transition-opacity"
+                    >
+                      Enviar Respuesta
+                    </button>
+                  </div>
+                )}
+              </div>
 
               <div className="flex items-center justify-between">
                 <p className="text-xs text-neutral-400">
@@ -152,7 +183,7 @@ export function ReviewsModerator({
                   })}
                 </p>
 
-                {currentStatus === "PENDING" && (
+                {currentStatus === "PENDING" ? (
                   <div className="flex gap-2">
                     <button
                       onClick={() => moderate(review.id, "REJECTED")}
@@ -171,6 +202,14 @@ export function ReviewsModerator({
                       Aprobar
                     </button>
                   </div>
+                ) : (
+                  <button
+                    onClick={() => moderate(review.id, currentStatus === "APPROVED" ? "REJECTED" : "APPROVED")}
+                    disabled={isPending}
+                    className="text-[10px] font-medium text-neutral-400 hover:text-neutral-600 dark:hover:text-neutral-200 transition-colors"
+                  >
+                    Mover a {currentStatus === "APPROVED" ? "Rechazadas" : "Aprobadas"}
+                  </button>
                 )}
               </div>
             </div>

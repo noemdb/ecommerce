@@ -1,5 +1,16 @@
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
+## 🎨 Componentes del Template (ADR-010)
+
+Este proyecto utiliza un sistema de diseño basado en los siguientes módulos de referencia encontrados en la carpeta `template/`:
+
+- **Home**: `home_tasty_daily_platform`
+- **Catálogo**: `catalog_tasty_daily_platform`
+- **Detalle de Producto**: `product_detail_tasty_daily_platform`
+- **Checkout**: `checkout_tasty_daily_platform`
+- **Estilo Visual**: `emerald_noir`
+
+
 ## Getting Started
 
 First, run the development server:
