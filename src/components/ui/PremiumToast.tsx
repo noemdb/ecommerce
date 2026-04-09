@@ -57,6 +57,7 @@ export const PremiumToast = ({
                   src={image}
                   alt={title}
                   fill
+                  sizes="48px"
                   className="object-cover"
                 />
               </div>

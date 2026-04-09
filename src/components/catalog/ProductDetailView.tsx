@@ -55,6 +55,7 @@ export function ProductDetailView({ product, isPreview = false }: ProductDetailV
                 src={primaryImage.url} 
                 alt={primaryImage.alt || product.name} 
                 fill 
+                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                 className="object-cover transition-transform duration-700 group-hover:scale-105" 
                 priority
               />
@@ -79,7 +80,7 @@ export function ProductDetailView({ product, isPreview = false }: ProductDetailV
                     image.id === primaryImage?.id ? "border-blue-600 shadow-md" : "border-transparent hover:border-neutral-200 dark:hover:border-neutral-700"
                   )}
                 >
-                  <Image src={image.url} alt={image.alt || product.name} fill className="object-cover" />
+                  <Image src={image.url} alt={image.alt || product.name} fill sizes="(max-width: 768px) 25vw, 15vw" className="object-cover" />
                 </div>
               ))}
             </div>
