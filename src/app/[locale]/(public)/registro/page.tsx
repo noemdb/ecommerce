@@ -13,7 +13,14 @@ export default async function RegisterPage({
   params: Promise<{ locale: string }>;
 }) {
   const { locale } = await params;
-  const messages = (await import(`../../../../messages/${locale}.json`)).default;
+
+  // Static mapping for Turbopack bundle stability
+  const messageImports: Record<string, any> = {
+    en: () => import("../../../../../messages/en.json"),
+    es: () => import("../../../../../messages/es.json"),
+  };
+
+  const messages = (await (messageImports[locale] || messageImports.es)()).default;
   const t = (key: string) => messages.Auth[key as keyof typeof messages.Auth];
 
   return (

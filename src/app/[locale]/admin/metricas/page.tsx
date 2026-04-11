@@ -1,6 +1,6 @@
 import { requirePermission } from "@/lib/rbac";
 import { prisma } from "@/lib/prisma";
-import MetricsCharts from "../../../components/admin/MetricsChartsWrapper";
+import MetricsCharts from "@/components/admin/MetricsChartsWrapper";
 
 export default async function MetricasPage() {
   await requirePermission("metrics:view");
