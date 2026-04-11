@@ -16,6 +16,7 @@ import {
 } from "lucide-react";
 import { toast } from "sonner";
 import { useConfirm } from "@/components/providers/ConfirmProvider";
+import { cn } from "@/lib/utils";
 
 interface Supplier {
   id: string;
