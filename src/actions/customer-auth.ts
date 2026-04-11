@@ -26,8 +26,7 @@ export async function registerCustomerAction(input: unknown): Promise<ActionResu
     });
 
     const hashedPassword = await bcrypt.hash(password, 12);
-    const token = generateVerifyToken();
-    const expires = new Date(Date.now() + 3600 * 1000); // 1 hour
+    const { token, expires } = generateVerifyToken();
 
     if (existingCustomer) {
       if (existingCustomer.password) {
