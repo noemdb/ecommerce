@@ -1,7 +1,7 @@
 "use client";
 
 import { useLocale, useTranslations } from "next-intl";
-import { useRouter, usePathname } from "next/navigation";
+import { useRouter, usePathname, useParams } from "next/navigation";
 import { Globe } from "lucide-react";
 import {
   DropdownMenu,
@@ -13,14 +13,22 @@ import { Button } from "@/components/ui/button";
 
 export function LanguageSelector() {
   const t = useTranslations("Language");
-  const locale = useLocale();
-  const router = useRouter();
-  const pathname = usePathname();
+  const params = useParams();
+  const currentLocale = params.locale as string;
+  const router = useRouter(); // Stable native router
+  const pathname = usePathname(); // Stable native pathname
 
   const handleLanguageChange = (newLocale: "en" | "es") => {
     if (!pathname) return;
-    const newPath = pathname.replace(new RegExp(`^/${locale}`), `/${newLocale}`);
-    router.replace(newPath);
+    
+    // Robust array-based path replacement to avoid /es/en errors
+    const segments = pathname.split("/");
+    // Standard structure: /locale/path... -> ['', 'es', 'path']
+    if (segments.length > 1) {
+      segments[1] = newLocale;
+    }
+    
+    router.push(segments.join("/") || "/");
   };
 
   return (
@@ -34,13 +42,13 @@ export function LanguageSelector() {
       <DropdownMenuContent align="end">
         <DropdownMenuItem 
           onClick={() => handleLanguageChange("es")}
-          className={locale === "es" ? "bg-neutral-100 dark:bg-neutral-800 font-bold" : ""}
+          className={currentLocale === "es" ? "bg-neutral-100 dark:bg-neutral-800 font-bold" : ""}
         >
           {t("es")}
         </DropdownMenuItem>
         <DropdownMenuItem 
           onClick={() => handleLanguageChange("en")}
-          className={locale === "en" ? "bg-neutral-100 dark:bg-neutral-800 font-bold" : ""}
+          className={currentLocale === "en" ? "bg-neutral-100 dark:bg-neutral-800 font-bold" : ""}
         >
           {t("en")}
         </DropdownMenuItem>
