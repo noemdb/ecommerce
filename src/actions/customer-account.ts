@@ -107,18 +107,25 @@ export async function clearCustomerBitacoraAction(): Promise<ActionResult> {
   return { success: true, data: undefined };
 }
 
-export async function deleteFullAccountAction(): Promise<ActionResult> {
+export async function requestAccountDeletionAction(): Promise<ActionResult> {
   const session = await requireCustomerSession();
   const customerId = session.user.id;
 
-  // Realizar borrado en cascada manual de lo que no tenga Cascade en schema
+  // Seguimiento estricto del Spec V2.0 - G-15:
+  // "eliminación real de datos (GDPR) Fuera del alcance v1.0."
+  // "requestAccountDeletionAction bloquea la cuenta y registra la solicitud."
   await prisma.$transaction([
-    // 1. Borrar órdenes (y sus ítems/historia vía Cascade en DB si existe, si no Prisma lo maneja)
-    prisma.order.deleteMany({ where: { customerId } }),
-    // 2. Borrar reseñas
-    prisma.review.deleteMany({ where: { customerId } }),
-    // 3. Borrar el cliente (cascada a CustomerAction)
-    prisma.customer.delete({ where: { id: customerId } }),
+    prisma.customer.update({
+      where: { id: customerId },
+      data: { isBlocked: true },
+    }),
+    prisma.customerAction.create({
+      data: {
+        customerId,
+        action: "DELETE_ACCOUNT_REQUEST",
+        description: "Solicitud de eliminación de cuenta. Cuenta bloqueada temporalmente.",
+      },
+    }),
   ]);
 
   return { success: true, data: undefined };

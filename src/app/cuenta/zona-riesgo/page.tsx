@@ -2,8 +2,8 @@
 
 import { useState } from "react";
 import { signOut } from "next-auth/react";
-import { deleteFullAccountAction, clearCustomerBitacoraAction } from "@/actions/customer-account";
-import { AlertTriangle, LogOut, CheckCircle2, ShieldAlert, History, Trash2 } from "lucide-react";
+import { requestAccountDeletionAction, clearCustomerBitacoraAction } from "@/actions/customer-account";
+import { AlertTriangle, LogOut, CheckCircle2, ShieldAlert, History, Trash2, Lock } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useConfirm } from "@/components/providers/ConfirmProvider";
@@ -26,13 +26,13 @@ export default function DangerZonePage() {
     if (deleteInput !== "CONFIRMAR") return;
     
     setIsDeleting(true);
-    const res = await deleteFullAccountAction();
+    const res = await requestAccountDeletionAction();
     if (res.success) {
       setDeletedSuccess(true);
-      toast.success("Cuenta eliminada exitosamente");
+      toast.success("Solicitud enviada exitosamente");
       setTimeout(() => signOut({ callbackUrl: "/login" }), 5000);
     } else {
-      toast.error(res.error || "Error al eliminar la cuenta");
+      toast.error(res.error || "Error al procesar la solicitud");
     }
     setIsDeleting(false);
   };
@@ -135,15 +135,15 @@ export default function DangerZonePage() {
 
           <div className="flex items-start gap-4 relative z-10">
             <div className="p-3 bg-red-100 dark:bg-red-900/30 rounded-md">
-              <Trash2 className="w-6 h-6 text-red-600 dark:text-red-500" />
+              <Lock className="w-6 h-6 text-red-600 dark:text-red-500" />
             </div>
             <div className="flex-1">
-              <h2 className="text-lg font-bold text-neutral-900 dark:text-white">Eliminar cuenta por completo</h2>
+              <h2 className="text-lg font-bold text-neutral-900 dark:text-white">Eliminar de cuenta (Bloqueo)</h2>
               
               {!deletedSuccess ? (
                 <>
                   <p className="text-sm text-neutral-500 mb-6 max-w-lg">
-                    Esta acción elmina permanentemente tu perfil, **compras**, reseñas y bitácora. No podrás recuperar esta información ni el acceso a esta cuenta.
+                    Esta acción registrará tu solicitud de eliminación. Por seguridad, **tu cuenta será bloqueada inmediatamente** e iniciará el proceso de eliminación según la política de retención de datos. No podrás volver a acceder.
                   </p>
 
                   {!showDeleteConfirm ? (
@@ -152,12 +152,12 @@ export default function DangerZonePage() {
                       onClick={() => setShowDeleteConfirm(true)}
                       className="rounded-md bg-red-50 text-red-600 dark:bg-red-900/10 dark:text-red-500 hover:bg-red-100 dark:hover:bg-red-900/20 font-bold"
                     >
-                      Eliminar cuenta y compras
+                      Solcitar eliminación de cuenta
                     </Button>
                   ) : (
                     <div className="mt-4 p-6 bg-red-50 dark:bg-red-900/10 rounded-md border border-red-100 dark:border-red-900/30">
                       <p className="text-sm font-bold text-red-800 dark:text-red-400 mb-4">
-                        ¿Estás seguro de querer elminar TODO? Escribe <span className="underline italic">CONFIRMAR</span>:
+                        ¿Estás seguro de querer bloquear y eliminar la cuenta? Escribe <span className="underline italic">CONFIRMAR</span>:
                       </p>
                       <div className="flex flex-col sm:flex-row gap-3">
                         <Input 
@@ -192,9 +192,9 @@ export default function DangerZonePage() {
                     <CheckCircle2 className="w-5 h-5 text-emerald-600 dark:text-emerald-400" />
                   </div>
                   <div>
-                    <h4 className="font-bold text-emerald-900 dark:text-emerald-300">Cuenta Eliminada</h4>
+                    <h4 className="font-bold text-emerald-900 dark:text-emerald-300">Solicitud Completada</h4>
                     <p className="text-sm text-emerald-700 dark:text-emerald-500">
-                      Tu cuenta ha sido elminada permanentemente. Serás desconectado...
+                      Tu cuenta ha sido bloqueada. Serás desconectado en breve...
                     </p>
                   </div>
                 </div>
