@@ -2,7 +2,7 @@
 
 import { useRouter, useSearchParams, usePathname } from "next/navigation";
 import { useTransition, useCallback } from "react";
-import Link from "next/link";
+import { Link } from "@/i18n/navigation";
 import {
   ShoppingBag,
   Search,

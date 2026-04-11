@@ -7,7 +7,7 @@ import { PromptActions } from "./PromptActions";
 import { ProductPreviewModal } from "./ProductPreviewModal";
 import { PromptDetailModal } from "./PromptDetailModal";
 import { Button as UIButton } from "@/components/ui/button";
-import Link from "next/link";
+import { Link } from "@/i18n/navigation";
 
 interface PromptWithProduct {
   id: string;

@@ -1,7 +1,7 @@
 "use client";
 
 import { useTransition, useState } from "react";
-import Link from "next/link";
+import { Link } from "@/i18n/navigation";
 import { moderateReviewAction } from "@/actions/review";
 import { cn } from "@/lib/utils";
 import type { ReviewStatus } from "@prisma/client";

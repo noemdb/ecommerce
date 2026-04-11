@@ -2,7 +2,7 @@ import { requireCustomerSession } from "@/lib/rbac";
 import { prisma } from "@/lib/prisma";
 import { notFound } from "next/navigation";
 import Image from "next/image";
-import Link from "next/link";
+import { Link } from "@/i18n/navigation";
 import { ArrowLeft, MessageCircle, FileText, CheckCircle2, Clock, AlertCircle, ShoppingBag } from "lucide-react";
 import type { OrderStatus } from "@prisma/client";
 

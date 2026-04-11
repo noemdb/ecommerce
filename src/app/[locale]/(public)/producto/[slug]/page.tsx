@@ -3,7 +3,7 @@ import { prisma } from "@/lib/prisma";
 import { notFound } from "next/navigation";
 import { ProductDetailView } from "@/components/catalog/ProductDetailView";
 import { ReviewForm } from "@/components/catalog/ReviewForm";
-import Link from "next/link";
+import { Link } from "@/i18n/navigation";
 
 interface ProductPageProps {
   params: Promise<{ slug: string }>;

@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useTransition } from "react";
-import Link from "next/link";
+import { Link } from "@/i18n/navigation";
 import { Pencil, ToggleLeft, ToggleRight, Trash2, Eye } from "lucide-react";
 import { showPremiumToast } from "@/components/ui/PremiumToast";
 import { useConfirm } from "@/components/providers/ConfirmProvider";

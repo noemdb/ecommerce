@@ -1,7 +1,7 @@
 import { auth } from "@/auth";
 import { CheckoutForm } from "@/components/cart/CheckoutForm";
 import { ArrowLeft, ShieldCheck } from "lucide-react";
-import Link from "next/link";
+import { Link } from "@/i18n/navigation";
 import { Suspense } from "react";
 
 export const metadata = {

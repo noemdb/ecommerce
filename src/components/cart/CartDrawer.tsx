@@ -3,7 +3,7 @@
 import { useCartStore } from "@/store/cart";
 import { X, ShoppingBag, Plus, Minus, Trash2, ArrowRight } from "lucide-react";
 import Image from "next/image";
-import Link from "next/link";
+import { Link } from "@/i18n/navigation";
 import { formatPrice } from "@/lib/utils";
 import { cn } from "@/lib/utils";
 import { useEffect, useState } from "react";

@@ -1,7 +1,7 @@
 import { prisma } from "@/lib/prisma";
 import { notFound } from "next/navigation";
 import { CheckCircle2, Package, Calendar, Tag, ArrowRight, Home } from "lucide-react";
-import Link from "next/link";
+import { Link } from "@/i18n/navigation";
 import { formatPrice } from "@/lib/utils";
 import { auth } from "@/auth";
 

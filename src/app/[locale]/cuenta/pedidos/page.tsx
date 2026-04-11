@@ -1,6 +1,6 @@
 import { requireCustomerSession } from "@/lib/rbac";
 import { prisma } from "@/lib/prisma";
-import Link from "next/link";
+import { Link } from "@/i18n/navigation";
 import { ShoppingBag } from "lucide-react";
 import type { OrderStatus } from "@prisma/client";
 

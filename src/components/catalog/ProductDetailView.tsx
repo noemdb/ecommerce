@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import Link from "next/link";
+import { Link } from "@/i18n/navigation";
 import { RatingStars } from "./RatingStars";
 import { AddToCartButton } from "./AddToCartButton";
 import { formatPrice } from "@/lib/utils";

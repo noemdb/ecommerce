@@ -1,6 +1,6 @@
 import { requireCustomerSession } from "@/lib/rbac";
 import { prisma } from "@/lib/prisma";
-import Link from "next/link";
+import { Link } from "@/i18n/navigation";
 import { ShoppingBag, DollarSign, Activity, CalendarDays } from "lucide-react";
 
 export default async function CustomerDashboardPage() {
