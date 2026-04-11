@@ -13,12 +13,14 @@ import { ArrowRight, CreditCard, Building2, Upload, AlertCircle, ShoppingBag } f
 import { useRouter } from "next/navigation";
 import { formatPrice } from "@/lib/utils";
 import Image from "next/image";
+import { useTranslations } from "next-intl";
 
 interface CheckoutFormProps {
   initialData?: Partial<CheckoutInput>;
 }
 
 export function CheckoutForm({ initialData }: CheckoutFormProps) {
+  const t = useTranslations("Checkout");
   const { items, total, clearCart } = useCartStore();
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
@@ -36,10 +38,10 @@ export function CheckoutForm({ initialData }: CheckoutFormProps) {
   // Redirect if cart empty
   useEffect(() => {
     if (items.length === 0 && !isLoading) {
-      toast.error("Tu carrito está vacío");
+      toast.error(t("empty"));
       router.push("/");
     }
-  }, [items, router, isLoading]);
+  }, [items, router, isLoading, t]);
 
   const onSubmit = async (data: CheckoutInput) => {
     setIsLoading(true);
@@ -57,14 +59,14 @@ export function CheckoutForm({ initialData }: CheckoutFormProps) {
       const result = await createOrderAction(data, orderItems);
       
       if (result.success) {
-        toast.success("¡Pedido realizado con éxito!");
+        toast.success(t("success"));
         clearCart();
         router.push(`/checkout/confirmado?orderId=${result.data.orderId}`);
       } else {
         toast.error(result.error || "Error al procesar el pedido");
       }
     } catch (error) {
-      toast.error("Error de conexión");
+      toast.error(t("error_conn"));
     } finally {
       setIsLoading(false);
     }
@@ -81,25 +83,25 @@ export function CheckoutForm({ initialData }: CheckoutFormProps) {
             <div className="p-2 bg-blue-50 dark:bg-blue-900/30 rounded-md text-blue-600">
               <ShoppingBag className="w-5 h-5" />
             </div>
-            <h2 className="text-xl font-black tracking-tight uppercase tracking-widest">1. Información del Cliente</h2>
+            <h2 className="text-xl font-black tracking-tight uppercase tracking-widest">{t("details")}</h2>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <Input
-              label="Nombre Completo"
-              placeholder="Ej. Juan Pérez"
+              label={t("label_name")}
+              placeholder={t("placeholder_name")}
               {...register("name")}
               error={errors.name?.message}
             />
             <Input
-              label="Email de Notificación"
-              placeholder="juan@ejemplo.com"
+              label={t("label_email")}
+              placeholder={t("placeholder_email")}
               {...register("email")}
               error={errors.email?.message}
             />
           </div>
           <Input
-            label="Teléfono de Contacto"
-            placeholder="+52 ..."
+            label={t("label_phone")}
+            placeholder={t("placeholder_phone")}
             {...register("phone")}
             error={errors.phone?.message}
           />
@@ -110,7 +112,7 @@ export function CheckoutForm({ initialData }: CheckoutFormProps) {
             <div className="p-2 bg-blue-50 dark:bg-blue-900/30 rounded-md text-blue-600">
               <Building2 className="w-5 h-5" />
             </div>
-            <h2 className="text-xl font-black tracking-tight uppercase tracking-widest">2. Detalles de Pago</h2>
+            <h2 className="text-xl font-black tracking-tight uppercase tracking-widest">{t("payment")}</h2>
           </div>
           <div className="space-y-4">
             <div className="w-full space-y-2">
@@ -146,7 +148,7 @@ export function CheckoutForm({ initialData }: CheckoutFormProps) {
             <div className="p-2 bg-blue-50 dark:bg-blue-900/30 rounded-md text-blue-600">
               <Upload className="w-5 h-5" />
             </div>
-            <h2 className="text-xl font-black tracking-tight uppercase tracking-widest">3. Comprobante de Pago</h2>
+            <h2 className="text-xl font-black tracking-tight uppercase tracking-widest">{t("proof")}</h2>
           </div>
           <div className="p-8 border-2 border-dashed border-neutral-200 dark:border-neutral-800 rounded-lg text-center space-y-4 hover:border-blue-500/50 hover:bg-blue-50/10 transition-all cursor-pointer group">
             <div className="w-12 h-12 bg-neutral-100 dark:bg-neutral-800 rounded-lg mx-auto flex items-center justify-center text-neutral-400 group-hover:scale-110 group-hover:text-blue-600 transition-all">
@@ -168,7 +170,7 @@ export function CheckoutForm({ initialData }: CheckoutFormProps) {
         </section>
 
         <Button type="submit" className="w-full h-18 text-lg" isLoading={isLoading}>
-          Confirmar Pedido & Pagar {formatPrice(total())}
+          {t("submit")} {formatPrice(total())}
           <ArrowRight className="ml-2 w-5 h-5" />
         </Button>
       </form>

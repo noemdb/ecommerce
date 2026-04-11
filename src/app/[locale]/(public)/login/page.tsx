@@ -8,7 +8,15 @@ export const metadata = {
   description: "Inicia sesión para acceder a tu historial de pedidos premium y beneficios exclusivos.",
 };
 
-export default function LoginPage() {
+export default async function LoginPage({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}) {
+  const { locale } = await params;
+  const messages = (await import(`../../../../messages/${locale}.json`)).default;
+  const t = (key: string) => messages.Auth[key as keyof typeof messages.Auth];
+
   return (
     <div className="flex-1 flex items-center justify-center py-20 px-4 bg-neutral-50/50 dark:bg-neutral-950/50 relative overflow-hidden">
       {/* Background decorative elements */}
@@ -16,8 +24,8 @@ export default function LoginPage() {
       <div className="absolute bottom-0 right-0 translate-y-1/2 translate-x-1/2 w-[500px] h-[500px] bg-blue-500/5 rounded-lg blur-[120px]" />
 
       <AuthCard 
-        title="Mi Cuenta" 
-        subtitle="Inicia sesión para continuar tu experiencia premium"
+        title={t("login_title")} 
+        subtitle={t("login_subtitle")}
         icon={<LogIn className="w-8 h-8" />}
       >
         <Suspense fallback={<div className="h-64 flex items-center justify-center">Cargando...</div>}>

@@ -16,6 +16,7 @@ import {
   RefreshCw,
   BadgeCheck,
   Hourglass,
+  Download,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import type { OrderStatus } from "@prisma/client";
@@ -110,6 +111,14 @@ export function OrdersTable({
             {total} pedido{total !== 1 ? "s" : ""} en total
           </p>
         </div>
+        <a 
+          href="/api/admin/export/orders" 
+          target="_blank"
+          className="inline-flex items-center gap-2 px-4 py-2 bg-neutral-900 dark:bg-white text-white dark:text-neutral-900 text-sm font-semibold rounded-md hover:opacity-90 transition-opacity"
+        >
+          <Download className="w-4 h-4" />
+          Exportar CSV
+        </a>
       </div>
 
       {/* Status tabs */}

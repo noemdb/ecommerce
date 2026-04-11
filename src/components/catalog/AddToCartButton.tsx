@@ -5,6 +5,7 @@ import { Plus, Check, ShoppingCart } from "lucide-react";
 import { useState } from "react";
 import { cn } from "@/lib/utils";
 import { showPremiumToast } from "@/components/ui/PremiumToast";
+import { useTranslations } from "next-intl";
 
 interface AddToCartButtonProps {
   product: {
@@ -31,6 +32,7 @@ export function AddToCartButton({
   showIcon = true,
   size = "md" 
 }: AddToCartButtonProps) {
+  const t = useTranslations("ProductCard");
   const addItem = useCartStore((state) => state.addItem);
   const toggleCart = useCartStore((state) => state.toggleCart);
   const [added, setAdded] = useState(false);
@@ -84,12 +86,12 @@ export function AddToCartButton({
       {added ? (
         <>
           <Check className="w-4 h-4" />
-          <span>Añadido</span>
+          <span>{t("added")}</span>
         </>
       ) : (
         <>
           {showIcon && <Plus className="w-4 h-4" />}
-          <span>{(product.stock <= 0 || disabled) ? "Agotado" : "Añadir"}</span>
+          <span>{(product.stock <= 0 || disabled) ? t("sold_out") : t("add_to_cart")}</span>
         </>
       )}
     </button>

@@ -5,8 +5,11 @@ import { ShoppingCart, User, LogIn } from "lucide-react";
 import { useCartStore } from "@/store/cart";
 import { useEffect, useState } from "react";
 import { cn } from "@/lib/utils";
+import { useTranslations } from "next-intl";
+import { LanguageSelector } from "./LanguageSelector";
 
 export function Navbar() {
+  const t = useTranslations("Header");
   const items = useCartStore((state) => state.items);
   const toggleCart = useCartStore((state) => state.toggleCart);
   const [mounted, setMounted] = useState(false);
@@ -43,20 +46,22 @@ export function Navbar() {
         <div className="flex items-center gap-4 md:gap-8">
           <nav className="hidden md:flex items-center gap-6">
             <Link href="/#catalogo" className="text-sm font-bold uppercase tracking-widest text-neutral-500 hover:text-blue-600 transition-colors">
-              Catálogo
+              {t("catalog")}
             </Link>
             <Link href="/nosotros" className="text-sm font-bold uppercase tracking-widest text-neutral-500 hover:text-blue-600 transition-colors">
-              Nosotros
+              {t("about")}
             </Link>
           </nav>
 
           <div className="h-4 w-px bg-neutral-200 dark:bg-neutral-800 hidden md:block" />
 
           <div className="flex items-center gap-2 md:gap-4">
+            <LanguageSelector />
+            
             <Link 
               href="/cuenta" 
               className="p-2 text-neutral-600 hover:text-blue-600 transition-all rounded-lg hover:bg-neutral-100 dark:text-neutral-400 dark:hover:bg-neutral-800"
-              title="Mi cuenta"
+              title={t("account")}
             >
               <User className="w-5 h-5" />
             </Link>
@@ -64,7 +69,7 @@ export function Navbar() {
             <button 
               onClick={toggleCart}
               className="p-2 relative group text-neutral-600 hover:text-blue-600 transition-all rounded-lg hover:bg-neutral-100 dark:text-neutral-400 dark:hover:bg-neutral-800"
-              aria-label="Ver carrito"
+              aria-label={t("cart")}
             >
               <ShoppingCart className="w-5 h-5 group-hover:scale-110 transition-transform" />
               {mounted && cartCount > 0 && (

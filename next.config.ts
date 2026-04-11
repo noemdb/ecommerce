@@ -1,6 +1,5 @@
 // next.config.ts
 import type { NextConfig } from "next";
-
 const nextConfig: NextConfig = {
   reactCompiler: true,
   images: {
@@ -10,6 +9,14 @@ const nextConfig: NextConfig = {
       { protocol: "https", hostname: "images.unsplash.com" },
     ],
   },
+  // Manually resolve next-intl config because the official plugin
+  // still uses the deprecated 'experimental: { turbo: ... }' key
+  // which causes warnings/errors in Next.js 16.2 stable Turbopack.
+  turbopack: {
+    resolveAlias: {
+      "next-intl/config": "./src/i18n/request.ts"
+    }
+  }
 };
 
 export default nextConfig;

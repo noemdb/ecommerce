@@ -22,6 +22,7 @@ import { Button } from "@/components/ui/button";
 import { useState, useEffect } from "react";
 import { cn } from "@/lib/utils";
 import { ThemeToggle } from "@/components/shared/ThemeToggle";
+import { LanguageSelector } from "@/components/layout/LanguageSelector";
 
 const SIDEBAR_ITEMS = [
   { label: "Dashboard", href: "/admin", icon: LayoutDashboard },
@@ -110,7 +111,10 @@ export function AdminSidebar() {
 
       {/* Footer / Theme & Logout */}
       <div className="p-3 border-t border-neutral-200 dark:border-neutral-800 shrink-0 space-y-1">
-        <ThemeToggle isCollapsed={isCollapsed} />
+        <div className={cn("flex items-center gap-2 mb-2", isCollapsed ? "justify-center flex-col" : "justify-between px-2")}>
+          <ThemeToggle isCollapsed={isCollapsed} />
+          {!isCollapsed && <LanguageSelector />}
+        </div>
         <Button 
           variant="ghost" 
           onClick={() => signOut({ callbackUrl: "/admin/login" })}

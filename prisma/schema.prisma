@@ -90,6 +90,7 @@ model Customer {
   // Auth opcional — null = cliente invitado/anónimo
   password           String?
   isEmailVerified    Boolean   @default(false)
+  phoneVerified      Boolean   @default(false)
   emailVerifyToken   String?
   emailVerifyExpires DateTime?
 
@@ -102,6 +103,7 @@ model Customer {
   orders          Order[]
   reviews         Review[]
   customerActions CustomerAction[]
+  otpTokens       OTPToken[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -110,6 +112,22 @@ model Customer {
   @@index([isBlocked])
   @@index([isEmailVerified])
   @@map("customers")
+}
+
+model OTPToken {
+  id         String   @id @default(cuid())
+  customerId String
+  customer   Customer @relation(fields: [customerId], references: [id], onDelete: Cascade)
+  phone      String
+  pinHash    String   // Bcrypt hash del generador de 6 digitos
+  expiresAt  DateTime
+  used       Boolean  @default(false)
+
+  createdAt  DateTime @default(now())
+
+  @@index([customerId])
+  @@index([phone])
+  @@map("otp_tokens")
 }
 
 model CustomerAction {
@@ -200,6 +218,9 @@ model Product {
   isNew             Boolean @default(false)
   stock             Int     @default(0)
   lowStockThreshold Int     @default(5)
+
+  averageRating     Float   @default(0)
+  totalReviews      Int     @default(0)
 
   metaTitle       String?
   metaDescription String?

@@ -68,6 +68,57 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
         return null;
       },
     }),
+    // Provider 3: WhatsApp OTP Auth
+    Credentials({
+      id: "whatsapp-otp",
+      name: "WhatsApp OTP",
+      credentials: {
+        phone: { label: "Phone", type: "text" },
+        pin: { label: "PIN", type: "text" }
+      },
+      async authorize(credentials) {
+        if (!credentials?.phone || !credentials?.pin) return null;
+        
+        const phone = credentials.phone as string;
+        const pin = credentials.pin as string;
+
+        const customer = await prisma.customer.findFirst({
+          where: { phone: { endsWith: phone }, isBlocked: false }
+        });
+
+        if (!customer) return null;
+
+        const token = await prisma.oTPToken.findFirst({
+          where: { customerId: customer.id, expiresAt: { gt: new Date() }, used: false }
+        });
+
+        if (!token) return null;
+
+        const isValid = await bcrypt.compare(pin, token.pinHash);
+        
+        if (isValid) {
+          // Actualizamos a verificado
+          await prisma.customer.update({
+            where: { id: customer.id },
+            data: { phoneVerified: true }
+          });
+          
+          await prisma.oTPToken.update({
+            where: { id: token.id },
+            data: { used: true }
+          });
+
+          return {
+            id: customer.id,
+            name: customer.name,
+            email: customer.email,
+            role: "CUSTOMER",
+          };
+        }
+
+        return null;
+      }
+    }),
   ],
   callbacks: {
     async jwt({ token, user }) {

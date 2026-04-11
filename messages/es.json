@@ -1,0 +1,52 @@
+{
+  "Header": {
+    "catalog": "Catálogo",
+    "about": "Nosotros",
+    "account": "Mi cuenta",
+    "cart": "Ver carrito"
+  },
+  "Language": {
+    "es": "Español",
+    "en": "English"
+  },
+  "Auth": {
+    "login_title": "Mi Cuenta",
+    "login_subtitle": "Inicia sesión para continuar tu experiencia premium",
+    "register_title": "Crear Cuenta",
+    "register_subtitle": "Únete para acceder a beneficios exclusivos"
+  },
+  "Hero": {
+    "badge": "Nueva Colección 2026",
+    "title_start": "Eleva tu estilo con",
+    "title_highlight": "Premium",
+    "description": "Descubre nuestra selección exclusiva de productos de alta gama. Calidad y diseño que transformarán tu día a día.",
+    "cta_catalog": "Explorar Catálogo",
+    "cta_about": "Conoce más"
+  },
+  "ProductCard": {
+    "sold_out": "Agotado",
+    "new": "Nuevo",
+    "best_seller": "Más Vendido",
+    "promo": "Promo",
+    "add_to_cart": "Agregar",
+    "view_product": "Ver producto",
+    "unit": "und",
+    "added": "Añadido"
+  },
+  "Checkout": {
+    "title": "Checkout",
+    "submit": "Completar Compra",
+    "details": "1. Información de Envío",
+    "payment": "2. Método de Pago",
+    "proof": "3. Comprobante de Pago",
+    "empty": "Tu carrito está vacío",
+    "success": "¡Pedido realizado con éxito!",
+    "error_conn": "Error de conexión",
+    "placeholder_name": "Ej. Juan Pérez",
+    "placeholder_email": "juan@ejemplo.com",
+    "placeholder_phone": "+52 ...",
+    "label_name": "Nombre Completo",
+    "label_email": "Email de Notificación",
+    "label_phone": "Teléfono de Contacto"
+  }
+}

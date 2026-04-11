@@ -1,0 +1,52 @@
+{
+  "Header": {
+    "catalog": "Catalog",
+    "about": "About Us",
+    "account": "My Account",
+    "cart": "View Cart"
+  },
+  "Language": {
+    "es": "Español",
+    "en": "English"
+  },
+  "Auth": {
+    "login_title": "My Account",
+    "login_subtitle": "Log in to continue your premium experience",
+    "register_title": "Create Account",
+    "register_subtitle": "Join to access exclusive benefits"
+  },
+  "Hero": {
+    "badge": "New Collection 2026",
+    "title_start": "Elevate your style with",
+    "title_highlight": "Premium",
+    "description": "Discover our exclusive selection of high-end products. Quality and design that will transform your everyday life.",
+    "cta_catalog": "Explore Catalog",
+    "cta_about": "Learn more"
+  },
+  "ProductCard": {
+    "sold_out": "Sold Out",
+    "new": "New",
+    "best_seller": "Best Seller",
+    "promo": "Promo",
+    "add_to_cart": "Add to cart",
+    "view_product": "View details",
+    "unit": "ea",
+    "added": "Added"
+  },
+  "Checkout": {
+    "title": "Checkout",
+    "submit": "Complete Purchase",
+    "details": "1. Shipping Information",
+    "payment": "2. Payment Method",
+    "proof": "3. Payment Proof",
+    "empty": "Your cart is empty",
+    "success": "Order placed successfully!",
+    "error_conn": "Connection error",
+    "placeholder_name": "e.g. John Doe",
+    "placeholder_email": "john@example.com",
+    "placeholder_phone": "+1 ...",
+    "label_name": "Full Name",
+    "label_email": "Notification Email",
+    "label_phone": "Contact Phone"
+  }
+}

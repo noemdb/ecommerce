@@ -7,6 +7,7 @@ import { RatingStars } from "@/components/catalog/RatingStars";
 import { Star, MessageSquare, Send } from "lucide-react";
 import { toast } from "sonner";
 import { cn } from "@/lib/utils";
+import { addReviewAction } from "@/actions/customer-review";
 
 interface ReviewFormProps {
   productId: string;
@@ -30,14 +31,17 @@ export function ReviewForm({ productId }: ReviewFormProps) {
     }
 
     setIsSubmitting(true);
-    // Mock server action call
     try {
-      await new Promise(resolve => setTimeout(resolve, 1500));
-      toast.success("¡Reseña enviada! Estará visible tras la moderación.");
-      setRating(0);
-      setComment("");
+      const res = await addReviewAction(productId, rating, comment);
+      if (res.success) {
+        toast.success("¡Reseña enviada! Estará visible tras la moderación.");
+        setRating(0);
+        setComment("");
+      } else {
+        toast.error(res.error || "Error al enviar la reseña");
+      }
     } catch (error) {
-      toast.error("Error al enviar la reseña");
+      toast.error("Error inesperado al comunicarse con el servidor");
     } finally {
       setIsSubmitting(false);
     }

@@ -12,6 +12,10 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
+import { NextIntlClientProvider } from 'next-intl';
+import { notFound } from 'next/navigation';
+import { routing } from '@/i18n/routing';
+
 import { Toaster } from "sonner";
 import { ConfirmProvider } from "@/components/providers/ConfirmProvider";
 import { ThemeProvider } from "@/components/providers/ThemeProvider";
@@ -27,12 +31,28 @@ export async function generateMetadata(): Promise<Metadata> {
   };
 }
 
+// Informa a Next.js qué segmentos de [locale] son válidos
+export function generateStaticParams() {
+  return [{ locale: 'es' }, { locale: 'en' }];
+}
+
 export default async function RootLayout({
   children,
+  params,
 }: Readonly<{
   children: React.ReactNode;
+  params: Promise<{ locale: string }>;
 }>) {
+  const resolvedParams = await params;
+  const { locale } = resolvedParams;
+  
+  // Prevent missing locale files like favicon.ico crashing server
+  if (!routing.locales.includes(locale as any)) {
+    notFound();
+  }
+
   const config = await getSiteConfig();
+  const messages = (await import(`../../../messages/${locale}.json`)).default;
 
   // CSS custom properties injected at the root so all pages can consume them.
   // These are additive and do not override existing Tailwind or dark-mode styles.
@@ -49,22 +69,24 @@ export default async function RootLayout({
 
   return (
     <html
-      lang="es"
+      lang={resolvedParams.locale}
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
       style={cssVars}
       suppressHydrationWarning
     >
       <body className="min-h-full flex flex-col">
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="system"
-          enableSystem
-          disableTransitionOnChange
-        >
-          <ConfirmProvider>
-            {children}
-          </ConfirmProvider>
-        </ThemeProvider>
+        <NextIntlClientProvider messages={messages}>
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="system"
+            enableSystem
+            disableTransitionOnChange
+          >
+            <ConfirmProvider>
+              {children}
+            </ConfirmProvider>
+          </ThemeProvider>
+        </NextIntlClientProvider>
         <Toaster 
           position="bottom-right" 
           toastOptions={{

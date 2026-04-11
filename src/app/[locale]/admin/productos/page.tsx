@@ -1,7 +1,7 @@
 import { requirePermission } from "@/lib/rbac";
 import { prisma } from "@/lib/prisma";
 import Link from "next/link";
-import { Plus, Package, Search } from "lucide-react";
+import { Plus, Package, Search, Download } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { ProductActions } from "@/components/admin/ProductActions";
 import { ProductImageCell } from "@/components/admin/ProductImageCell";
@@ -91,13 +91,23 @@ export default async function ProductosPage({
             {products.length} producto{products.length !== 1 ? "s" : ""} en el catálogo
           </p>
         </div>
-        <Link
-          href="/admin/productos/nuevo"
-          className="inline-flex items-center justify-center h-11 px-6 rounded-md bg-blue-600 text-white text-sm font-bold uppercase tracking-wider hover:bg-blue-700 transition-colors gap-2 shadow-lg shadow-blue-500/20"
-        >
-          <Plus className="w-4 h-4" />
-          Nuevo Producto
-        </Link>
+        <div className="flex items-center gap-3">
+          <a 
+            href="/api/admin/export/products" 
+            target="_blank"
+            className="inline-flex items-center justify-center h-11 px-4 bg-neutral-900 dark:bg-white text-white dark:text-neutral-900 text-sm font-semibold rounded-md hover:opacity-90 transition-opacity gap-2"
+          >
+            <Download className="w-4 h-4" />
+            <span className="hidden sm:inline">Exportar CSV</span>
+          </a>
+          <Link
+            href="/admin/productos/nuevo"
+            className="inline-flex items-center justify-center h-11 px-6 rounded-md bg-blue-600 text-white text-sm font-bold uppercase tracking-wider hover:bg-blue-700 transition-colors gap-2 shadow-lg shadow-blue-500/20"
+          >
+            <Plus className="w-4 h-4" />
+            <span className="hidden sm:inline">Nuevo Producto</span>
+          </Link>
+        </div>
       </div>
 
       <div className="flex flex-col lg:flex-row lg:items-center gap-4 justify-between">

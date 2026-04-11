@@ -1,8 +1,11 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
 import { formatPrice } from "@/lib/utils";
 import { RatingStars } from "./RatingStars";
 import { AddToCartButton } from "./AddToCartButton";
+import { useTranslations } from "next-intl";
 
 interface ProductCardProps {
   product: {
@@ -21,6 +24,7 @@ interface ProductCardProps {
 }
 
 export function ProductCard({ product, badge }: ProductCardProps) {
+  const t = useTranslations("ProductCard");
   const isOutOfStock = product.stock <= 0;
   
   const averageRating = product.reviews?.length 
@@ -37,7 +41,7 @@ export function ProductCard({ product, badge }: ProductCardProps) {
       <div className="absolute z-10 top-3 left-3 flex flex-col gap-2 pointer-events-none">
         {isOutOfStock ? (
           <span className="bg-red-500 text-white text-[10px] font-bold px-2 py-1 rounded uppercase tracking-wider">
-            Agotado
+            {t("sold_out")}
           </span>
         ) : (
           <>
@@ -48,12 +52,12 @@ export function ProductCard({ product, badge }: ProductCardProps) {
             )}
             {product.promoPrice && (
               <span className="bg-blue-600 text-white text-[10px] font-bold px-2 py-1 rounded uppercase tracking-wider shadow-sm">
-                Oferta
+                {t("promo")}
               </span>
             )}
             {product.isNew && !badge && (
               <span className="bg-emerald-500 text-white text-[10px] font-bold px-2 py-1 rounded uppercase tracking-wider shadow-sm">
-                Nuevo
+                {t("new")}
               </span>
             )}
           </>

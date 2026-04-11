@@ -1,9 +1,10 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import { useTranslations } from "next-intl";
 
 interface HeroProduct {
   id: string;
@@ -28,9 +29,11 @@ interface Particle {
 }
 
 export function HeroBanner({ products }: HeroBannerProps) {
+  const t = useTranslations("Hero");
   const [currentIndex, setCurrentIndex] = useState(0);
   const [particles, setParticles] = useState<Particle[]>([]);
   const [mounted, setMounted] = useState(false);
+  const shouldReduceMotion = useReducedMotion();
 
   useEffect(() => {
     setMounted(true);
@@ -65,7 +68,7 @@ export function HeroBanner({ products }: HeroBannerProps) {
       <div className="hero-gradient-bg absolute inset-0 z-0" />
 
       {/* Capa 2: Partículas flotantes (Framer Motion, solo cliente) */}
-      {mounted && particles.map((p) => (
+      {mounted && !shouldReduceMotion && particles.map((p) => (
         <motion.div
           key={p.id}
           className="absolute rounded-lg bg-white/10 backdrop-blur-sm pointer-events-none"
@@ -97,9 +100,9 @@ export function HeroBanner({ products }: HeroBannerProps) {
         <motion.div
           key={currentIndex}
           className="absolute inset-0 md:inset-y-0 md:right-0 md:w-1/2 z-10"
-          initial={{ opacity: 0, scale: 1.05 }}
+          initial={{ opacity: 0, scale: shouldReduceMotion ? 1 : 1.05 }}
           animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 1.2, ease: "easeOut" }}
+          transition={{ duration: shouldReduceMotion ? 0.3 : 1.2, ease: "easeOut" }}
         >
           <Image
             src={current.images[0].url}
@@ -129,16 +132,20 @@ export function HeroBanner({ products }: HeroBannerProps) {
               animate={{ opacity: 1, scale: 1 }}
               className="inline-block px-4 py-1.5 rounded-full bg-blue-600/90 backdrop-blur-md text-white text-[10px] font-bold uppercase tracking-widest mb-6 shadow-lg shadow-blue-500/20"
             >
-              Oferta exclusiva
+              {t("badge")}
             </motion.span>
           )}
 
           <h1 className="text-4xl sm:text-5xl lg:text-7xl font-extrabold text-white leading-[1.1] mb-6 tracking-tight">
-            {current?.name ?? "Descubre nuestra colección premium"}
+            {current?.name ?? (
+              <>
+                {t("title_start")} <span className="text-blue-500">{t("title_highlight")}</span>
+              </>
+            )}
           </h1>
 
           <p className="text-white/70 text-base md:text-xl mb-8 md:mb-10 max-w-md mx-auto md:mx-0 leading-relaxed">
-            Productos de calidad excepcional con envío garantizado a todo el país.
+            {t("description")}
           </p>
 
           <div className="flex flex-col sm:flex-row items-center justify-center md:justify-start gap-4">
@@ -147,7 +154,7 @@ export function HeroBanner({ products }: HeroBannerProps) {
                 href={`/producto/${current.slug}`}
                 className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-8 py-4 bg-white text-black font-bold rounded-xl hover:bg-neutral-100 transition-all active:scale-95 shadow-xl shadow-white/10"
               >
-                Ver producto
+                {t("cta_catalog")}
                 <span className="text-xl" aria-hidden>→</span>
               </Link>
             ) : (
@@ -155,7 +162,7 @@ export function HeroBanner({ products }: HeroBannerProps) {
                 href="/catalogo"
                 className="inline-flex items-center gap-2 px-6 py-3 bg-white text-black font-semibold rounded-lg hover:bg-neutral-100 transition-colors"
               >
-                Ver colección
+                {t("cta_catalog")}
                 <span aria-hidden>→</span>
               </Link>
             )}
@@ -163,7 +170,7 @@ export function HeroBanner({ products }: HeroBannerProps) {
               href="/#catalogo"
               className="inline-flex items-center gap-2 px-6 py-3 border-2 border-white text-white font-semibold rounded-lg hover:bg-white/10 transition-colors"
             >
-              Explorar
+              {t("cta_about")}
             </Link>
           </div>
 

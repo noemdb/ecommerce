@@ -8,7 +8,9 @@ import {
   CheckCircle2,
   XCircle,
   ExternalLink,
+  Download,
 } from "lucide-react";
+import { PurgeCustomerButton } from "@/components/admin/PurgeCustomerButton";
 
 export const metadata = {
   title: "Clientes | Admin",
@@ -65,6 +67,14 @@ export default async function ClientesPage({
             {total} cliente{total !== 1 ? "s" : ""} registrado{total !== 1 ? "s" : ""}
           </p>
         </div>
+        <a 
+          href="/api/admin/export/customers" 
+          target="_blank"
+          className="inline-flex items-center gap-2 px-4 py-2 bg-neutral-900 dark:bg-white text-white dark:text-neutral-900 text-sm font-semibold rounded-md hover:opacity-90 transition-opacity"
+        >
+          <Download className="w-4 h-4" />
+          Exportar CSV
+        </a>
       </div>
 
       {/* Search form */}
@@ -144,13 +154,16 @@ export default async function ClientesPage({
                       })}
                     </td>
                     <td className="px-5 py-4">
-                      <Link
-                        href={`/admin/clientes/${c.id}`}
-                        className="inline-flex items-center gap-1 text-xs font-bold text-blue-600 hover:text-blue-700 opacity-0 group-hover:opacity-100 transition-opacity"
-                      >
-                        <ExternalLink className="w-3.5 h-3.5" />
-                        Ver
-                      </Link>
+                      <div className="flex items-center gap-2">
+                        <Link
+                          href={`/admin/clientes/${c.id}`}
+                          className="inline-flex items-center gap-1 text-xs font-bold text-blue-600 hover:text-blue-700 opacity-0 group-hover:opacity-100 transition-opacity"
+                        >
+                          <ExternalLink className="w-3.5 h-3.5" />
+                          Ver
+                        </Link>
+                        {c.isBlocked && <PurgeCustomerButton customerId={c.id} />}
+                      </div>
                     </td>
                   </tr>
                 ))}

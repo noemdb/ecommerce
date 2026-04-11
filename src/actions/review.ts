@@ -14,23 +14,41 @@ export async function moderateReviewAction(
   await requirePermission("reviews:moderate");
 
   try {
-    await prisma.review.update({
+    const updatedReview = await prisma.review.update({
       where: { id: reviewId },
       data: {
         status,
         adminResponse: adminResponse || undefined,
       },
+      select: { productId: true }
+    });
+
+    // Recalcular rating considerando SOLO reseñas aprobadas
+    const stats = await prisma.review.aggregate({
+      where: { productId: updatedReview.productId, status: "APPROVED" },
+      _avg: { rating: true },
+      _count: true,
+    });
+
+    // Actualizar producto (G-10 Rating Promedio Desnormalizado)
+    await prisma.product.update({
+      where: { id: updatedReview.productId },
+      data: {
+        averageRating: stats._avg.rating || 0,
+        totalReviews: stats._count || 0,
+      },
     });
 
     revalidatePath("/admin/resenas");
+    revalidatePath("/producto/[slug]", "page");
 
     return {
       success: true,
       message:
         status === "APPROVED"
-          ? "Reseña aprobada"
+          ? "Reseña aprobada (Promedio actualizado)"
           : status === "REJECTED"
-          ? "Reseña rechazada"
+          ? "Reseña rechazada (Promedio actualizado)"
           : "Estado actualizado",
     };
   } catch (error) {
@@ -38,3 +56,4 @@ export async function moderateReviewAction(
     return { success: false, error: "Error al moderar la reseña" };
   }
 }
+

@@ -12,6 +12,9 @@ const envSchema = z.object({
   NEXT_PUBLIC_APP_URL: z.string().url(),
   NEXT_PUBLIC_APP_NAME: z.string().min(1),
   NEXT_PUBLIC_WHATSAPP_NUMBER: z.string().min(10),
+  WHATSAPP_VERIFY_TOKEN: z.string().optional(),
+  WHATSAPP_API_TOKEN: z.string().optional(),
+  WHATSAPP_PHONE_NUMBER_ID: z.string().optional(),
 });
 
 export const env = envSchema.parse(process.env);
