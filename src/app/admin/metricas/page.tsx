@@ -1,12 +1,6 @@
 import { requirePermission } from "@/lib/rbac";
 import { prisma } from "@/lib/prisma";
-import dynamic from "next/dynamic";
-import { Card, CardContent, CardHeader, CardTitle } from "../../../components/ui/card";
-
-const MetricsCharts = dynamic(() => import("../../../components/admin/MetricsCharts"), {
-  ssr: false,
-  loading: () => <div className="h-[400px] w-full bg-neutral-100 dark:bg-neutral-800 animate-pulse rounded-md" />,
-});
+import MetricsCharts from "../../../components/admin/MetricsChartsWrapper";
 
 export default async function MetricasPage() {
   await requirePermission("metrics:view");

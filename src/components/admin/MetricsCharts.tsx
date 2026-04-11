@@ -16,7 +16,7 @@ import {
 import { Card, CardContent, CardHeader, CardTitle } from "../ui/card";
 import { formatPrice } from "@/lib/utils";
 
-interface MetricsChartsProps {
+export interface MetricsChartsProps {
   dailyData: any[];
   pieData: any[];
 }
