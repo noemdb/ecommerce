@@ -1,12 +1,13 @@
 "use client";
 
 import { Link } from "@/i18n/navigation";
-import { ShoppingCart, User, LogIn } from "lucide-react";
+import { ShoppingCart, User } from "lucide-react";
 import { useCartStore } from "@/store/cart";
 import { useEffect, useState } from "react";
 import { cn } from "@/lib/utils";
 import { useTranslations } from "next-intl";
 import { LanguageSelector } from "./LanguageSelector";
+import { ThemeToggle } from "./ThemeToggle";
 
 export function Navbar() {
   const t = useTranslations("Header");
@@ -57,6 +58,7 @@ export function Navbar() {
 
           <div className="flex items-center gap-2 md:gap-4">
             <LanguageSelector />
+            <ThemeToggle />
             
             <Link 
               href="/cuenta" 

@@ -3,7 +3,7 @@
 import { useState } from "react";
 import Image from "next/image";
 import { Link } from "@/i18n/navigation";
-import { formatPrice } from "@/lib/utils";
+import { cn, formatPrice } from "@/lib/utils";
 import { RatingStars } from "./RatingStars";
 import { useTranslations } from "next-intl";
 
@@ -65,20 +65,14 @@ export function ProductCard({ product, badge, accentIndex }: ProductCardProps) {
 
   return (
     <div
-      className="
-        group relative bg-neutral-950
-        border rounded-xl overflow-hidden
-        transition-all duration-300
-        hover:shadow-2xl hover:-translate-y-1
-        h-full flex flex-col w-full max-w-[500px] mx-auto
-        border-neutral-800/60
-        hover:border-[var(--accent)]
-      "
-      style={
-        {
-          "--accent": accent.from,
-        } as React.CSSProperties
-      }
+      className={cn(
+        "group relative bg-white dark:bg-neutral-950",
+        "border border-neutral-200/80 dark:border-neutral-800/60 rounded-xl overflow-hidden",
+        "transition-all duration-300",
+        "hover:shadow-2xl hover:-translate-y-1 hover:border-[var(--accent)]",
+        "h-full flex flex-col w-full max-w-[500px] mx-auto"
+      )}
+      style={{ "--accent": accent.from } as React.CSSProperties}
     >
       {/* LINK */}
       <Link href={`/producto/${product.slug}`} className="absolute inset-0 z-0" />
@@ -107,24 +101,17 @@ export function ProductCard({ product, badge, accentIndex }: ProductCardProps) {
 
       {/* IMAGE */}
       <div className="relative aspect-[4/5] overflow-hidden">
-        <div className="absolute inset-0 bg-neutral-950" />
+        <div className="absolute inset-0 z-0 bg-neutral-100 dark:bg-neutral-950" />
 
-        {/* spotlight */}
+        {/* spotlight — siempre detrás de la imagen (z-[1] < z-10 del wrapper) */}
         <div
-          className="absolute inset-0 transition-opacity duration-500 group-hover:opacity-110"
+          className="absolute inset-0 z-[1] opacity-50 transition-opacity duration-500 group-hover:opacity-80"
           style={{
-            background: `
-              radial-gradient(
-                ellipse 75% 70% at 50% 60%,
-                ${accent.from} 0%,
-                ${accent.mid} 45%,
-                transparent 75%
-              )
-            `,
+            background: `radial-gradient(ellipse 75% 70% at 50% 60%, ${accent.from} 0%, ${accent.mid} 45%, transparent 75%)`,
           }}
         />
 
-        {/* wrapper FIX SCALE */}
+        {/* wrapper de imágenes — siempre encima del spotlight */}
         <div className="relative z-10 w-full h-full flex items-center justify-center p-6">
 
           {/* imagen principal */}
@@ -134,36 +121,38 @@ export function ProductCard({ product, badge, accentIndex }: ProductCardProps) {
               alt={product.images[0].alt ?? product.name}
               width={400}
               height={400}
-              className="
-                object-contain absolute
-                transition-all duration-700 ease-out
-                group-hover:scale-110 group-hover:opacity-0
-              "
+              className={cn(
+                "object-contain absolute",
+                "transition-all duration-700 ease-out",
+                // Fade-out solo si hay imagen secundaria que tome su lugar
+                product.images?.[1]
+                  ? "group-hover:scale-110 group-hover:opacity-0"
+                  : "group-hover:scale-105"
+              )}
             />
           )}
 
-          {/* imagen secundaria (hover PRO) */}
+          {/* imagen secundaria (hover) — solo renderizada si existe */}
           {product.images?.[1] && (
             <Image
               src={product.images[1].url}
               alt={product.images[1].alt ?? product.name}
               width={400}
               height={400}
-              className="
-                object-contain absolute
-                opacity-0
-                transition-all duration-700 ease-out
-                group-hover:opacity-100 group-hover:scale-110
-              "
+              className={cn(
+                "object-contain absolute opacity-0",
+                "transition-all duration-700 ease-out",
+                "group-hover:opacity-100 group-hover:scale-110"
+              )}
             />
           )}
         </div>
       </div>
 
       {/* CONTENT */}
-      <div className="p-5 flex flex-col flex-1 bg-neutral-950 relative z-10">
+      <div className="p-5 flex flex-col flex-1 bg-white dark:bg-neutral-950 relative z-10">
 
-        <h3 className="font-medium text-sm line-clamp-2 mb-2 text-neutral-100 group-hover:text-white">
+        <h3 className="font-medium text-sm line-clamp-2 mb-2 text-neutral-800 dark:text-neutral-100 group-hover:text-neutral-900 dark:group-hover:text-white">
           <Link href={`/producto/${product.slug}`}>{product.name}</Link>
         </h3>
 
@@ -190,20 +179,20 @@ export function ProductCard({ product, badge, accentIndex }: ProductCardProps) {
           <div className="flex flex-col">
             {product.promoPrice ? (
               <>
-                <span className="text-xs text-neutral-500 line-through">
+                <span className="text-xs text-neutral-400 dark:text-neutral-500 line-through">
                   {formatPrice(product.price)}
                 </span>
 
-                <span className="text-xl font-bold text-blue-400">
+                <span className="text-xl font-bold text-blue-600 dark:text-blue-400">
                   {formatPrice(product.promoPrice)}
                 </span>
 
-                <span className="text-[11px] text-emerald-400 font-medium">
+                <span className="text-[11px] text-emerald-600 dark:text-emerald-400 font-medium">
                   Ahorras {formatPrice(savings)}
                 </span>
               </>
             ) : (
-              <span className="text-xl font-bold text-white">
+              <span className="text-xl font-bold text-neutral-900 dark:text-white">
                 {formatPrice(product.price)}
               </span>
             )}
@@ -213,16 +202,13 @@ export function ProductCard({ product, badge, accentIndex }: ProductCardProps) {
           <button
             onClick={handleAdd}
             disabled={isOutOfStock}
-            className={`
-              px-5 py-2.5 rounded-lg font-semibold
-              transition-all duration-300
-              active:scale-95
-              shadow-lg
-
-              ${added
+            className={cn(
+              "px-5 py-2.5 rounded-lg font-semibold",
+              "transition-all duration-300 active:scale-95 shadow-lg",
+              added
                 ? "bg-emerald-500 text-white scale-105 animate-[pulse_0.3s_ease]"
-                : "bg-white text-black hover:bg-neutral-200"}
-            `}
+                : "bg-neutral-900 text-white hover:bg-neutral-700 dark:bg-white dark:text-black dark:hover:bg-neutral-200"
+            )}
           >
             {added ? "✓ Añadido" : "Agregar"}
           </button>
