@@ -41,7 +41,7 @@ export function Navbar() {
           href="/" 
           className="text-2xl font-black tracking-tighter hover:opacity-80 transition-opacity"
         >
-          ECOMMERCE<span className="text-blue-600">PREMIUM</span>
+          EC<span className="text-blue-600">PM</span>
         </Link>
 
         <div className="flex items-center gap-4 md:gap-8">
