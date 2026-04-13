@@ -48,5 +48,8 @@
     "label_name": "Full Name",
     "label_email": "Notification Email",
     "label_phone": "Contact Phone"
+  },
+  "CategoryBar": {
+    "explore": "Explore Categories"
   }
 }

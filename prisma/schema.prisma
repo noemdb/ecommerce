@@ -424,34 +424,107 @@ model Review {
 // ═══════════════════════════════════════════════════════════════
 
 model SiteConfig {
-  id                      Int      @id @default(1)
+  id Int @id @default(1)
 
-  appName                 String   @default("Ecommerce Premium")
-  metadataTitle           String   @default("Ecommerce NoDoz")
-  metadataDescription     String   @default("Ecommerce Premium")
+  // ── Identidad (ya existe) ──────────────────────
+  appName             String @default("Ecommerce Premium")
+  metadataTitle       String @default("Ecommerce NoDoz")
+  metadataDescription String @default("Ecommerce Premium")
 
-  colorBgPrimary          String   @default("#FFFFFF")
-  colorBgSecondary        String   @default("#F8FAFC")
-  colorTextPrimary        String   @default("#0F172A")
-  colorTextSecondary      String   @default("#475569")
-  colorAccentPrimary      String   @default("#111827")
-  colorAccentSecondary    String   @default("#6366F1")
-  colorButtonPrimary      String   @default("#111827")
-  colorBorder             String   @default("#E2E8F0")
+  // ── Branding (NUEVO) ──────────────────────────
+  logoUrl           String @default("")
+  faviconUrl        String @default("")
+  defaultTheme      String @default("system")
+  googleAnalyticsId String @default("")
+  metaOgImageUrl    String @default("")
 
-  showHeroBanner          Boolean  @default(true)
-  showCategoryBar         Boolean  @default(true)
-  showSocialProofBanner   Boolean  @default(true)
-  showFeaturedBestSellers Boolean  @default(true)
-  showFeaturedNewArrivals Boolean  @default(true)
-  showCustomerCTABanner   Boolean  @default(true)
-  showFeaturedTrending    Boolean  @default(true)
-  showCatalogSection      Boolean  @default(true)
-  showTrustBadges         Boolean  @default(true)
-  showWhatsAppFAB         Boolean  @default(true)
+  // ── Colores CSS (ya existe) ───────────────────
+  colorBgPrimary       String @default("#FFFFFF")
+  colorBgSecondary     String @default("#F8FAFC")
+  colorTextPrimary     String @default("#0F172A")
+  colorTextSecondary   String @default("#475569")
+  colorAccentPrimary   String @default("#111827")
+  colorAccentSecondary String @default("#6366F1")
+  colorButtonPrimary   String @default("#111827")
+  colorBorder          String @default("#E2E8F0")
 
-  createdAt               DateTime @default(now())
-  updatedAt               DateTime @updatedAt
+  // ── Hero Banner (NUEVO) ───────────────────────
+  heroRotationIntervalMs Int     @default(5000)
+  heroMaxProducts        Int     @default(5)
+  heroShowProductCard    Boolean @default(true)
+  heroShowUrgencyBar     Boolean @default(true)
+  heroCtaPrimaryLabel    String  @default("Ver producto")
+  heroCtaSecondaryLabel  String  @default("Ver catálogo")
+  heroSubtitle           String  @default("")
+
+  // ── Featured Sections (NUEVO) ─────────────────
+  featuredBestSellersTitle    String @default("Más Vendidos")
+  featuredBestSellersSubtitle String @default("Lo que nuestros clientes eligen")
+  featuredBestSellersLimit    Int    @default(8)
+  featuredNewArrivalsTitle    String @default("Novedades")
+  featuredNewArrivalsLimit    Int    @default(8)
+  featuredTrendingTitle       String @default("Tendencias")
+  featuredTrendingLimit       Int    @default(8)
+  featuredShowViewAllLink     Boolean @default(true)
+
+  // ── Catálogo (NUEVO) ──────────────────────────
+  catalogTitle         String  @default("Nuestro Catálogo")
+  catalogSubtitle      String  @default("Encuentra exactamente lo que buscas...")
+  catalogPageSize      Int     @default(24)
+  catalogDefaultSort   String  @default("newest")
+  catalogShowFilters   Boolean @default(true)
+  catalogShowPagination Boolean @default(true)
+
+  // ── Social Proof (NUEVO) ──────────────────────
+  socialProofCustomerLabel   String @default("Clientes")
+  socialProofProductLabel    String @default("Productos")
+  socialProofThirdStatLabel  String @default("Seguro")
+  socialProofThirdStatValue  String @default("100%")
+  socialProofBgColor         String @default("#2563EB")
+
+  // ── Trust Badges (NUEVO) ──────────────────────
+  trustBadge1Title       String @default("Pago seguro")
+  trustBadge1Description String @default("Transferencia bancaria protegida")
+  trustBadge2Title       String @default("Verificación manual")
+  trustBadge2Description String @default("Validamos cada comprobante")
+  trustBadge3Title       String @default("Soporte por WhatsApp")
+  trustBadge3Description String @default("Atención personalizada inmediata")
+  trustBadge4Title       String @default("Productos garantizados")
+  trustBadge4Description String @default("Calidad premium asegurada")
+
+  // ── WhatsApp FAB (NUEVO) ──────────────────────
+  whatsappNumber     String @default("")
+  whatsappMessage    String @default("¡Hola! Necesito ayuda con una compra.")
+  whatsappFabPosition String @default("bottom-right")
+
+  // ── CTA Banner (NUEVO) ────────────────────────
+  ctaBannerTitle           String @default("Crea tu cuenta y mejora tu experiencia")
+  ctaBannerDescription     String @default("Lleva un historial de todos tus pedidos...")
+  ctaBannerPrimaryLabel    String @default("Registrarme")
+  ctaBannerSecondaryLabel  String @default("Ya tengo cuenta")
+
+  // ── Footer (NUEVO) ────────────────────────────
+  showFooter            Boolean @default(true)
+  footerCopyright       String  @default("© 2025 Ecommerce Premium")
+  footerShowSocialLinks Boolean @default(false)
+  footerInstagramUrl    String  @default("")
+  footerFacebookUrl     String  @default("")
+  footerTiktokUrl       String  @default("")
+
+  // ── Visibilidad de secciones (ya existe) ──────
+  showHeroBanner          Boolean @default(true)
+  showCategoryBar         Boolean @default(true)
+  showSocialProofBanner   Boolean @default(true)
+  showFeaturedBestSellers Boolean @default(true)
+  showFeaturedNewArrivals Boolean @default(true)
+  showCustomerCTABanner   Boolean @default(true)
+  showFeaturedTrending    Boolean @default(true)
+  showCatalogSection      Boolean @default(true)
+  showTrustBadges         Boolean @default(true)
+  showWhatsAppFAB         Boolean @default(true)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
   @@map("site_config")
 }

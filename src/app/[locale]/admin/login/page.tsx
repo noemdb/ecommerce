@@ -2,13 +2,26 @@ import { StaffLoginForm } from "@/components/auth/StaffLoginForm";
 import { AuthCard } from "@/components/auth/AuthCard";
 import { ShieldAlert } from "lucide-react";
 import { Suspense } from "react";
+import { auth } from "@/auth";
+import { redirect } from "@/i18n/navigation";
 
 export const metadata = {
   title: "Admin Login | Ecommerce Premium",
   description: "Panel de administración restringido.",
 };
 
-export default function AdminLoginPage() {
+export default async function AdminLoginPage({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}) {
+  const { locale } = await params;
+  const session = await auth();
+  
+  if (session?.user?.role === "ADMIN" || session?.user?.role === "SUPERADMIN" || session?.user?.role === "MANAGER") {
+    redirect({ href: "/admin", locale });
+  }
+
   return (
     <div className="min-h-screen flex items-center justify-center py-20 px-4 bg-neutral-900 relative overflow-hidden">
       {/* Decorative Background for Admin */}

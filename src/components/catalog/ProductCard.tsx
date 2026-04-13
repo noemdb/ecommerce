@@ -78,7 +78,7 @@ export function ProductCard({ product, badge, accentIndex }: ProductCardProps) {
       <Link href={`/producto/${product.slug}`} className="absolute inset-0 z-0" />
 
       {/* BADGES */}
-      <div className="absolute z-10 top-3 left-3 flex flex-col gap-1.5 pointer-events-none">
+      <div className="absolute z-20 top-4 left-4 flex flex-col gap-2 pointer-events-none transition-all duration-300 group-hover:translate-x-1 group-hover:translate-y-1">
         {isOutOfStock ? (
           <span className="bg-red-500/90 text-white text-[10px] font-bold px-2.5 py-1 rounded-full uppercase">
             {t("sold_out")}
@@ -115,7 +115,7 @@ export function ProductCard({ product, badge, accentIndex }: ProductCardProps) {
         <div className="relative z-10 w-full h-full flex items-center justify-center p-6">
 
           {/* imagen principal */}
-          {product.images?.[0] && (
+          {product.images?.[0] ? (
             <Image
               src={product.images[0].url}
               alt={product.images[0].alt ?? product.name}
@@ -130,6 +130,18 @@ export function ProductCard({ product, badge, accentIndex }: ProductCardProps) {
                   : "group-hover:scale-105"
               )}
             />
+          ) : (
+            <div className="absolute inset-0 flex items-center justify-center p-8">
+              <div 
+                className="absolute inset-0 opacity-20"
+                style={{
+                  background: `radial-gradient(circle at 50% 50%, ${accent.from}, transparent 80%)`
+                }}
+              />
+              <span className="relative z-10 text-[10px] font-black uppercase tracking-[0.3em] text-neutral-400 dark:text-neutral-500 text-center leading-relaxed opacity-40 group-hover:opacity-60 transition-opacity">
+                {product.name}
+              </span>
+            </div>
           )}
 
           {/* imagen secundaria (hover) — solo renderizada si existe */}

@@ -8,8 +8,14 @@ import { cn } from "@/lib/utils";
 import { useTranslations } from "next-intl";
 import { LanguageSelector } from "./LanguageSelector";
 import { ThemeToggle } from "./ThemeToggle";
+import Image from "next/image";
 
-export function Navbar() {
+interface NavbarProps {
+  logoUrl?: string;
+  appName?: string;
+}
+
+export function Navbar({ logoUrl, appName }: NavbarProps) {
   const t = useTranslations("Header");
   const items = useCartStore((state) => state.items);
   const toggleCart = useCartStore((state) => state.toggleCart);
@@ -39,9 +45,15 @@ export function Navbar() {
       <div className="container mx-auto px-4 lg:px-8 flex items-center justify-between">
         <Link 
           href="/" 
-          className="text-2xl font-black tracking-tighter hover:opacity-80 transition-opacity"
+          className="hover:opacity-80 transition-opacity flex items-center gap-2"
         >
-          EC<span className="text-blue-600">PM</span>
+          {logoUrl ? (
+            <Image src={logoUrl} alt={appName || "Logo"} width={160} height={40} className="h-8 md:h-10 w-auto object-contain" />
+          ) : (
+            <span className="text-2xl font-black tracking-tighter">
+              {appName ? appName : <>EC<span className="text-blue-600">PM</span></>}
+            </span>
+          )}
         </Link>
 
         <div className="flex items-center gap-4 md:gap-8">

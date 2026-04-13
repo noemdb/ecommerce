@@ -19,8 +19,11 @@ interface HeroProduct {
   videoUrl?: string; // 👈 preparado
 }
 
+import type { SiteConfigData } from "@/lib/site-config/default-site-config";
+
 interface HeroBannerProps {
   products: HeroProduct[];
+  config: SiteConfigData;
 }
 
 const ACCENTS = [
@@ -37,7 +40,7 @@ function getAccent(id: string) {
   return ACCENTS[sum % ACCENTS.length];
 }
 
-export function HeroBanner({ products }: HeroBannerProps) {
+export function HeroBanner({ products, config }: HeroBannerProps) {
   const t = useTranslations("Hero");
   const [currentIndex, setCurrentIndex] = useState(0);
   const [mounted, setMounted] = useState(false);
@@ -55,9 +58,9 @@ export function HeroBanner({ products }: HeroBannerProps) {
     if (!products?.length) return;
     const interval = setInterval(() => {
       setCurrentIndex((i) => (i + 1) % products.length);
-    }, 5000);
+    }, config.heroRotationIntervalMs || 5000);
     return () => clearInterval(interval);
-  }, [products]);
+  }, [products, config.heroRotationIntervalMs]);
 
   const current = products?.[currentIndex];
   const next = products?.[(currentIndex + 1) % products.length];
@@ -120,7 +123,7 @@ export function HeroBanner({ products }: HeroBannerProps) {
               playsInline
               className="w-full h-full object-cover"
             />
-          ) : (
+          ) : current.images?.[0]?.url ? (
             <Image
               src={current.images[0].url}
               alt={current.name}
@@ -128,6 +131,18 @@ export function HeroBanner({ products }: HeroBannerProps) {
               className="object-cover"
               priority
             />
+          ) : (
+            <div className="w-full h-full bg-neutral-900 flex items-center justify-center p-20 relative overflow-hidden">
+               <div 
+                className="absolute inset-0 opacity-40 animate-pulse"
+                style={{
+                  background: `radial-gradient(circle at 20% 20%, ${accent}, transparent 60%), radial-gradient(circle at 80% 80%, rgba(0,0,0,0.5), transparent 60%)`
+                }}
+              />
+              <span className="relative z-10 text-white/20 font-black text-4xl md:text-7xl uppercase tracking-[0.5em] opacity-10 rotate-[-5deg] select-none text-center">
+                {current.name}
+              </span>
+            </div>
           )}
 
           <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-black/10" />
@@ -144,7 +159,7 @@ export function HeroBanner({ products }: HeroBannerProps) {
             exit={{ opacity: 0, y: -20 }}
             transition={{ duration: 0.8 }}
           >
-            {current?.promoPrice && (
+            {current?.promoPrice && config.heroShowUrgencyBar !== false && (
               <span className="inline-flex items-center gap-1 px-4 py-1.5 rounded-full bg-blue-600 text-white text-xs font-bold mb-5">
                 <Zap className="w-3 h-3" />
                 {t("badge")}
@@ -155,8 +170,8 @@ export function HeroBanner({ products }: HeroBannerProps) {
               {current?.name}
             </h1>
 
-            <p className="text-white/70 mb-8">
-              {t("description")}
+            <p className="text-white/70 mb-8 whitespace-pre-wrap">
+              {config.heroSubtitle || t("description")}
             </p>
 
             {current && (
@@ -184,14 +199,14 @@ export function HeroBanner({ products }: HeroBannerProps) {
                 className="inline-flex items-center gap-2 px-8 py-3 bg-white text-black font-bold rounded-xl hover:bg-neutral-200 transition-all active:scale-95"
               >
                 <ShoppingCart className="w-4 h-4" />
-                Ver producto
+                {config.heroCtaPrimaryLabel || "Ver producto"}
               </Link>
 
               <Link
                 href="/#catalogo"
                 className="inline-flex items-center gap-2 px-8 py-3 border border-white/30 text-white rounded-xl hover:bg-white/10"
               >
-                {t("cta_catalog")}
+                {config.heroCtaSecondaryLabel || t("cta_catalog")}
                 <ArrowRight className="w-4 h-4" />
               </Link>
             </div>
@@ -216,7 +231,7 @@ export function HeroBanner({ products }: HeroBannerProps) {
       </div>
 
       {/* PANEL */}
-      {current && (
+      {current && config.heroShowProductCard !== false && (
         <div className="absolute bottom-6 left-1/2 -translate-x-1/2 z-30 w-[90%] max-w-md">
           <div className="rounded-2xl border border-white/20 bg-black/50 backdrop-blur-xl p-5 text-white shadow-2xl">
             <div className="flex justify-between mb-3">

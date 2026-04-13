@@ -7,6 +7,7 @@ const nextConfig: NextConfig = {
       { protocol: "https", hostname: "utfs.io" },
       { protocol: "https", hostname: "*.uploadthing.com" },
       { protocol: "https", hostname: "images.unsplash.com" },
+      { protocol: "https", hostname: "placehold.co" },
     ],
   },
   // Manually resolve next-intl config because the official plugin

@@ -19,9 +19,10 @@ interface ProductGridProps {
   total: number;
   page: number;
   pageSize: number;
+  showPagination?: boolean;
 }
 
-export function ProductGrid({ products, total, page, pageSize }: ProductGridProps) {
+export function ProductGrid({ products, total, page, pageSize, showPagination = true }: ProductGridProps) {
   const totalPages = Math.ceil(total / pageSize);
 
   if (products.length === 0) {
@@ -50,7 +51,7 @@ export function ProductGrid({ products, total, page, pageSize }: ProductGridProp
       </div>
 
       {/* Pagination */}
-      {totalPages > 1 && (
+      {showPagination && totalPages > 1 && (
         <div className="mt-12 flex justify-center gap-2">
           {page > 1 && (
             <Link

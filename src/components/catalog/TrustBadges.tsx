@@ -1,26 +1,31 @@
 import { Lock, FileCheck, MessageCircle, ShieldCheck } from "lucide-react";
+import type { SiteConfigData } from "@/lib/site-config/default-site-config";
 
-export function TrustBadges() {
+interface TrustBadgesProps {
+  config: SiteConfigData;
+}
+
+export function TrustBadges({ config }: TrustBadgesProps) {
   const badges = [
     {
       icon: Lock,
-      title: "Pago seguro",
-      description: "Transferencia bancaria protegida",
+      title: config.trustBadge1Title,
+      description: config.trustBadge1Description,
     },
     {
       icon: FileCheck,
-      title: "Verificación manual",
-      description: "Validamos cada comprobante",
+      title: config.trustBadge2Title,
+      description: config.trustBadge2Description,
     },
     {
       icon: MessageCircle,
-      title: "Soporte por WhatsApp",
-      description: "Atención personalizada inmediata",
+      title: config.trustBadge3Title,
+      description: config.trustBadge3Description,
     },
     {
       icon: ShieldCheck,
-      title: "Productos garantizados",
-      description: "Calidad premium asegurada",
+      title: config.trustBadge4Title,
+      description: config.trustBadge4Description,
     },
   ];
 

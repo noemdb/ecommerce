@@ -13,9 +13,6 @@ import { ProductGrid } from "@/components/catalog/ProductGrid";
 import { CatalogFilters } from "@/components/catalog/CatalogFilters";
 import { TrustBadges } from "@/components/catalog/TrustBadges";
 import { WhatsAppFAB } from "@/components/catalog/WhatsAppFAB";
-
-const PAGE_SIZE = 24;
-
 export default async function HomePage({
   searchParams,
 }: {
@@ -34,13 +31,20 @@ export default async function HomePage({
     ...(filters.inStock === "true" && { stock: { gt: 0 } }),
   };
 
+  const config = await getSiteConfig();
+  const pageSize = config.catalogPageSize || 24;
+
+  const validSorts = ["newest", "featured", "price_asc", "price_desc", "rating"] as const;
+  const rawSort = filters.sort || config.catalogDefaultSort || "newest";
+  const finalSort = validSorts.includes(rawSort as any) ? rawSort : "newest";
+
   const orderBy = {
     price_asc: { price: "asc" as const },
     price_desc: { price: "desc" as const },
     newest: { createdAt: "desc" as const },
     featured: { isFeatured: "desc" as const },
     rating: { reviews: { _count: "desc" as const } },
-  }[filters.sort ?? "newest"] ?? { createdAt: "desc" as const };
+  }[finalSort] ?? { createdAt: "desc" as const };
 
   const productSelect = {
     id: true,
@@ -73,40 +77,39 @@ export default async function HomePage({
     categories,
     totalCustomers,
     totalProductsCount,
-    siteConfig,
   ] = await Promise.all([
     prisma.product.findMany({
       where,
       orderBy,
-      skip: (filters.page - 1) * PAGE_SIZE,
-      take: PAGE_SIZE,
+      skip: (filters.page - 1) * pageSize,
+      take: pageSize,
       select: productSelect,
     }),
     prisma.product.count({ where }),
-    // Hero: máx 5 productos destacados con imagen
+    // Hero: productos destacados
     prisma.product.findMany({
       where: { isActive: true, isFeatured: true },
       select: productSelect,
-      take: 5,
+      take: config.heroMaxProducts || 5,
     }),
     // Más vendidos
     prisma.product.findMany({
       where: { isActive: true, isBestSeller: true },
       select: productSelect,
-      take: 8,
+      take: config.featuredBestSellersLimit || 8,
     }),
     // Novedades
     prisma.product.findMany({
       where: { isActive: true, isNew: true },
       select: productSelect,
-      take: 8,
+      take: config.featuredNewArrivalsLimit || 8,
       orderBy: { createdAt: "desc" },
     }),
     // Tendencias
     prisma.product.findMany({
       where: { isActive: true, isMostSearched: true },
       select: productSelect,
-      take: 8,
+      take: config.featuredTrendingLimit || 8,
     }),
     // Categorías para el CategoryBar
     prisma.category.findMany({
@@ -117,56 +120,56 @@ export default async function HomePage({
     // Métricas para SocialProofBanner
     prisma.customer.count(),
     prisma.product.count({ where: { isActive: true } }),
-    // Configuración del sitio (visibilidad de secciones)
-    getSiteConfig(),
   ]);
 
   return (
     <>
-      {siteConfig.showHeroBanner && (
-        <HeroBanner products={heroProducts as any} />
+      {config.showHeroBanner && (
+        <HeroBanner products={heroProducts as any} config={config} />
       )}
 
-      {siteConfig.showCategoryBar && (
+      {config.showCategoryBar && (
         <CategoryBar categories={categories} activeCategoryId={filters.categoryId} />
       )}
 
-      {siteConfig.showSocialProofBanner && (
-        <SocialProofBanner totalCustomers={totalCustomers} totalProducts={totalProductsCount} />
+      {config.showSocialProofBanner && (
+        <SocialProofBanner totalCustomers={totalCustomers} totalProducts={totalProductsCount} config={config} />
       )}
 
       <div className="flex flex-col gap-8 md:gap-16">
-        {siteConfig.showFeaturedBestSellers && (
-          <FeaturedSection title="Más Vendidos" subtitle="Lo que nuestros clientes eligen" products={bestSellers as any} />
+        {config.showFeaturedBestSellers && (
+          <FeaturedSection title={config.featuredBestSellersTitle} subtitle={config.featuredBestSellersSubtitle} products={bestSellers as any} />
         )}
 
-        {siteConfig.showFeaturedNewArrivals && (
-          <FeaturedSection title="Novedades" subtitle="Recién llegados" products={newArrivals as any} badge="NUEVO" />
+        {config.showFeaturedNewArrivals && (
+          <FeaturedSection title={config.featuredNewArrivalsTitle} subtitle="Recién llegados" products={newArrivals as any} badge="NUEVO" />
         )}
 
         {/* CTA banner: respects both the config flag AND the auth state */}
-        {siteConfig.showCustomerCTABanner && !isCustomerLoggedIn && (
-          <CustomerCTABanner />
+        {config.showCustomerCTABanner && !isCustomerLoggedIn && (
+          <CustomerCTABanner config={config} />
         )}
 
-        {siteConfig.showFeaturedTrending && (
-          <FeaturedSection title="Tendencias" subtitle="Lo más buscado ahora" products={trending as any} />
+        {config.showFeaturedTrending && (
+          <FeaturedSection title={config.featuredTrendingTitle} subtitle="Lo más buscado ahora" products={trending as any} />
         )}
 
-        {siteConfig.showCatalogSection && (
+        {config.showCatalogSection && (
           <section id="catalogo" className="container mx-auto px-4 pt-4 pb-8 md:pt-8 md:pb-16">
             <div className="mb-8 md:mb-12">
-              <h2 className="text-3xl font-bold tracking-tight mb-2">Nuestro Catálogo</h2>
-              <p className="text-neutral-500 dark:text-neutral-400">Encuentra exactamente lo que buscas en nuestra colección completa.</p>
+              <h2 className="text-3xl font-bold tracking-tight mb-2">{config.catalogTitle}</h2>
+              <p className="text-neutral-500 dark:text-neutral-400">{config.catalogSubtitle}</p>
             </div>
-            <CatalogFilters categories={categories} currentFilters={filters} />
-            <ProductGrid products={products as any} total={total} page={filters.page} pageSize={PAGE_SIZE} />
+            {config.catalogShowFilters && (
+              <CatalogFilters categories={categories} currentFilters={filters} />
+            )}
+            <ProductGrid products={products as any} total={total} page={filters.page} pageSize={pageSize} showPagination={config.catalogShowPagination} />
           </section>
         )}
       </div>
 
-      {siteConfig.showTrustBadges && <TrustBadges />}
-      {siteConfig.showWhatsAppFAB && <WhatsAppFAB />}
+      {config.showTrustBadges && <TrustBadges config={config} />}
+      {/* WhatsAppFAB ha sido movido al (public)/layout.tsx para que sea global, pero se lo quitamos de aquí */}
     </>
   );
 }

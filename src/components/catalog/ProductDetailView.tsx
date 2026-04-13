@@ -60,7 +60,17 @@ export function ProductDetailView({ product, isPreview = false }: ProductDetailV
                 priority
               />
             ) : (
-                <div className="w-full h-full flex items-center justify-center text-neutral-400">Sin imagen</div>
+                <div className="w-full h-full flex items-center justify-center p-12 bg-neutral-100 dark:bg-neutral-900/50 relative overflow-hidden">
+                  <div 
+                    className="absolute inset-0 opacity-10 animate-pulse"
+                    style={{
+                      background: `radial-gradient(circle at 30% 30%, #3b82f6, transparent 70%), radial-gradient(circle at 70% 70%, #8b5cf6, transparent 70%)`
+                    }}
+                  />
+                  <span className="relative z-10 text-xs font-black uppercase tracking-[0.4em] text-neutral-400 dark:text-neutral-500 text-center leading-loose opacity-30 select-none">
+                    {product.name}
+                  </span>
+                </div>
             )}
             {product.isNew && (
               <span className="absolute top-6 left-6 bg-blue-600 text-white text-[10px] font-black uppercase tracking-widest px-3 py-1.5 rounded-lg shadow-lg">
