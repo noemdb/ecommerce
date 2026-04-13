@@ -1,5 +1,12 @@
 "use client";
 
+import { 
+  motion, 
+  useReducedMotion, 
+  useMotionValue, 
+  useSpring, 
+  useTransform 
+} from "framer-motion";
 import Image from "next/image";
 import { Link } from "@/i18n/navigation";
 import { RatingStars } from "./RatingStars";
@@ -25,11 +32,41 @@ interface ProductDetailViewProps {
   isPreview?: boolean;
 }
 
+const CARD_ACCENTS = [
+  { from: "rgba(59,130,246,0.3)", mid: "rgba(37,99,235,0.1)", glow: "rgba(59,130,246,0.2)" },
+  { from: "rgba(139,92,246,0.3)", mid: "rgba(109,40,217,0.1)", glow: "rgba(139,92,246,0.2)" },
+  { from: "rgba(6,182,212,0.3)", mid: "rgba(8,145,178,0.1)", glow: "rgba(6,182,212,0.2)" },
+  { from: "rgba(245,158,11,0.3)", mid: "rgba(217,119,6,0.1)", glow: "rgba(245,158,11,0.2)" },
+  { from: "rgba(16,185,129,0.3)", mid: "rgba(5,150,105,0.1)", glow: "rgba(16,185,129,0.2)" },
+  { from: "rgba(236,72,153,0.3)", mid: "rgba(219,39,119,0.1)", glow: "rgba(236,72,153,0.2)" },
+] as const;
+
+function getAccent(id: string) {
+  const sum = id.split("").reduce((acc, c) => acc + c.charCodeAt(0), 0);
+  return CARD_ACCENTS[sum % CARD_ACCENTS.length];
+}
+
 export function ProductDetailView({ product, isPreview = false }: ProductDetailViewProps) {
   const primaryImage = product.images.find((img) => img.isPrimary) || product.images[0];
   const avgRating = product.reviews.length > 0
     ? product.reviews.reduce((acc, r) => acc + r.rating, 0) / product.reviews.length
     : 0;
+
+  const accent = getAccent(product.id);
+  const shouldReduceMotion = useReducedMotion();
+
+  // 👇 PREMIUM PARALLAX SYSTEM
+  const mouseX = useMotionValue(0);
+  const mouseY = useMotionValue(0);
+
+  const springConfig = { damping: 25, stiffness: 150 };
+  const springX = useSpring(mouseX, springConfig);
+  const springY = useSpring(mouseY, springConfig);
+
+  const translateX = useTransform(springX, [-0.5, 0.5], [-15, 15]);
+  const translateY = useTransform(springY, [-0.5, 0.5], [-15, 15]);
+  const rotateX = useTransform(springY, [-0.5, 0.5], [3, -3]);
+  const rotateY = useTransform(springX, [-0.5, 0.5], [-3, 3]);
 
   return (
     <div className={cn("container mx-auto px-4 py-8", isPreview && "py-0 px-0 max-w-none")}>
@@ -48,19 +85,50 @@ export function ProductDetailView({ product, isPreview = false }: ProductDetailV
         !isPreview ? "lg:grid-cols-2" : "@lg:grid-cols-2 gap-4 @sm:gap-6 @lg:gap-10"
       )}>
         {/* Left: Gallery */}
-        <div className="space-y-4">
-          <div className="aspect-square relative bg-neutral-50 dark:bg-neutral-900 rounded-lg overflow-hidden border dark:border-neutral-800 shadow-sm group">
-            {primaryImage ? (
-              <Image 
-                src={primaryImage.url} 
-                alt={primaryImage.alt || product.name} 
-                fill 
-                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                className="object-cover transition-transform duration-700 group-hover:scale-105" 
-                priority
-              />
-            ) : (
-                <div className="w-full h-full flex items-center justify-center p-12 bg-neutral-100 dark:bg-neutral-900/50 relative overflow-hidden">
+        <div 
+          className="space-y-4"
+          onMouseMove={(e) => {
+            if (shouldReduceMotion) return;
+            const rect = e.currentTarget.getBoundingClientRect();
+            mouseX.set((e.clientX - rect.left) / rect.width - 0.5);
+            mouseY.set((e.clientY - rect.top) / rect.height - 0.5);
+          }}
+          onMouseLeave={() => {
+            mouseX.set(0);
+            mouseY.set(0);
+          }}
+        >
+          <div className="aspect-square relative bg-white dark:bg-neutral-950 rounded-[2.5rem] overflow-hidden border dark:border-neutral-800 shadow-2xl group flex items-center justify-center">
+            
+            {/* Spotlight Background (ProductCard Style) */}
+            <div 
+              className="absolute inset-0 z-0 opacity-60 pointer-events-none"
+              style={{
+                background: `radial-gradient(ellipse 70% 60% at 50% 50%, ${accent.from} 0%, ${accent.mid} 45%, transparent 75%)`
+              }}
+            />
+
+            <motion.div 
+              className="relative z-10 w-full h-full p-12"
+              style={{
+                x: shouldReduceMotion ? 0 : translateX,
+                y: shouldReduceMotion ? 0 : translateY,
+                rotateX: shouldReduceMotion ? 0 : rotateX,
+                rotateY: shouldReduceMotion ? 0 : rotateY,
+                transformPerspective: 1000,
+              }}
+            >
+              {primaryImage ? (
+                <Image 
+                  src={primaryImage.url} 
+                  alt={primaryImage.alt || product.name} 
+                  fill 
+                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                  className="object-contain drop-shadow-2xl" 
+                  priority
+                />
+              ) : (
+                  <div className="w-full h-full flex items-center justify-center p-12 bg-neutral-100 dark:bg-neutral-900/50 relative overflow-hidden rounded-3xl">
                   <div 
                     className="absolute inset-0 opacity-10 animate-pulse"
                     style={{
@@ -72,6 +140,8 @@ export function ProductDetailView({ product, isPreview = false }: ProductDetailV
                   </span>
                 </div>
             )}
+          </motion.div>
+            
             {product.isNew && (
               <span className="absolute top-6 left-6 bg-blue-600 text-white text-[10px] font-black uppercase tracking-widest px-3 py-1.5 rounded-lg shadow-lg">
                 Novedad

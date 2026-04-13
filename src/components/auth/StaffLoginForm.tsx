@@ -66,7 +66,11 @@ export function StaffLoginForm() {
         />
       </div>
 
-      <Button type="submit" className="w-full h-16 bg-neutral-900 dark:bg-neutral-100 hover:bg-neutral-800 dark:hover:bg-neutral-200" isLoading={isLoading}>
+      <Button 
+        type="submit" 
+        className="w-full h-16 bg-neutral-900 text-white dark:bg-neutral-100 dark:text-neutral-900 hover:bg-neutral-800 dark:hover:bg-neutral-200 shadow-2xl" 
+        isLoading={isLoading}
+      >
         Acceder al Dashboard
         <ArrowRight className="ml-2 w-5 h-5" />
       </Button>
