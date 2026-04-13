@@ -13,11 +13,18 @@ import { DEFAULT_SITE_CONFIG, type SiteConfigData } from "./default-site-config"
  */
 export const getSiteConfig = cache(
   async (): Promise<SiteConfigData> => {
-    const config = await prisma.siteConfig.findUnique({ where: { id: 1 } });
-    if (!config) return DEFAULT_SITE_CONFIG;
+    try {
+      const config = await prisma.siteConfig.findUnique({ where: { id: 1 } });
+      if (!config) return DEFAULT_SITE_CONFIG;
 
-    // Destructure to strip id, createdAt, updatedAt
-    const { id: _id, createdAt: _c, updatedAt: _u, ...data } = config;
-    return data;
+      // Destructure to strip id, createdAt, updatedAt
+      const { id: _id, createdAt: _c, updatedAt: _u, ...data } = config;
+      return data;
+    } catch (error) {
+      // During build or before migrations are applied, the table might not exist.
+      // We return defaults instead of crashing the build.
+      console.warn("⚠️ [getSiteConfig] Failed to fetch config from DB, using defaults:", error instanceof Error ? error.message : error);
+      return DEFAULT_SITE_CONFIG;
+    }
   }
 );
