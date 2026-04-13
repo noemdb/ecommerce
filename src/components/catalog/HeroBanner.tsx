@@ -1,6 +1,13 @@
 "use client";
 
-import { motion, useReducedMotion, AnimatePresence } from "framer-motion";
+import { 
+  motion, 
+  useReducedMotion, 
+  AnimatePresence, 
+  useMotionValue, 
+  useSpring, 
+  useTransform 
+} from "framer-motion";
 import Image from "next/image";
 import { Link } from "@/i18n/navigation";
 import { useEffect, useState } from "react";
@@ -46,8 +53,19 @@ export function HeroBanner({ products, config }: HeroBannerProps) {
   const [mounted, setMounted] = useState(false);
   const shouldReduceMotion = useReducedMotion();
 
-  // 👇 PARALLAX
-  const [mouse, setMouse] = useState({ x: 0, y: 0 });
+  // 👇 PREMIUM PARALLAX SYSTEM
+  const mouseX = useMotionValue(0);
+  const mouseY = useMotionValue(0);
+
+  const springConfig = { damping: 25, stiffness: 150 };
+  const springX = useSpring(mouseX, springConfig);
+  const springY = useSpring(mouseY, springConfig);
+
+  // Mapeamos el movimiento para que sea sutil
+  const translateX = useTransform(springX, [-0.5, 0.5], [-30, 30]);
+  const translateY = useTransform(springY, [-0.5, 0.5], [-30, 30]);
+  const rotateX = useTransform(springY, [-0.5, 0.5], [5, -5]);
+  const rotateY = useTransform(springX, [-0.5, 0.5], [-5, 5]);
 
   useEffect(() => {
     setMounted(true);
@@ -83,171 +101,166 @@ export function HeroBanner({ products, config }: HeroBannerProps) {
       onMouseMove={(e) => {
         if (shouldReduceMotion) return;
         const rect = e.currentTarget.getBoundingClientRect();
-        setMouse({
-          x: (e.clientX - rect.left) / rect.width - 0.5,
-          y: (e.clientY - rect.top) / rect.height - 0.5,
-        });
+        mouseX.set((e.clientX - rect.left) / rect.width - 0.5);
+        mouseY.set((e.clientY - rect.top) / rect.height - 0.5);
       }}
-      className="relative h-[80vh] min-h-[600px] max-h-[900px] overflow-hidden flex items-center justify-center"
+      onMouseLeave={() => {
+        mouseX.set(0);
+        mouseY.set(0);
+      }}
+      className="relative min-h-[600px] lg:h-[80vh] flex items-center overflow-hidden bg-white dark:bg-neutral-950"
     >
-      {/* Fondo dinámico */}
+      {/* Fondo Global */}
       <div
-        className="absolute inset-0 z-0 transition-colors duration-700"
+        className="absolute inset-0 z-0 opacity-30 transition-colors duration-700"
         style={{
-          background: `
-            radial-gradient(circle at 50% 50%, ${accent}, transparent 70%)
-          `,
+          background: `radial-gradient(circle at 70% 50%, ${accent}, transparent 70%)`,
         }}
       />
 
-      {/* MEDIA (video o imagen) */}
-      {current && (
-        <motion.div
-          key={currentIndex}
-          className="absolute inset-0 z-10"
-          style={{
-            transform: shouldReduceMotion
-              ? "none"
-              : `translate(${mouse.x * 20}px, ${mouse.y * 20}px) scale(1.05)`,
-          }}
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 1 }}
-        >
-          {current.videoUrl ? (
-            <video
-              src={current.videoUrl}
-              autoPlay
-              muted
-              loop
-              playsInline
-              className="w-full h-full object-cover"
-            />
-          ) : current.images?.[0]?.url ? (
-            <Image
-              src={current.images[0].url}
-              alt={current.name}
-              fill
-              className="object-cover"
-              priority
-            />
-          ) : (
-            <div className="w-full h-full bg-neutral-900 flex items-center justify-center p-20 relative overflow-hidden">
-               <div 
-                className="absolute inset-0 opacity-40 animate-pulse"
-                style={{
-                  background: `radial-gradient(circle at 20% 20%, ${accent}, transparent 60%), radial-gradient(circle at 80% 80%, rgba(0,0,0,0.5), transparent 60%)`
-                }}
-              />
-              <span className="relative z-10 text-white/20 font-black text-4xl md:text-7xl uppercase tracking-[0.5em] opacity-10 rotate-[-5deg] select-none text-center">
-                {current.name}
-              </span>
-            </div>
-          )}
+      <div className="container mx-auto px-6 md:px-12 grid grid-cols-1 md:grid-cols-2 gap-12 lg:gap-20 items-center relative z-10 py-20 lg:py-0">
+        
+        {/* COLUMNA IZQUIERDA: CONTENIDO */}
+        <div className="order-2 md:order-1 max-w-xl">
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={currentIndex}
+              initial={{ opacity: 0, x: -30 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: 20 }}
+              transition={{ duration: 0.6, ease: "easeOut" }}
+            >
+              {current?.promoPrice && config.heroShowUrgencyBar !== false && (
+                <span className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full bg-blue-600/10 text-blue-600 dark:text-blue-400 text-[10px] font-black uppercase tracking-widest mb-6">
+                  <Zap className="w-3 h-3" />
+                  {t("badge")}
+                </span>
+              )}
 
-          <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-black/10" />
-        </motion.div>
-      )}
+              <h1 className="text-4xl md:text-5xl lg:text-7xl font-black text-neutral-900 dark:text-white mb-6 leading-[1.05] tracking-tighter">
+                {current?.name}
+              </h1>
 
-      {/* CONTENIDO */}
-      <div className="relative z-20 text-center px-6 max-w-2xl">
-        <AnimatePresence mode="wait">
-          <motion.div
-            key={currentIndex}
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -20 }}
-            transition={{ duration: 0.8 }}
-          >
-            {current?.promoPrice && config.heroShowUrgencyBar !== false && (
-              <span className="inline-flex items-center gap-1 px-4 py-1.5 rounded-full bg-blue-600 text-white text-xs font-bold mb-5">
-                <Zap className="w-3 h-3" />
-                {t("badge")}
-              </span>
-            )}
+              <p className="text-base md:text-lg text-neutral-500 dark:text-neutral-400 mb-10 whitespace-pre-wrap leading-relaxed max-w-md italic">
+                {config.heroSubtitle || t("description")}
+              </p>
 
-            <h1 className="text-4xl md:text-6xl font-extrabold text-white mb-4">
-              {current?.name}
-            </h1>
-
-            <p className="text-white/70 mb-8 whitespace-pre-wrap">
-              {config.heroSubtitle || t("description")}
-            </p>
-
-            {current && (
-              <div className="mb-6">
-                {current.promoPrice ? (
-                  <div className="flex justify-center gap-3">
-                    <span className="text-4xl font-black text-white">
-                      {formatPrice(current.promoPrice)}
-                    </span>
-                    <span className="text-white/50 line-through">
+              {current && (
+                <div className="mb-10 flex items-baseline gap-4">
+                  {current.promoPrice ? (
+                    <>
+                      <span className="text-4xl md:text-5xl font-black text-blue-600 tracking-tighter">
+                        {formatPrice(current.promoPrice)}
+                      </span>
+                      <span className="text-xl text-neutral-300 dark:text-neutral-600 line-through italic">
+                        {formatPrice(current.price)}
+                      </span>
+                    </>
+                  ) : (
+                    <span className="text-4xl md:text-5xl font-black text-neutral-900 dark:text-white tracking-tighter">
                       {formatPrice(current.price)}
                     </span>
-                  </div>
-                ) : (
-                  <span className="text-4xl font-black text-white">
-                    {formatPrice(current.price)}
-                  </span>
-                )}
+                  )}
+                </div>
+              )}
+
+              <div className="flex flex-wrap gap-4">
+                <Link
+                  href={`/producto/${current?.slug}`}
+                  className="inline-flex items-center gap-2 px-8 py-4 bg-blue-600 text-white font-bold rounded-xl hover:bg-blue-700 transition-all active:scale-95 shadow-xl shadow-blue-500/25"
+                >
+                  <ShoppingCart className="w-4 h-4" />
+                  {config.heroCtaPrimaryLabel || "Ver producto ahora"}
+                </Link>
+
+                <Link
+                  href="/#catalogo"
+                  className="inline-flex items-center gap-2 px-8 py-4 border border-neutral-200 dark:border-neutral-800 text-neutral-600 dark:text-neutral-300 rounded-xl hover:bg-neutral-50 dark:hover:bg-neutral-900 transition-colors"
+                >
+                  {config.heroCtaSecondaryLabel || t("cta_catalog")}
+                  <ArrowRight className="w-4 h-4" />
+                </Link>
               </div>
-            )}
 
-            <div className="flex flex-col sm:flex-row gap-3 justify-center">
-              <Link
-                href={`/producto/${current?.slug}`}
-                className="inline-flex items-center gap-2 px-8 py-3 bg-white text-black font-bold rounded-xl hover:bg-neutral-200 transition-all active:scale-95"
-              >
-                <ShoppingCart className="w-4 h-4" />
-                {config.heroCtaPrimaryLabel || "Ver producto"}
-              </Link>
-
-              <Link
-                href="/#catalogo"
-                className="inline-flex items-center gap-2 px-8 py-3 border border-white/30 text-white rounded-xl hover:bg-white/10"
-              >
-                {config.heroCtaSecondaryLabel || t("cta_catalog")}
-                <ArrowRight className="w-4 h-4" />
-              </Link>
-            </div>
-
-            {/* dots */}
-            {products.length > 1 && (
-              <div className="flex justify-center gap-2 mt-6">
-                {products.map((_, i) => (
-                  <button
-                    key={i}
-                    onClick={() => setCurrentIndex(i)}
-                    className={cn(
-                      "h-2 rounded-full transition-all",
-                      i === currentIndex ? "w-8 bg-white" : "w-2 bg-white/40"
-                    )}
-                  />
-                ))}
-              </div>
-            )}
-          </motion.div>
-        </AnimatePresence>
-      </div>
-
-      {/* PANEL */}
-      {current && config.heroShowProductCard !== false && (
-        <div className="absolute bottom-6 left-1/2 -translate-x-1/2 z-30 w-[90%] max-w-md">
-          <div className="rounded-2xl border border-white/20 bg-black/50 backdrop-blur-xl p-5 text-white shadow-2xl">
-            <div className="flex justify-between mb-3">
-              <h2 className="font-bold">{current.name}</h2>
-              {discount > 0 && <span>-{discount}%</span>}
-            </div>
-
-            <Link
-              href={`/producto/${current.slug}`}
-              className="w-full inline-flex justify-center px-5 py-3 bg-white text-black font-bold rounded-xl"
-            >
-              Ver producto completo
-            </Link>
-          </div>
+              {/* Dots indicators */}
+              {products.length > 1 && (
+                <div className="flex gap-2.5 mt-12">
+                  {products.map((_, i) => (
+                    <button
+                      key={i}
+                      onClick={() => setCurrentIndex(i)}
+                      className={cn(
+                        "h-1.5 rounded-full transition-all duration-500",
+                        i === currentIndex ? "w-10 bg-blue-600" : "w-2.5 bg-neutral-200 dark:bg-neutral-800"
+                      )}
+                      aria-label={`Ir al producto ${i + 1}`}
+                    />
+                  ))}
+                </div>
+              )}
+            </motion.div>
+          </AnimatePresence>
         </div>
-      )}
+
+        {/* COLUMNA DERECHA: MEDIA */}
+        <div className="order-1 md:order-2 flex items-center justify-center relative min-h-[400px]">
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={currentIndex}
+              className="relative aspect-square flex items-center justify-center max-h-[500px] w-full"
+              style={{
+                x: shouldReduceMotion ? 0 : translateX,
+                y: shouldReduceMotion ? 0 : translateY,
+                rotateX: shouldReduceMotion ? 0 : rotateX,
+                rotateY: shouldReduceMotion ? 0 : rotateY,
+                transformPerspective: 1000,
+              }}
+              initial={{ opacity: 0, scale: 0.8 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 1.1 }}
+              transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+            >
+              {/* Spotlight localized */}
+              <div 
+                className="absolute inset-0 z-0 opacity-40 blur-3xl pointer-events-none"
+                style={{
+                  background: `radial-gradient(circle at 50% 50%, ${accent}, transparent 70%)`
+                }}
+              />
+
+              {current?.videoUrl ? (
+                <video
+                  src={current.videoUrl}
+                  autoPlay
+                  muted
+                  loop
+                  playsInline
+                  className="relative z-10 max-h-full object-contain"
+                />
+              ) : current?.images?.[0]?.url ? (
+                <div className="relative z-10 w-full h-full">
+                  <Image
+                    src={current.images[0].url}
+                    alt={current.name}
+                    fill
+                    className="object-contain drop-shadow-[0_25px_50px_rgba(0,0,0,0.2)] dark:drop-shadow-[0_25px_50px_rgba(255,255,255,0.05)]"
+                    priority
+                  />
+                </div>
+              ) : (
+                <div className="relative z-10 w-full h-full flex items-center justify-center p-12 overflow-hidden bg-neutral-50 dark:bg-neutral-900/40 rounded-3xl">
+                  <div className="absolute inset-0 opacity-20 animate-pulse"
+                    style={{ background: `radial-gradient(circle at 20% 20%, ${accent}, transparent 60%)` }}
+                  />
+                  <span className="relative z-10 text-neutral-300 dark:text-neutral-600 font-black text-2xl md:text-4xl uppercase tracking-[0.4em] opacity-40 rotate-[-5deg] select-none text-center">
+                    {current?.name}
+                  </span>
+                </div>
+              )}
+            </motion.div>
+          </AnimatePresence>
+        </div>
+      </div>
     </section>
   );
 }
