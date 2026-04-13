@@ -10,6 +10,7 @@ import {
   Users, 
   Package, 
   Settings,
+  Settings2,
   Tags,
   Truck,
   MessageSquare,
@@ -35,7 +36,7 @@ const SIDEBAR_ITEMS = [
   { label: "Reseñas", href: "/admin/resenas", icon: MessageSquare },
   { label: "Prompts AI", href: "/admin/prompts", icon: Sparkles },
   { label: "Usuarios", href: "/admin/usuarios", icon: ShieldCheck },
-  { label: "Métricas", href: "/admin/metricas", icon: Settings },
+  { label: "Métricas", href: "/admin/metricas", icon: Settings2 },
   { label: "Config. Sitio", href: "/admin/site-config", icon: Settings },
 ];
 
