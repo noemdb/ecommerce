@@ -18,7 +18,8 @@ import {
   ChevronLeft,
   ChevronRight,
   Sparkles,
-  BookOpen
+  BookOpen,
+  Database
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useState, useEffect } from "react";
@@ -38,6 +39,7 @@ const SIDEBAR_ITEMS = [
   { label: "Prompts AI", href: "/admin/prompts", icon: Sparkles },
   { label: "Usuarios", href: "/admin/usuarios", icon: ShieldCheck },
   { label: "Métricas", href: "/admin/metricas", icon: Settings2 },
+  { label: "Base de Datos", href: "/admin/backup", icon: Database },
   { label: "Config. Sitio", href: "/admin/site-config", icon: Settings },
   { label: "Manual de Uso", href: "/admin/manual", icon: BookOpen },
 ];
