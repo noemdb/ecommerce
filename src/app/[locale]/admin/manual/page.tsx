@@ -343,18 +343,62 @@ const MANUAL_SECTIONS = [
         <div>
           <h3 className="text-xl font-bold flex items-center gap-2 mb-2">
             <LayoutDashboard className="text-indigo-500 w-6 h-6" />
-            Organizar tus Categorías
+            Organizar tus Categorías (Arquitectura)
           </h3>
-          <p className="text-neutral-600 dark:text-neutral-400">
-            Las categorías son como los pasillos de un supermercado. Si agrupas bien, la gente comprará más fácil.
+          <p className="text-neutral-600 dark:text-neutral-400 leading-relaxed mb-4">
+            Las categorías son los <strong>pasillos y estanterías</strong> de tu tienda. Una estructura desordenada confunde al cliente y hace que abandone el carrito. El sistema te permite crear una arquitectura "infinita", pero la clave es la simplicidad.
           </p>
         </div>
-        
-        <div className="bg-indigo-50 dark:bg-indigo-500/10 p-4 rounded-xl border border-indigo-100 dark:border-indigo-500/20">
-          <ul className="list-disc list-inside space-y-2 text-indigo-900 dark:text-indigo-200">
-            <li>No crees categorías por cada cosita (ej: Categoría "iPhone Rojo de 64gb"). Mejor usa: "Celulares" → Subcategoría "iPhone".</li>
-            <li>Coloca una imagen representativa para la categoría, esto hará que el catálogo de tu tienda se vea más "premium".</li>
-          </ul>
+
+        <div className="grid md:grid-cols-2 gap-4">
+          <div className="bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 p-5 rounded-xl shadow-sm">
+            <h4 className="font-bold text-indigo-700 dark:text-indigo-400 mb-3 flex items-center gap-2">
+              <CheckCircle2 className="w-5 h-5" />
+              Jerarquía y Subcategorías
+            </h4>
+            <p className="text-sm text-neutral-600 dark:text-neutral-400 mb-3">
+              No todas las categorías son iguales. Puedes tener categorías "Padre" (ej. <i>Mujer</i>) y "Hijas" (ej. <i>Vestidos</i>, <i>Calzado</i>). 
+            </p>
+            <div className="bg-indigo-50 dark:bg-indigo-950/30 p-3 rounded-lg border border-indigo-100 dark:border-indigo-900/50">
+              <p className="text-xs font-mono text-indigo-800 dark:text-indigo-300">
+                📁 Ropa Mujer <br/>
+                &nbsp;&nbsp;╰── 👗 Vestidos <br/>
+                &nbsp;&nbsp;╰── 👠 Tacones
+              </p>
+            </div>
+          </div>
+
+          <div className="bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 p-5 rounded-xl shadow-sm">
+            <h4 className="font-bold text-emerald-700 dark:text-emerald-400 mb-3 flex items-center gap-2">
+              <LayoutDashboard className="w-5 h-5 text-emerald-500" />
+              Drag & Drop (Orden Visual)
+            </h4>
+            <p className="text-sm text-neutral-600 dark:text-neutral-400">
+              El orden en que aparecen las categorías en tu página principal es totalmente personalizable. Solo debes <strong>mantener presionado y arrastrar</strong> las tarjetas en el panel de administración para priorizar lo que quieres que tus clientes vean primero.
+            </p>
+          </div>
+        </div>
+
+        <div className="bg-blue-50 dark:bg-blue-500/10 p-5 rounded-xl border border-blue-100 dark:border-blue-500/20">
+          <h4 className="font-bold flex items-center gap-2 text-blue-800 dark:text-blue-300 mb-3 text-lg">
+            <Lightbulb className="w-5 h-5" />
+            La importancia del "Slug" y SEO
+          </h4>
+          <div className="grid md:grid-cols-2 gap-6">
+            <p className="text-sm text-neutral-700 dark:text-neutral-300 leading-relaxed">
+              El <strong>Slug</strong> es la parte de la dirección web que identifica a la categoría (ej. <i>mitienda.com/ropa-hombre</i>). El sistema lo genera automáticamente al escribir el nombre, pero puedes editarlo. 
+              <br/><br/>
+              <strong>Regla de Oro:</strong> Una vez que la categoría está pública en Google, evita cambiar el slug, ya que esto rompería los enlaces antiguos.
+            </p>
+            <div className="space-y-3">
+              <div className="bg-white dark:bg-neutral-900 p-3 rounded-lg border border-neutral-200 dark:border-neutral-700">
+                <p className="text-[10px] text-neutral-400 uppercase font-bold mb-1">Visibilidad</p>
+                <p className="text-sm text-neutral-600 dark:text-neutral-400 italic">
+                  Puedes desactivar categorías (ej. "Liquidación de Navidad") para que desaparezcan de la tienda sin borrarlas, guardándolas para el próximo año.
+                </p>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     )

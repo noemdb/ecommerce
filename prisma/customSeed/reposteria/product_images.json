@@ -1,11 +1,74 @@
 [
-  { "id": "cmnwikxvh001aehxh220efk8m", "productId": "cmnwi6cbf000u10bd8vhmx6yo", "url": "https://placehold.co/800x800/fdf2f8/db2777.png?text=Torta+Drip+Cake+Personalizada", "alt": "Torta Drip Cake Personalizada Dulce Lucía", "order": 0, "isPrimary": true },
-  { "id": "cmnwj90ty0001fjh1pslu96ox", "productId": "cmnwi6bpb000c10bdgkks9mfj", "url": "https://placehold.co/800x800/fdf2f8/db2777.png?text=Cheesecake+Frutos+Rojos", "alt": "Cheesecake de Frutos Rojos", "order": 0, "isPrimary": true },
-  { "id": "cmnwj9q6v0001wrz737e05vmp", "productId": "cmnwi6big000810bdctf29fbh", "url": "https://placehold.co/800x800/fdf2f8/db2777.png?text=Torta+Red+Velvet", "alt": "Torta Red Velvet Clásica", "order": 0, "isPrimary": true },
-  { "id": "cmnwjc59a0002wrz7gc98fq9v", "productId": "cmnwi6bvr000g10bdyvirukob", "url": "https://placehold.co/800x800/fdf2f8/db2777.png?text=Alfajores+Maicena", "alt": "Alfajores de Maicena Tradicionales", "order": 0, "isPrimary": true },
-  { "id": "cmnwjuw5800008p1trx9iqiqt", "productId": "cmnwi6c70000q10bd79fm40dx", "url": "https://placehold.co/800x800/fdf2f8/db2777.png?text=Flan+Caramelo+Casero", "alt": "Flan de Caramelo Casero", "order": 0, "isPrimary": true },
-  { "id": "cmnwjxiw50000xvd4vhnm4it3", "productId": "cmnwi6c2j000m10bdjrg9daua", "url": "https://placehold.co/800x800/fdf2f8/db2777.png?text=Cupcakes+Decorados", "alt": "Cupcakes Decorados Pack x6", "order": 0, "isPrimary": true },
-  { "id": "cmnwk0db90000rmadygklaqrg", "productId": "cmnwi6c09000k10bd3y7fntrz", "url": "https://placehold.co/800x800/fdf2f8/db2777.png?text=Torta+Tres+Leches", "alt": "Torta de Tres Leches Clásica", "order": 0, "isPrimary": true },
-  { "id": "cmnwkdqpt0001nvgolrs1h6ah", "productId": "cmnwi6by0000i10bdcq2nazkk", "url": "https://placehold.co/800x800/fdf2f8/db2777.png?text=Brownie+Chocolate", "alt": "Brownie Chocolate Intenso", "order": 0, "isPrimary": true },
-  { "id": "cmnwksvm50001vp07kyfymoug", "productId": "cmnwi6c4w000o10bd8lp09zi1", "url": "https://placehold.co/800x800/fdf2f8/db2777.png?text=Galletas+Decoradas", "alt": "Galletas Decoradas Temáticas", "order": 0, "isPrimary": true }
+  {
+    "id": "cmo0iyjm40000hqcdxmbaoo2h",
+    "productId": "cmnwi6bpb000c10bdgkks9mfj",
+    "url": "https://utfs.io/f/ymdloqageYK6oFZ5gDbCR2HthaPNy5vQwsxrMmTl64XpnAd7",
+    "alt": null,
+    "order": 0,
+    "isPrimary": true
+  },
+  {
+    "id": "cmo0j1abw0000dlf1vm393hwr",
+    "productId": "cmnwi6big000810bdctf29fbh",
+    "url": "https://utfs.io/f/ymdloqageYK6J6fmtToJE6paMH58ZhWFKTvkCe9DBqdzgxV1",
+    "alt": null,
+    "order": 0,
+    "isPrimary": true
+  },
+  {
+    "id": "cmo0j4qml0001dlf1rovvmn0g",
+    "productId": "cmnwi6c09000k10bd3y7fntrz",
+    "url": "https://utfs.io/f/ymdloqageYK6ShPO7Q3bJkAlOVQZWYxpRNEmCecLaiGFgu1U",
+    "alt": null,
+    "order": 0,
+    "isPrimary": true
+  },
+  {
+    "id": "cmo0j6h5d00024rdkjjtparji",
+    "productId": "cmnwi6c70000q10bd79fm40dx",
+    "url": "https://utfs.io/f/ymdloqageYK6simx1WZa50pJbXefUtFcVzkyj3o6il2PAm4n",
+    "alt": null,
+    "order": 0,
+    "isPrimary": true
+  },
+  {
+    "id": "cmo0jbg9u0002hqcd89cnx0hb",
+    "productId": "cmnwi6cbf000u10bd8vhmx6yo",
+    "url": "https://utfs.io/f/ymdloqageYK68qoNA7CDV2es4M6GwgSEFZXjpRNkb9CzOcoU",
+    "alt": null,
+    "order": 0,
+    "isPrimary": true
+  },
+  {
+    "id": "cmo0je2830003hqcd3a7l9aqg",
+    "productId": "cmnwi6c4w000o10bd8lp09zi1",
+    "url": "https://utfs.io/f/ymdloqageYK6J86gRroJE6paMH58ZhWFKTvkCe9DBqdzgxV1",
+    "alt": null,
+    "order": 0,
+    "isPrimary": true
+  },
+  {
+    "id": "cmo0jhjh40002dlf1owwf5r39",
+    "productId": "cmnwi6c2j000m10bdjrg9daua",
+    "url": "https://utfs.io/f/ymdloqageYK6J5Wl7XoJE6paMH58ZhWFKTvkCe9DBqdzgxV1",
+    "alt": null,
+    "order": 0,
+    "isPrimary": true
+  },
+  {
+    "id": "cmo0jq6io0004hqcd7fiai61y",
+    "productId": "cmnwi6by0000i10bdcq2nazkk",
+    "url": "https://utfs.io/f/ymdloqageYK6jakPltnRovtQHD6aidJ2jqAZzYFc0nUG1k7T",
+    "alt": null,
+    "order": 0,
+    "isPrimary": true
+  },
+  {
+    "id": "cmo0jqovd0000bposc7gk5cu4",
+    "productId": "cmnwi6bvr000g10bdyvirukob",
+    "url": "https://utfs.io/f/ymdloqageYK6Uq7rSP6I18yzl45RbhWaMfpo36nGPZErLBiO",
+    "alt": null,
+    "order": 0,
+    "isPrimary": true
+  }
 ]

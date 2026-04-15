@@ -20,15 +20,15 @@
     "metaDescription": "Torta Red Velvet hecha a mano con ingredientes premium. Perfecta para celebraciones especiales.",
     "categoryId": "cmnwi6b74000210bdliq2u59x",
     "supplierId": null,
-    "createdAt": "2026-04-13 01:17:29.415",
-    "updatedAt": "2026-04-13 01:48:08.007"
+    "createdAt": "2026-04-15 20:44:05.835",
+    "updatedAt": "2026-04-15 20:52:38.898"
   },
   {
     "id": "cmnwi6bpb000c10bdgkks9mfj",
     "name": "Cheesecake de Frutos Rojos",
     "slug": "cheesecake-frutos-rojos",
     "description": "Base crujiente de galleta artesanal, relleno cremoso de queso Philadelphia y topping de compota natural de fresas, frambuesas y moras. Sin conservantes.",
-    "price": 38.50,
+    "price": 38.5,
     "promoPrice": null,
     "sku": "POS-002",
     "isActive": true,
@@ -44,8 +44,8 @@
     "metaDescription": "Cheesecake artesanal con frutos rojos frescos. Ideal para compartir o regalar.",
     "categoryId": "cmnwi6b9g000310bdb2edb10u",
     "supplierId": null,
-    "createdAt": "2026-04-13 01:17:29.663",
-    "updatedAt": "2026-04-13 01:47:35.142"
+    "createdAt": "2026-04-15 20:44:05.847",
+    "updatedAt": "2026-04-15 20:50:30.97"
   },
   {
     "id": "cmnwi6bvr000g10bdyvirukob",
@@ -68,15 +68,15 @@
     "metaDescription": "Alfajores tradicionales con dulce de leche premium. Perfectos para compartir o regalar.",
     "categoryId": "cmnwi6bbs000410bd96n7imld",
     "supplierId": null,
-    "createdAt": "2026-04-13 01:17:29.895",
-    "updatedAt": "2026-04-13 01:50:00.847"
+    "createdAt": "2026-04-15 20:44:05.855",
+    "updatedAt": "2026-04-15 21:12:24.137"
   },
   {
     "id": "cmnwi6by0000i10bdcq2nazkk",
     "name": "Brownie Chocolate Intenso",
     "slug": "brownie-chocolate-intenso",
     "description": "Brownie artesanal con 70% cacao, textura húmeda por dentro y costra crujiente por fuera. Opcional con nueces tostadas. Porción individual o por encargo.",
-    "price": 4.50,
+    "price": 4.5,
     "promoPrice": null,
     "sku": "POS-004",
     "isActive": true,
@@ -92,16 +92,16 @@
     "metaDescription": "Brownie intenso con cacao premium. Ideal para acompañar tu café o merienda.",
     "categoryId": "cmnwi6b9g000310bdb2edb10u",
     "supplierId": null,
-    "createdAt": "2026-04-13 01:17:29.976",
-    "updatedAt": "2026-04-13 02:19:14.929"
+    "createdAt": "2026-04-15 20:44:05.862",
+    "updatedAt": "2026-04-15 21:12:00.379"
   },
   {
     "id": "cmnwi6c09000k10bd3y7fntrz",
     "name": "Torta de Tres Leches Clásica",
     "slug": "torta-tres-leches-clasica",
     "description": "Bizcocho esponjoso bañado en nuestra mezcla signature de tres leches, coronado con merengue italiano y canela. Tradición y sabor en cada bocado.",
-    "price": 42.00,
-    "promoPrice": 36.50,
+    "price": 42.0,
+    "promoPrice": 36.5,
     "sku": "TOR-005",
     "isActive": true,
     "isFeatured": true,
@@ -116,8 +116,8 @@
     "metaDescription": "La auténtica torta de tres leches hecha a mano. Perfecta para cumpleaños y celebraciones.",
     "categoryId": "cmnwi6b74000210bdliq2u59x",
     "supplierId": null,
-    "createdAt": "2026-04-13 01:17:30.057",
-    "updatedAt": "2026-04-13 02:08:51.017"
+    "createdAt": "2026-04-15 20:44:05.87",
+    "updatedAt": "2026-04-15 20:55:19.987"
   },
   {
     "id": "cmnwi6c2j000m10bdjrg9daua",
@@ -140,15 +140,15 @@
     "metaDescription": "Cupcakes personalizados para tus celebraciones. Sabores y diseños a elección.",
     "categoryId": "cmnwi6bdy000510bdchaz5f4d",
     "supplierId": null,
-    "createdAt": "2026-04-13 01:17:30.139",
-    "updatedAt": "2026-04-13 02:06:38.287"
+    "createdAt": "2026-04-15 20:44:05.878",
+    "updatedAt": "2026-04-15 21:05:17.267"
   },
   {
     "id": "cmnwi6c4w000o10bd8lp09zi1",
     "name": "Galletas Decoradas Temáticas",
     "slug": "galletas-decoradas-tematicas",
     "description": "Galletas de mantequilla con glaseado real pintado a mano. Diseños personalizados para cumpleaños, bodas, baby showers o eventos corporativos. Pedido mínimo: 12 unidades.",
-    "price": 2.50,
+    "price": 2.5,
     "promoPrice": null,
     "sku": "GAL-007",
     "isActive": true,
@@ -164,8 +164,8 @@
     "metaDescription": "Galletas artesanales con diseños únicos para tus eventos especiales.",
     "categoryId": "cmnwi6b9g000310bdb2edb10u",
     "supplierId": null,
-    "createdAt": "2026-04-13 01:17:30.223",
-    "updatedAt": "2026-04-13 02:31:01.061"
+    "createdAt": "2026-04-15 20:44:05.885",
+    "updatedAt": "2026-04-15 21:02:34.941"
   },
   {
     "id": "cmnwi6c70000q10bd79fm40dx",
@@ -188,8 +188,8 @@
     "metaDescription": "Flan casero con receta tradicional. El postre perfecto para cerrar cualquier comida.",
     "categoryId": "cmnwi6bbs000410bd96n7imld",
     "supplierId": null,
-    "createdAt": "2026-04-13 01:17:30.3",
-    "updatedAt": "2026-04-13 02:04:35.481"
+    "createdAt": "2026-04-15 20:44:05.892",
+    "updatedAt": "2026-04-15 20:56:41.023"
   },
   {
     "id": "cmnwi6cbf000u10bd8vhmx6yo",
@@ -212,7 +212,7 @@
     "metaDescription": "Tortas decoradas artesanalmente para tus eventos más importantes. Diseño único y personalizado.",
     "categoryId": "cmnwi6b74000210bdliq2u59x",
     "supplierId": null,
-    "createdAt": "2026-04-13 01:17:30.459",
-    "updatedAt": "2026-04-13 01:28:51.429"
+    "createdAt": "2026-04-15 20:44:05.899",
+    "updatedAt": "2026-04-15 21:00:33.162"
   }
 ]
