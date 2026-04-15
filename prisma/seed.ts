@@ -60,48 +60,8 @@ async function main() {
   });
 
   // ─────────────────────────────────────────────
-  // 3. CATEGORÍAS
+  // 3. CATEGORÍAS (Omitido por solicitud del usuario)
   // ─────────────────────────────────────────────
-  const categories = [
-    {
-      id: "cmnwi6b74000210bdliq2u59x",
-      name: "Electrónica",
-      slug: "electronica",
-      order: 1,
-    },
-    {
-      id: "cmnwi6b9g000310bdb2edb10u",
-      name: "Ropa y Accesorios",
-      slug: "ropa-accesorios",
-      order: 2,
-    },
-    {
-      id: "cmnwi6bbs000410bd96n7imld",
-      name: "Hogar y Jardín",
-      slug: "hogar-jardin",
-      order: 3,
-    },
-    {
-      id: "cmnwi6bdy000510bdchaz5f4d",
-      name: "Deportes",
-      slug: "deportes",
-      order: 4,
-    },
-    {
-      id: "cmnwi6bg6000610bdabjk2b7r",
-      name: "Libros",
-      slug: "libros",
-      order: 5,
-    },
-  ];
-
-  for (const cat of categories) {
-    await prisma.category.upsert({
-      where: { id: cat.id },
-      update: { order: cat.order, name: cat.name, slug: cat.slug },
-      create: { ...cat, isActive: true },
-    });
-  }
 
   // ─────────────────────────────────────────────
   // 4. PRODUCTOS DESDE JSON

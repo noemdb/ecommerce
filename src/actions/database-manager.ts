@@ -2,6 +2,10 @@
 
 import { prisma } from "@/lib/prisma";
 import { revalidatePath } from "next/cache";
+import bcrypt from "bcryptjs";
+import fs from "fs";
+import path from "path";
+import { DEFAULT_SITE_CONFIG } from "@/lib/site-config/default-site-config";
 
 export async function exportDatabase() {
   try {
@@ -235,6 +239,72 @@ export async function importDatabase(jsonDataStr: string) {
     return { success: true };
   } catch (error: any) {
     console.error("Error importing database:", error);
+    return { success: false, error: error.message };
+  }
+}
+
+export async function resetToInitialState() {
+  try {
+    // 1. TRUNCATE ALL TABLES
+    await prisma.$executeRawUnsafe(`
+      TRUNCATE TABLE 
+        "users", 
+        "customers", 
+        "otp_tokens", 
+        "customer_actions", 
+        "categories", 
+        "suppliers", 
+        "products", 
+        "product_images", 
+        "product_variants", 
+        "product_prompts", 
+        "orders", 
+        "order_items", 
+        "order_status_history", 
+        "inventory_movements", 
+        "reviews", 
+        "site_config", 
+        "audit_logs" 
+      CASCADE;
+    `);
+
+    // 2. SEED ADMIN & CUSTOMER DEMO
+    const adminPassword = await bcrypt.hash("Admin1234!", 12);
+    await prisma.user.create({
+      data: {
+        name: "Administrador Premium",
+        email: "admin@mitienda.com",
+        password: adminPassword,
+        role: "ADMIN",
+        isActive: true,
+      },
+    });
+
+    const customerPassword = await bcrypt.hash("Cliente1234!", 12);
+    await prisma.customer.create({
+      data: {
+        name: "Juan Pérez Demo",
+        email: "cliente@demo.com",
+        password: customerPassword,
+        phone: "584120000000",
+        isEmailVerified: true,
+      },
+    });
+
+    // 3. SEED DEFAULT CATALOG (Omitido por solicitud del usuario)
+    // No se cargan categorías, productos ni imágenes en esta operación.
+
+    // 4. SITE CONFIG
+    await prisma.siteConfig.create({
+      data: { id: 1, ...DEFAULT_SITE_CONFIG },
+    });
+
+    revalidatePath("/");
+    revalidatePath("/admin");
+    
+    return { success: true };
+  } catch (error: any) {
+    console.error("Error resetting database:", error);
     return { success: false, error: error.message };
   }
 }

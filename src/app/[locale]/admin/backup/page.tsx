@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { Download, Upload, Server, FileJson, AlertTriangle } from "lucide-react";
-import { exportDatabase, importDatabase, seedCatalogFromJSON } from "@/actions/database-manager";
+import { exportDatabase, importDatabase, seedCatalogFromJSON, resetToInitialState } from "@/actions/database-manager";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -10,11 +10,14 @@ import { Label } from "@/components/ui/Label";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle, CardFooter } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/Alert";
+import { ConfirmationDialog } from "@/components/ui/confirmation-dialog";
 
 export default function BackupPage() {
   const [isExporting, setIsExporting] = useState(false);
   const [isImporting, setIsImporting] = useState(false);
   const [isSeeding, setIsSeeding] = useState(false);
+  const [isResetting, setIsResetting] = useState(false);
+  const [showResetDialog, setShowResetDialog] = useState(false);
 
   const [importFile, setImportFile] = useState<File | null>(null);
 
@@ -93,6 +96,23 @@ export default function BackupPage() {
      } finally {
         setIsSeeding(false);
      }
+  };
+ 
+  const handleReset = async () => {
+    setShowResetDialog(false);
+    setIsResetting(true);
+    try {
+      const res = await resetToInitialState();
+      if (res.success) {
+        toast.success("Tienda restaurada al estado inicial con éxito");
+      } else {
+        toast.error("Error al resetear", { description: res.error });
+      }
+    } catch (e) {
+      toast.error("Error inesperado en el reseteo");
+    } finally {
+      setIsResetting(false);
+    }
   };
 
   return (
@@ -179,6 +199,44 @@ export default function BackupPage() {
                     </Button>
                 </CardFooter>
             </Card>
+
+            <Card className="border-orange-200 dark:border-orange-900/50 bg-orange-50/10">
+                <CardHeader>
+                    <CardTitle className="flex items-center gap-2 text-orange-600">
+                        <AlertTriangle className="w-5 h-5" />
+                        Configuración de Fábrica
+                    </CardTitle>
+                    <CardDescription>
+                        Borra absolutamente todo y vuelve a la configuración inicial con productos de demostración y cuenta de administrador por defecto.
+                    </CardDescription>
+                </CardHeader>
+                <CardContent>
+                    <p className="text-sm text-neutral-600 dark:text-neutral-400">
+                        Útil para limpiar el sistema después de pruebas o para comenzar una nueva tienda desde cero.
+                    </p>
+                </CardContent>
+                <CardFooter>
+                    <Button 
+                        variant="outline" 
+                        onClick={() => setShowResetDialog(true)} 
+                        disabled={isResetting}
+                        className="w-full sm:w-auto font-bold border-orange-200 hover:bg-orange-100 dark:border-orange-900 dark:hover:bg-orange-900/20 text-orange-700 dark:text-orange-400"
+                    >
+                        {isResetting ? "Reseteando Sistema..." : "Resetear al Inicio"}
+                    </Button>
+                </CardFooter>
+            </Card>
+
+            <ConfirmationDialog 
+                isOpen={showResetDialog}
+                onConfirm={handleReset}
+                onCancel={() => setShowResetDialog(false)}
+                variant="danger"
+                title="¿Resetear Tienda al Inicio?"
+                description="🚨 PELIGRO EXTREMO: Esta acción eliminará COMPLETAMENTE todos los datos (Pedidos, Clientes, Productos, Configuración) y restaurará la tienda a su estado de fábrica original. Esta operación es irreversible."
+                confirmText="Sí, Resetear Todo"
+                cancelText="Cancelar"
+            />
         </TabsContent>
 
         {/* TAB SEEDER */}
