@@ -17,7 +17,8 @@ import {
   ShieldCheck,
   ChevronLeft,
   ChevronRight,
-  Sparkles
+  Sparkles,
+  BookOpen
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useState, useEffect } from "react";
@@ -38,6 +39,7 @@ const SIDEBAR_ITEMS = [
   { label: "Usuarios", href: "/admin/usuarios", icon: ShieldCheck },
   { label: "Métricas", href: "/admin/metricas", icon: Settings2 },
   { label: "Config. Sitio", href: "/admin/site-config", icon: Settings },
+  { label: "Manual de Uso", href: "/admin/manual", icon: BookOpen },
 ];
 
 export function AdminSidebar() {
