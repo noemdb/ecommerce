@@ -1,0 +1,50 @@
+[
+  {
+    "id": "cmnwi6b74000210bdliq2u59x",
+    "name": "Tarjetería Especial",
+    "slug": "tarjeteria-especial",
+    "order": 1
+  },
+  {
+    "id": "cmnwi6b9g000310bdb2edb10u",
+    "name": "Invitaciones de Eventos",
+    "slug": "invitaciones-eventos",
+    "order": 2
+  },
+  {
+    "id": "cmnwi6bbs000410bd96n7imld",
+    "name": "Arreglos y Flower Boxes",
+    "slug": "arreglos-flower-boxes",
+    "order": 3
+  },
+  {
+    "id": "cmnwi6bdy000510bdchaz5f4d",
+    "name": "Stickers y Etiquetas",
+    "slug": "stickers-etiquetas",
+    "order": 4
+  },
+  {
+    "id": "cmnwi6cat000610bdcat5f4d",
+    "name": "Cuadros Decorativos",
+    "slug": "cuadros-decorativos",
+    "order": 5
+  },
+  {
+    "id": "cmnwi6dog000710bddog5f4d",
+    "name": "Party Boxes (Kits Fiesta)",
+    "slug": "party-boxes",
+    "order": 6
+  },
+  {
+    "id": "cmnwi6mac000810bdmac5f4d",
+    "name": "Papelería Personalizada",
+    "slug": "papeleria-personalizada",
+    "order": 7
+  },
+  {
+    "id": "cmnwi6emb000910bdemb5f4d",
+    "name": "Impresiones y Laminados",
+    "slug": "impresiones-laminados",
+    "order": 8
+  }
+]
