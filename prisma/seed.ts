@@ -59,35 +59,6 @@ async function main() {
     },
   });
 
-  // ─────────────────────────────────────────────
-  // 3. CATEGORÍAS (Omitido por solicitud del usuario)
-  // ─────────────────────────────────────────────
-
-  // ─────────────────────────────────────────────
-  // 4. PRODUCTOS DESDE JSON
-  // ─────────────────────────────────────────────
-  for (const p of productsJson) {
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const { createdAt, updatedAt, ...data } = p;
-
-    await prisma.product.upsert({
-      where: { id: data.id },
-      update: data,
-      create: data,
-    });
-  }
-
-  // ─────────────────────────────────────────────
-  // 4.1 IMÁGENES DESDE JSON
-  // ─────────────────────────────────────────────
-  for (const img of productImagesJson) {
-    await prisma.productImage.upsert({
-      where: { id: img.id },
-      update: img,
-      create: img,
-    });
-  }
-
   console.log(`✅ Productos (${productsJson.length}) e Imágenes (${productImagesJson.length}) creados.`);
 
   // ─────────────────────────────────────────────
