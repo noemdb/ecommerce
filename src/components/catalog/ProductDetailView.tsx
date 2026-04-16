@@ -24,6 +24,7 @@ interface ProductDetailViewProps {
     promoPrice: number | null;
     stock: number;
     categoryId: string;
+    sku: string;
     category?: { name: string };
     images: { id: string; url: string; alt?: string | null; isPrimary?: boolean }[];
     isNew?: boolean;

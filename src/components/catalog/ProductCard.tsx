@@ -6,6 +6,8 @@ import { Link } from "@/i18n/navigation";
 import { cn, formatPrice } from "@/lib/utils";
 import { RatingStars } from "./RatingStars";
 import { useTranslations } from "next-intl";
+import { useCartStore, type CartItem } from "@/store/cart";
+import { showPremiumToast } from "@/components/ui/PremiumToast";
 
 interface ProductCardProps {
   product: {
@@ -42,12 +44,35 @@ export function ProductCard({ product, badge, accentIndex }: ProductCardProps) {
   const t = useTranslations("ProductCard");
   const isOutOfStock = product.stock <= 0;
 
+  const addItem = useCartStore((state) => state.addItem);
+  const toggleCart = useCartStore((state) => state.toggleCart);
+
   const [added, setAdded] = useState(false);
 
-  const handleAdd = () => {
-    if (added || isOutOfStock) return;
+  const handleAdd = (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    
+    if (isOutOfStock) return;
+
+    const item: CartItem = {
+      productId: product.id,
+      name: product.name,
+      price: product.promoPrice ?? product.price,
+      imageUrl: product.images[0]?.url ?? "",
+      quantity: 1,
+      sku: product.sku,
+    };
+
+    addItem(item);
     setAdded(true);
-    setTimeout(() => setAdded(false), 1500);
+    
+    showPremiumToast.cart(
+      { name: product.name, image: product.images[0]?.url },
+      () => toggleCart()
+    );
+
+    setTimeout(() => setAdded(false), 2000);
   };
 
   const averageRating =

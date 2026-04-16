@@ -2,7 +2,7 @@
 
 import { useCartStore, CartItem } from "@/store/cart";
 import { Plus, Check, ShoppingCart } from "lucide-react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { cn } from "@/lib/utils";
 import { showPremiumToast } from "@/components/ui/PremiumToast";
 import { useTranslations } from "next-intl";
@@ -36,32 +36,41 @@ export function AddToCartButton({
   const addItem = useCartStore((state) => state.addItem);
   const toggleCart = useCartStore((state) => state.toggleCart);
   const [added, setAdded] = useState(false);
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   const handleAdd = (e: React.MouseEvent) => {
     e.preventDefault();
     e.stopPropagation();
 
-    if (product.stock <= 0 || disabled) return;
+    if (product.stock <= 0 || disabled || !mounted) return;
 
-    const item: CartItem = {
-      productId: product.id,
-      variantId,
-      name: product.name,
-      price: product.promoPrice ?? product.price,
-      imageUrl: product.images[0]?.url ?? "",
-      quantity: 1,
-      sku: product.sku,
-    };
+    try {
+      const item: CartItem = {
+        productId: product.id,
+        variantId,
+        name: product.name,
+        price: product.promoPrice ?? product.price,
+        imageUrl: product.images[0]?.url ?? "",
+        quantity: 1,
+        sku: product.sku,
+      };
 
-    addItem(item);
-    setAdded(true);
-    
-    showPremiumToast.cart(
-      { name: product.name, image: product.images[0]?.url },
-      () => toggleCart()
-    );
+      addItem(item);
+      setAdded(true);
+      
+      showPremiumToast.cart(
+        { name: product.name, image: product.images[0]?.url },
+        () => toggleCart()
+      );
 
-    setTimeout(() => setAdded(false), 2000);
+      setTimeout(() => setAdded(false), 2000);
+    } catch (error) {
+      console.error("Failed to add to cart:", error);
+    }
   };
 
   const sizeClasses = {
