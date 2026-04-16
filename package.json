@@ -5,11 +5,9 @@
   "engines": {
     "node": "22.x || 24.x"
   },
-  
-    "prisma": {
-      "seed": "npx tsx prisma/seed.ts"
-    },
-
+  "prisma": {
+    "seed": "npx tsx prisma/seed.ts"
+  },
   "scripts": {
     "dev": "next dev",
     "build": "npx prisma generate && npx prisma migrate deploy && next build",
@@ -85,6 +83,6 @@
     "postcss": "8.4.49",
     "prisma": "5.22.0",
     "tailwindcss": "^4.2.2",
-    "tsx": "4.19.2"
+    "tsx": "^4.19.2"
   }
 }

@@ -124,12 +124,25 @@ export function CheckoutForm({ initialData }: CheckoutFormProps) {
                 className="flex h-14 w-full rounded-md border-2 border-neutral-100 bg-white px-4 py-2 text-sm font-medium transition-all duration-300 focus:outline-none focus:border-blue-600 dark:bg-neutral-900 dark:border-neutral-800 dark:text-white"
               >
                 <option value="">Selecciona un banco</option>
-                <option value="BBVA">BBVA</option>
-                <option value="Banorte">Banorte</option>
-                <option value="Santander">Santander</option>
-                <option value="PayPal">PayPal / Transferencia</option>
-                <option value="Otros">Otros</option>
+                <option value="0102 - Banco de Venezuela">Banco de Venezuela (BDV)</option>
+                <option value="0105 - Mercantil">Mercantil Banco</option>
+                <option value="0108 - Provincial">BBVA Provincial</option>
+                <option value="0134 - Banesco">Banesco</option>
+                <option value="0172 - Bancamiga">Bancamiga</option>
+                <option value="0114 - Bancaribe">Bancaribe</option>
+                <option value="0115 - Exterior">Banco Exterior</option>
+                <option value="0128 - Caroní">Banco Caroní</option>
+                <option value="0151 - BNC">Banco Nacional de Crédito (BNC)</option>
+                <option value="0163 - Tesoro">Banco del Tesoro</option>
+                <option value="0168 - Bancrecer">Bancrecer</option>
+                <option value="0171 - Activo">Banco Activo</option>
+                <option value="0174 - Banplus">Banplus</option>
+                <option value="0175 - Bicentenario">Banco Bicentenario</option>
+                <option value="0191 - BND">BND (B.O.D)</option>
+                <option value="Zelle">Zelle / Transferencia USA</option>
+                <option value="Otros">Otros (Pago Móvil / Efectivo)</option>
               </select>
+
               {errors.bankName && (
                 <p className="text-[10px] font-bold text-red-500 uppercase tracking-widest ml-1">{errors.bankName.message}</p>
               )}
