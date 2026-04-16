@@ -31,6 +31,7 @@ export function ProductImageCell({ url, name }: ProductImageCellProps) {
           src={url}
           alt={name}
           fill
+          sizes="44px"
           className="object-cover transition-transform duration-500 group-hover:scale-110"
         />
         <div className="absolute inset-0 bg-black/0 group-hover:bg-black/5 transition-colors" />
@@ -49,6 +50,7 @@ export function ProductImageCell({ url, name }: ProductImageCellProps) {
                 src={url}
                 alt={name}
                 fill
+                sizes="(max-width: 768px) 100vw, 768px"
                 className="object-contain p-8"
                 quality={100}
                 priority

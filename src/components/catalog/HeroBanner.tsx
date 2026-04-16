@@ -243,6 +243,7 @@ export function HeroBanner({ products, config }: HeroBannerProps) {
                     src={current.images[0].url}
                     alt={current.name}
                     fill
+                    sizes="100vw"
                     className="object-contain drop-shadow-[0_25px_50px_rgba(0,0,0,0.2)] dark:drop-shadow-[0_25px_50px_rgba(255,255,255,0.05)]"
                     priority
                   />
