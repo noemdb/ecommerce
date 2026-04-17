@@ -11,7 +11,7 @@ export const checkoutSchema = z.object({
   paymentReference: z.string().min(4, "Referencia de pago requerida"),
   
   // Note: Comprobante will be handled as a URL/String after upload
-  receiptUrl: z.string().optional(),
+  receiptUrl: z.string().min(1, "El comprobante de pago es obligatorio"),
 });
 
 export type CheckoutInput = z.infer<typeof checkoutSchema>;

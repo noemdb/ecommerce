@@ -11,8 +11,18 @@ export const ourFileRouter = {
     })
     .onUploadComplete(async ({ metadata, file }) => {
       console.log("Upload complete for userId:", metadata.uploadedBy);
-      console.log("file url", file.url);
-      return { uploadedBy: metadata.uploadedBy, url: file.url };
+      console.log("file url", file.ufsUrl);
+      return { uploadedBy: metadata.uploadedBy, url: file.ufsUrl };
+    }),
+
+  receiptImage: f({ image: { maxFileSize: "4MB" } })
+    .middleware(async () => {
+      // Para recibos de pago permitimos invitados, opcionalmente podrías checkear sesión
+      return { uploadedAt: new Date() };
+    })
+    .onUploadComplete(async ({ metadata, file }) => {
+      console.log("Receipt Upload complete:", file.ufsUrl);
+      return { url: file.ufsUrl };
     }),
 } satisfies FileRouter;
 

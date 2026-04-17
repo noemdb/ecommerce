@@ -17,30 +17,39 @@ export default async function proxy(request: NextRequest) {
   }
 
   // 2. Handle Auth/Protection
-  const session = await auth();
+  let session = null;
+  try {
+    session = await auth();
+  } catch (authError: any) {
+    console.error("[PROXY_AUTH_ERROR] Error fetching session:", authError?.message || authError);
+    // Continue even if auth fails, to avoid fatal TypeError during serialization
+  }
+
   const { pathname } = request.nextUrl;
-
-  const isAdminRoute =
-    pathname.startsWith("/admin") && pathname !== "/admin/login";
-  const isCuentaRoute = pathname.startsWith("/cuenta");
-  const isAdminLogin = pathname === "/admin/login";
-
   const role = session?.user?.role;
 
-  // Protection for /admin/* — only ADMIN
-  if (isAdminLogin && session && role === "ADMIN") {
-    return NextResponse.redirect(new URL("/admin", request.url));
-  }
-  
-  if (isAdminRoute && (!session || role !== "ADMIN")) {
-    return NextResponse.redirect(new URL("/admin/login", request.url));
-  }
+  try {
+    const isAdminRoute = pathname.startsWith("/admin") && pathname !== "/admin/login";
+    const isCuentaRoute = pathname.startsWith("/cuenta");
+    const isAdminLogin = pathname === "/admin/login";
 
-  // Protection for /cuenta/* — only CUSTOMER
-  if (isCuentaRoute && role !== "CUSTOMER") {
-    const loginUrl = new URL("/login", request.url);
-    loginUrl.searchParams.set("callbackUrl", pathname);
-    return NextResponse.redirect(loginUrl);
+    // Protection for /admin/* — only ADMIN
+    if (isAdminLogin && session && role === "ADMIN") {
+      return NextResponse.redirect(new URL("/admin", request.url));
+    }
+    
+    if (isAdminRoute && (!session || role !== "ADMIN")) {
+      return NextResponse.redirect(new URL("/admin/login", request.url));
+    }
+
+    // Protection for /cuenta/* — only CUSTOMER
+    if (isCuentaRoute && role !== "CUSTOMER") {
+      const loginUrl = new URL("/login", request.url);
+      loginUrl.searchParams.set("callbackUrl", pathname);
+      return NextResponse.redirect(loginUrl);
+    }
+  } catch (flowError) {
+    console.error("[PROXY_FLOW_ERROR] Error in route protection logic:", flowError);
   }
 
   return response; // Return the i18n response (with locale headers/cookies)

@@ -14,6 +14,8 @@ import { useRouter } from "next/navigation";
 import { formatPrice } from "@/lib/utils";
 import Image from "next/image";
 import { useTranslations } from "next-intl";
+import { UploadButton } from "@uploadthing/react";
+import { OurFileRouter } from "@/lib/uploadthing";
 
 interface CheckoutFormProps {
   initialData?: Partial<CheckoutInput>;
@@ -29,11 +31,14 @@ export function CheckoutForm({ initialData }: CheckoutFormProps) {
     register,
     handleSubmit,
     setValue,
+    watch,
     formState: { errors },
   } = useForm<CheckoutInput>({
     resolver: zodResolver(checkoutSchema),
     defaultValues: initialData,
   });
+  
+  const receiptUrl = watch("receiptUrl");
 
   // Redirect if cart empty
   useEffect(() => {
@@ -56,7 +61,10 @@ export function CheckoutForm({ initialData }: CheckoutFormProps) {
         sku: it.sku,
       }));
 
-      const result = await createOrderAction(data, orderItems);
+      const result = await createOrderAction(
+        JSON.parse(JSON.stringify(data)), 
+        JSON.parse(JSON.stringify(orderItems))
+      );
       
       if (result.success) {
         toast.success(t("success"));
@@ -163,16 +171,65 @@ export function CheckoutForm({ initialData }: CheckoutFormProps) {
             </div>
             <h2 className="text-xl font-black tracking-tight uppercase tracking-widest">{t("proof")}</h2>
           </div>
-          <div className="p-8 border-2 border-dashed border-neutral-200 dark:border-neutral-800 rounded-lg text-center space-y-4 hover:border-blue-500/50 hover:bg-blue-50/10 transition-all cursor-pointer group">
-            <div className="w-12 h-12 bg-neutral-100 dark:bg-neutral-800 rounded-lg mx-auto flex items-center justify-center text-neutral-400 group-hover:scale-110 group-hover:text-blue-600 transition-all">
-              <Upload className="w-6 h-6" />
-            </div>
-            <div className="space-y-1">
-              <p className="text-sm font-bold">Haz clic para subir comprobante</p>
-              <p className="text-[10px] text-neutral-400 uppercase tracking-widest">PNG, JPG hasta 5MB</p>
-            </div>
-            {/* Mock input - in real app would use uploadthing or similar */}
-            <input type="file" className="hidden" />
+          <div className="space-y-4">
+            {!receiptUrl ? (
+              <div className="p-8 border-2 border-dashed border-neutral-200 dark:border-neutral-800 rounded-lg text-center space-y-4 hover:border-blue-500/50 hover:bg-blue-50/10 transition-all cursor-pointer group relative">
+                <UploadButton<OurFileRouter, "receiptImage">
+                  endpoint="receiptImage"
+                  onClientUploadComplete={(res) => {
+                    if (res?.[0]) {
+                      setValue("receiptUrl", res[0].ufsUrl);
+                      toast.success("Comprobante subido correctamente");
+                    }
+                  }}
+                  onUploadError={(error: Error) => {
+                    toast.error(`Error al subir: ${error.message}`);
+                  }}
+                  content={{
+                    button({ ready }) {
+                      if (ready) return "Seleccionar Comprobante";
+                      return "Preparando...";
+                    },
+                    allowedContent: "Imagen (Max 4MB)"
+                  }}
+                  appearance={{
+                    button: "w-full h-14 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-lg transition-all shadow-lg shadow-blue-500/20",
+                    allowedContent: "text-[10px] font-bold text-neutral-400 uppercase tracking-widest mt-2"
+                  }}
+                />
+              </div>
+            ) : (
+              <div className="relative group rounded-xl overflow-hidden border-2 border-blue-500 shadow-xl shadow-blue-500/10 animate-in zoom-in duration-300">
+                <div className="relative aspect-[4/3] w-full bg-neutral-100 dark:bg-neutral-800">
+                  <Image 
+                    src={receiptUrl} 
+                    alt="Comprobante de pago" 
+                    fill 
+                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                    className="object-contain p-2"
+                  />
+                </div>
+                <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-3">
+                  <button
+                    type="button"
+                    onClick={() => setValue("receiptUrl", "")}
+                    className="px-4 py-2 bg-red-600 text-white text-xs font-black uppercase tracking-widest rounded-lg hover:bg-red-700 transition-all transform hover:scale-105"
+                  >
+                    Eliminar y Cambiar
+                  </button>
+                </div>
+                <div className="absolute bottom-4 left-4 right-4 p-3 bg-white/90 dark:bg-neutral-900/90 backdrop-blur rounded-lg flex items-center gap-3 border shadow-lg">
+                  <div className="p-1.5 bg-emerald-500 rounded-full">
+                    <ArrowRight className="w-3 h-3 text-white rotate-[-45deg]" />
+                  </div>
+                  <span className="text-[10px] font-black uppercase tracking-widest text-emerald-600">Comprobante Listo</span>
+                </div>
+              </div>
+            )}
+            
+            {errors.receiptUrl && (
+              <p className="text-[10px] font-bold text-red-500 uppercase tracking-widest ml-1">{errors.receiptUrl.message}</p>
+            )}
           </div>
           <div className="flex gap-2 p-4 bg-amber-50 dark:bg-amber-900/20 rounded-md border border-amber-100 dark:border-amber-800">
             <AlertCircle className="w-5 h-5 text-amber-600 shrink-0" />

@@ -14,12 +14,13 @@ export async function sendOrderPendingEmail(params: {
   customerName: string;
 }) {
   const shortId = params.orderId.slice(-8).toUpperCase();
-  await resend.emails.send({
+  const { error } = await resend.emails.send({
     from: env.EMAIL_FROM,
     to: [params.customerEmail, env.EMAIL_ADMIN],
     subject: `Orden #${shortId} recibida — pendiente de verificación`,
     react: OrderPendingTemplate({ ...params, shortId }),
   });
+  if (error) throw new Error(String(error.message ?? "Resend error"));
 }
 
 export async function sendOrderConfirmedEmail(params: {
@@ -28,12 +29,13 @@ export async function sendOrderConfirmedEmail(params: {
   customerName: string;
 }) {
   const shortId = params.orderId.slice(-8).toUpperCase();
-  await resend.emails.send({
+  const { error } = await resend.emails.send({
     from: env.EMAIL_FROM,
     to: [params.customerEmail],
     subject: `Orden #${shortId} confirmada ✓`,
     react: OrderConfirmedTemplate({ ...params, shortId }),
   });
+  if (error) throw new Error(String(error.message ?? "Resend error"));
 }
 
 export async function sendOrderRejectedEmail(params: {
@@ -43,12 +45,13 @@ export async function sendOrderRejectedEmail(params: {
   reason?: string;
 }) {
   const shortId = params.orderId.slice(-8).toUpperCase();
-  await resend.emails.send({
+  const { error } = await resend.emails.send({
     from: env.EMAIL_FROM,
     to: [params.customerEmail],
     subject: `Orden #${shortId} — acción requerida`,
     react: OrderRejectedTemplate({ ...params, shortId }),
   });
+  if (error) throw new Error(String(error.message ?? "Resend error"));
 }
 
 export async function sendCustomerVerifyEmail(params: {
@@ -57,12 +60,13 @@ export async function sendCustomerVerifyEmail(params: {
   token: string;
 }) {
   const verifyUrl = `${env.NEXT_PUBLIC_APP_URL}/registro/verificar?token=${params.token}`;
-  await resend.emails.send({
+  const { error } = await resend.emails.send({
     from: env.EMAIL_FROM,
     to: [params.email],
     subject: "Verifica tu cuenta",
     react: CustomerVerifyEmailTemplate({ name: params.name, verifyUrl }),
   });
+  if (error) throw new Error(String(error.message ?? "Resend error"));
 }
 
 export async function sendCustomerPasswordResetEmail(params: {
@@ -71,10 +75,11 @@ export async function sendCustomerPasswordResetEmail(params: {
   token: string;
 }) {
   const resetUrl = `${env.NEXT_PUBLIC_APP_URL}/login?reset=true&token=${params.token}`;
-  await resend.emails.send({
+  const { error } = await resend.emails.send({
     from: env.EMAIL_FROM,
     to: [params.email],
     subject: "Restablecer contraseña",
     react: CustomerPasswordResetTemplate({ name: params.name, resetUrl }),
   });
+  if (error) throw new Error(String(error.message ?? "Resend error"));
 }
