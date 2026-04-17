@@ -36,15 +36,15 @@
     "order": 6
   },
   {
-    "id": "cmnwi6mac000810bdmac5f4d",
-    "name": "Papelería Personalizada",
-    "slug": "papeleria-personalizada",
-    "order": 7
-  },
-  {
     "id": "cmnwi6emb000910bdemb5f4d",
     "name": "Impresiones y Laminados",
     "slug": "impresiones-laminados",
     "order": 8
+  },
+  {
+    "id": "cmnwi6mac000810bdmac5f4d",
+    "name": "Papelería Personalizada",
+    "slug": "papeleria-personalizada",
+    "order": 7
   }
 ]
