@@ -20,7 +20,12 @@ export async function sendOrderPendingEmail(params: {
     subject: `Orden #${shortId} recibida — pendiente de verificación`,
     react: OrderPendingTemplate({ ...params, shortId }),
   });
-  if (error) throw new Error(String(error.message ?? "Resend error"));
+  if (error) {
+    const msg = typeof error === "object" && error !== null
+      ? (String((error as any).message ?? "") || JSON.stringify(error))
+      : String(error);
+    throw new Error(msg || "Resend error");
+  }
 }
 
 export async function sendOrderConfirmedEmail(params: {
@@ -35,7 +40,12 @@ export async function sendOrderConfirmedEmail(params: {
     subject: `Orden #${shortId} confirmada ✓`,
     react: OrderConfirmedTemplate({ ...params, shortId }),
   });
-  if (error) throw new Error(String(error.message ?? "Resend error"));
+  if (error) {
+    const msg = typeof error === "object" && error !== null
+      ? (String((error as any).message ?? "") || JSON.stringify(error))
+      : String(error);
+    throw new Error(msg || "Resend error");
+  }
 }
 
 export async function sendOrderRejectedEmail(params: {
@@ -51,7 +61,12 @@ export async function sendOrderRejectedEmail(params: {
     subject: `Orden #${shortId} — acción requerida`,
     react: OrderRejectedTemplate({ ...params, shortId }),
   });
-  if (error) throw new Error(String(error.message ?? "Resend error"));
+  if (error) {
+    const msg = typeof error === "object" && error !== null
+      ? (String((error as any).message ?? "") || JSON.stringify(error))
+      : String(error);
+    throw new Error(msg || "Resend error");
+  }
 }
 
 export async function sendCustomerVerifyEmail(params: {
@@ -66,7 +81,12 @@ export async function sendCustomerVerifyEmail(params: {
     subject: "Verifica tu cuenta",
     react: CustomerVerifyEmailTemplate({ name: params.name, verifyUrl }),
   });
-  if (error) throw new Error(String(error.message ?? "Resend error"));
+  if (error) {
+    const msg = typeof error === "object" && error !== null
+      ? (String((error as any).message ?? "") || JSON.stringify(error))
+      : String(error);
+    throw new Error(msg || "Resend error");
+  }
 }
 
 export async function sendCustomerPasswordResetEmail(params: {
@@ -81,5 +101,10 @@ export async function sendCustomerPasswordResetEmail(params: {
     subject: "Restablecer contraseña",
     react: CustomerPasswordResetTemplate({ name: params.name, resetUrl }),
   });
-  if (error) throw new Error(String(error.message ?? "Resend error"));
+  if (error) {
+    const msg = typeof error === "object" && error !== null
+      ? (String((error as any).message ?? "") || JSON.stringify(error))
+      : String(error);
+    throw new Error(msg || "Resend error");
+  }
 }

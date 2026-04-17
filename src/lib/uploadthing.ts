@@ -18,7 +18,7 @@ export const ourFileRouter = {
   receiptImage: f({ image: { maxFileSize: "4MB" } })
     .middleware(async () => {
       // Para recibos de pago permitimos invitados, opcionalmente podrías checkear sesión
-      return { uploadedAt: new Date() };
+      return { uploadedAt: new Date().toISOString() };
     })
     .onUploadComplete(async ({ metadata, file }) => {
       console.log("Receipt Upload complete:", file.ufsUrl);
