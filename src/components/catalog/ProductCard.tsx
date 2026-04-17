@@ -147,7 +147,7 @@ export function ProductCard({ product, badge, accentIndex }: ProductCardProps) {
               width={400}
               height={400}
               className={cn(
-                "object-contain absolute",
+                "object-contain absolute rounded-[10px]",
                 "transition-all duration-700 ease-out",
                 // Fade-out solo si hay imagen secundaria que tome su lugar
                 product.images?.[1]
@@ -177,7 +177,7 @@ export function ProductCard({ product, badge, accentIndex }: ProductCardProps) {
               width={400}
               height={400}
               className={cn(
-                "object-contain absolute opacity-0",
+                "object-contain absolute opacity-0 rounded-[10px]",
                 "transition-all duration-700 ease-out",
                 "group-hover:opacity-100 group-hover:scale-110"
               )}

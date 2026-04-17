@@ -235,17 +235,17 @@ export function HeroBanner({ products, config }: HeroBannerProps) {
                   muted
                   loop
                   playsInline
-                  className="relative z-10 max-h-full object-contain"
+                  className="relative z-10 max-h-full object-contain rounded-[10px]"
                 />
               ) : current?.images?.[0]?.url ? (
-                <div className="relative z-10 w-full h-full">
+                <div className="relative z-10 w-full h-full flex items-center justify-center overflow-hidden">
                   <Image
                     src={current.images[0].url}
                     alt={current.name}
-                    fill
-                    sizes="100vw"
-                    className="object-contain drop-shadow-[0_25px_50px_rgba(0,0,0,0.2)] dark:drop-shadow-[0_25px_50px_rgba(255,255,255,0.05)]"
+                    width={1000}
+                    height={1000}
                     priority
+                    className="w-auto h-auto max-w-full max-h-full object-contain rounded-[10px] drop-shadow-[0_25px_50px_rgba(0,0,0,0.2)] dark:drop-shadow-[0_25px_50px_rgba(255,255,255,0.05)]"
                   />
                 </div>
               ) : (
