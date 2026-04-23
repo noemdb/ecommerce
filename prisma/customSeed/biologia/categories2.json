@@ -1,0 +1,44 @@
+[
+  {
+    "id": "cmnwi6b74000210bdliq2u59x",
+    "name": "Biología y Ciencias Naturales",
+    "slug": "biologia-ciencias",
+    "order": 1
+  },
+  {
+    "id": "cmnwi6b9g000310bdb2edb10u",
+    "name": "Robótica Educativa STEM",
+    "slug": "robotica-stem",
+    "order": 2
+  },
+  {
+    "id": "cmnwi6bbs000410bd96n7imld",
+    "name": "Metodología de la Investigación",
+    "slug": "metodologia-investigacion",
+    "order": 3
+  },
+  {
+    "id": "cmnwi6bdy000510bdchaz5f4d",
+    "name": "Didáctica Integradora y Estrategias Transversales",
+    "slug": "didactica-transversal",
+    "order": 4
+  },
+  {
+    "id": "cmnwi6cat000610bdcat5f4d",
+    "name": "Laboratorio y Prácticas Científicas",
+    "slug": "laboratorio-practicas",
+    "order": 5
+  },
+  {
+    "id": "cmnwi6dog000710bddog5f4d",
+    "name": "Semilleros Científicos y Ferias MINCYT",
+    "slug": "semilleros-ferias",
+    "order": 6
+  },
+  {
+    "id": "cmnwi6uni000110bduniv001",
+    "name": "Cursos Universitarios",
+    "slug": "cursos-universitarios",
+    "order": 7
+  }
+]
