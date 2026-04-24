@@ -19,7 +19,7 @@ export const productSchema = z.object({
   isNew: z.boolean().default(false),
   isActive: z.boolean().default(true),
   metaTitle: z.string().max(60).optional().nullable(),
-  metaDescription: z.string().max(160).optional().nullable(),
+  metaDescription: z.string().min(10).optional().nullable(),
   type: z.enum(["PRODUCT", "SERVICE"]).default("PRODUCT"),
   time: z.coerce.number().int().min(0).optional().nullable().default(0),
 });
