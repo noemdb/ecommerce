@@ -59,6 +59,7 @@ export function AddToCartButton({
         imageUrl: product.images[0]?.url ?? "",
         quantity: 1,
         sku: product.sku,
+        slug: (product as any).slug || "",
         type: product.type as any,
         time: product.time,
       };

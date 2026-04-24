@@ -214,7 +214,10 @@ export function HeroBanner({ products, config }: HeroBannerProps) {
                   className="relative z-10 max-h-full object-contain rounded-[10px]"
                 />
               ) : current?.images?.[0]?.url ? (
-                <div className="relative z-10 w-full h-full flex items-center justify-center overflow-hidden">
+                <Link 
+                  href={`/producto/${current?.slug}`}
+                  className="relative z-10 w-full h-full flex items-center justify-center overflow-hidden hover:scale-[1.02] transition-transform duration-500"
+                >
                   <Image
                     src={current.images[0].url}
                     alt={current.name}
@@ -223,7 +226,7 @@ export function HeroBanner({ products, config }: HeroBannerProps) {
                     priority
                     className="w-auto h-auto max-w-full max-h-full object-contain rounded-[10px] drop-shadow-[0_25px_50px_rgba(0,0,0,0.2)] dark:drop-shadow-[0_25px_50px_rgba(255,255,255,0.05)]"
                   />
-                </div>
+                </Link>
               ) : (
                 <div className="relative z-10 w-full h-full flex items-center justify-center p-12 overflow-hidden bg-neutral-50 dark:bg-neutral-900/40 rounded-3xl">
                   <div className="absolute inset-0 opacity-20 animate-pulse"

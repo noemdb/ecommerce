@@ -88,7 +88,11 @@ export function CartDrawer() {
             <div className="space-y-8 animate-in fade-in slide-in-from-right-4 duration-300">
               {items.map((item) => (
                 <div key={`${item.productId}-${item.variantId}`} className="flex gap-4 group">
-                  <div className="relative w-24 h-24 bg-neutral-100 dark:bg-neutral-800 rounded-md overflow-hidden shrink-0 shadow-sm border dark:border-neutral-800">
+                  <Link 
+                    href={`/producto/${item.slug}`} 
+                    className="relative w-24 h-24 bg-neutral-100 dark:bg-neutral-800 rounded-md overflow-hidden shrink-0 shadow-sm border dark:border-neutral-800 hover:ring-2 hover:ring-blue-500 transition-all"
+                    onClick={toggleCart}
+                  >
                     <Image 
                       src={item.imageUrl} 
                       alt={item.name} 
@@ -96,7 +100,7 @@ export function CartDrawer() {
                       sizes="96px"
                       className="object-cover group-hover:scale-110 transition-transform duration-500"
                     />
-                  </div>
+                  </Link>
                   <div className="flex-1 flex flex-col py-0.5">
                     <div className="flex justify-between gap-2 mb-1">
                       <h3 className="text-sm font-bold line-clamp-2 leading-snug group-hover:text-blue-600 transition-colors">

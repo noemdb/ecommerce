@@ -12,6 +12,7 @@ export interface CartItem {
   imageUrl: string;
   quantity: number;
   sku: string;
+  slug: string;
   type?: "PRODUCT" | "SERVICE";
   time?: number | null;
 }

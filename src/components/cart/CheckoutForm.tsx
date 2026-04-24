@@ -253,9 +253,12 @@ export function CheckoutForm({ initialData }: CheckoutFormProps) {
           <div className="space-y-6 max-h-[400px] overflow-y-auto pr-2 custom-scrollbar">
             {items.map((it) => (
               <div key={`${it.productId}-${it.variantId}`} className="flex gap-4 group">
-                <div className="relative w-24 h-24 bg-white dark:bg-neutral-800 rounded-md overflow-hidden shrink-0 border dark:border-neutral-700 shadow-sm">
+                <Link 
+                  href={`/producto/${it.slug}`}
+                  className="relative w-24 h-24 bg-white dark:bg-neutral-800 rounded-md overflow-hidden shrink-0 border dark:border-neutral-700 shadow-sm hover:ring-2 hover:ring-blue-500 transition-all"
+                >
                   <Image src={it.imageUrl} alt={it.name} fill sizes="96px" className="object-cover group-hover:scale-110 transition-transform duration-500" />
-                </div>
+                </Link>
                 <div className="flex-1 flex flex-col py-0.5 justify-center">
                   <h4 className="text-sm font-bold line-clamp-2 leading-tight mb-1">{it.name}</h4>
                   {it.type === "SERVICE" && (

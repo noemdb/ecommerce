@@ -41,6 +41,7 @@ export default async function PedidoDetallePage({
             select: {
               type: true,
               time: true,
+              slug: true,
               images: {
                 where: { isPrimary: true },
                 take: 1,
@@ -119,7 +120,10 @@ export default async function PedidoDetallePage({
                 const img = item.product.images[0];
                 return (
                   <div key={item.id} className="p-6 flex flex-col sm:flex-row gap-6 items-start sm:items-center">
-                    <div className="w-20 h-20 bg-neutral-100 dark:bg-neutral-800 rounded-md flex-shrink-0 overflow-hidden relative">
+                    <Link 
+                      href={`/producto/${item.product.slug}`}
+                      className="w-20 h-20 bg-neutral-100 dark:bg-neutral-800 rounded-md flex-shrink-0 overflow-hidden relative block hover:ring-2 hover:ring-blue-500 transition-all"
+                    >
                       {img ? (
                         <Image src={img.url} alt={img.alt || item.name} fill className="object-cover" sizes="80px" />
                       ) : (
@@ -127,7 +131,7 @@ export default async function PedidoDetallePage({
                           <ShoppingBag className="w-8 h-8 opacity-50" />
                         </div>
                       )}
-                    </div>
+                    </Link>
                     <div className="flex-1 min-w-0">
                       <h4 className="text-base font-bold text-neutral-900 dark:text-white">{item.name}</h4>
                       {item.product.type === "SERVICE" && (
