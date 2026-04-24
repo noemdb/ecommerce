@@ -13,6 +13,7 @@ import { ArrowRight, CreditCard, Building2, Upload, AlertCircle, ShoppingBag } f
 import { useRouter } from "next/navigation";
 import { formatPrice } from "@/lib/utils";
 import Image from "next/image";
+import Link from "next/link";
 import { useTranslations } from "next-intl";
 import { UploadButton } from "@uploadthing/react";
 import { OurFileRouter } from "@/lib/uploadthing";

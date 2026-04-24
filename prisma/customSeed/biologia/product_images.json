@@ -1,9 +1,41 @@
 [
   {
-    "id": "cmo1v6nri0000m15vaf52se8c",
+    "id": "cmobwud2o00004juu9tcz2jgu",
     "productId": "cmnwi6bpb000c10bdgkks9mfj",
-    "url": "https://placehold.co/600x400/2563eb/ffffff?text=Taller+Robotica+Arduino",
-    "alt": "Estudiantes trabajando con kit Arduino en taller de robótica",
+    "url": "https://utfs.io/f/hMHClwITW2XlDD93Wdv6r1pa4vnkRTP7MltqzD5CfJXH3sZ8",
+    "alt": null,
+    "order": 0,
+    "isPrimary": true
+  },
+  {
+    "id": "cmoc0qhbz000013j48rx935hv",
+    "productId": "cmnwi6c2j000m10bdjrg9daua",
+    "url": "https://utfs.io/f/hMHClwITW2XlruZUn9Yxhg4OPoHUmZTn1wNFiDcf0bvAyaYL",
+    "alt": null,
+    "order": 0,
+    "isPrimary": true
+  },
+  {
+    "id": "cmoc0rpds0000wn3gq64b8g0n",
+    "productId": "cmnwi6big000810bdctf29fbh",
+    "url": "https://utfs.io/f/hMHClwITW2Xlu8CRiU3tH95xevP0iZ1lSnrEpw7LBaGzWjVA",
+    "alt": null,
+    "order": 0,
+    "isPrimary": true
+  },
+  {
+    "id": "cmoc4zqdg0000hz44bqg7p7c4",
+    "productId": "cmnwi6uni000310bduniv003",
+    "url": "https://utfs.io/f/hMHClwITW2XlRaDm8GlnpGUsHTIcgutYq0vwiW3CfzD6ELaB",
+    "alt": null,
+    "order": 0,
+    "isPrimary": true
+  },
+  {
+    "id": "cmoca8wan00004usq8rcclzf9",
+    "productId": "cmnwi6uni000410bduniv004",
+    "url": "https://utfs.io/f/hMHClwITW2XlDKgrbfsv6r1pa4vnkRTP7MltqzD5CfJXH3sZ",
+    "alt": null,
     "order": 0,
     "isPrimary": true
   },
@@ -12,14 +44,6 @@
     "productId": "cmnwi6c09000k10bd3y7fntrz",
     "url": "https://placehold.co/600x400/059669/ffffff?text=Practica+Microscopia",
     "alt": "Práctica guiada de microscopía en laboratorio educativo",
-    "order": 0,
-    "isPrimary": true
-  },
-  {
-    "id": "cmo1vk56r000013bn4smily25",
-    "productId": "cmnwi6c2j000m10bdjrg9daua",
-    "url": "https://placehold.co/600x400/dc2626/ffffff?text=Mentoria+Ferias+MINCYT",
-    "alt": "Asesoría para presentación de proyectos en ferias científicas",
     "order": 0,
     "isPrimary": true
   },
@@ -104,34 +128,10 @@
     "isPrimary": true
   },
   {
-    "id": "cmo39plk900006ld4ivpu7u0x",
-    "productId": "cmnwi6big000810bdctf29fbh",
-    "url": "https://placehold.co/600x400/dc2626/ffffff?text=Biologia+Celular+Secundaria",
-    "alt": "Curso de biología celular y molecular para secundaria",
-    "order": 0,
-    "isPrimary": true
-  },
-  {
     "id": "cmo1vimg000110bdimg001",
     "productId": "cmnwi6uni000210bduniv002",
     "url": "https://placehold.co/600x400/1e40af/ffffff?text=Biofisicoquimica",
     "alt": "Curso de Biofisicoquímica para ciencias de la salud",
-    "order": 0,
-    "isPrimary": true
-  },
-  {
-    "id": "cmo1vimg000210bdimg002",
-    "productId": "cmnwi6uni000310bduniv003",
-    "url": "https://placehold.co/600x400/047857/ffffff?text=Fisicoquimica",
-    "alt": "Curso de Fisicoquímica con enfoque biotecnológico",
-    "order": 0,
-    "isPrimary": true
-  },
-  {
-    "id": "cmo1vimg000310bdimg003",
-    "productId": "cmnwi6uni000410bduniv004",
-    "url": "https://placehold.co/600x400/b91c1c/ffffff?text=Biologia+Celular+Uni",
-    "alt": "Curso de Biología Celular y Molecular universitaria",
     "order": 0,
     "isPrimary": true
   }
