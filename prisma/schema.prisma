@@ -4,8 +4,8 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
   directUrl = env("DIRECT_URL")
 }
 
@@ -144,6 +144,8 @@ model Product {
   totalReviews       Int                 @default(0)
   metaTitle          String?
   metaDescription    String?
+  type               ProductType         @default(PRODUCT)
+  time               Int?                @default(0)
   categoryId         String
   supplierId         String?
   createdAt          DateTime            @default(now())
@@ -445,4 +447,9 @@ enum CustomerActionType {
   CHANGE_PASSWORD
   DELETE_ACCOUNT_REQUEST
   VIEWED_ORDER
+}
+
+enum ProductType {
+  PRODUCT
+  SERVICE
 }

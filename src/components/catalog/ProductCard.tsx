@@ -21,6 +21,8 @@ interface ProductCardProps {
     stock: number;
     sku: string;
     reviews?: { rating: number }[];
+    type?: "PRODUCT" | "SERVICE" | string;
+    time?: number | null;
   };
   badge?: string;
   accentIndex?: number; // ✅ NUEVO
@@ -110,6 +112,11 @@ export function ProductCard({ product, badge, accentIndex }: ProductCardProps) {
           </span>
         ) : (
           <>
+            {product.type === "SERVICE" && (
+              <span className="bg-purple-600/90 text-white text-[10px] font-bold px-2.5 py-1 rounded-full uppercase shadow-lg border border-purple-500/20 backdrop-blur-sm">
+                Servicio • {product.time}h
+              </span>
+            )}
             {badge && (
               <span className="bg-white/10 border border-white/20 text-white text-[10px] font-bold px-2.5 py-1 rounded-full uppercase">
                 {badge}

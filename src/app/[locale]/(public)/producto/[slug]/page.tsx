@@ -16,15 +16,31 @@ export default async function ProductPage({ params }: ProductPageProps) {
 
   const product = await prisma.product.findUnique({
     where: { slug, isActive: true },
-    include: {
-      images: { orderBy: { order: "asc" } },
-      category: true,
+    select: {
+      id: true,
+      name: true,
+      description: true,
+      price: true,
+      promoPrice: true,
+      stock: true,
+      categoryId: true,
+      sku: true,
+      type: true,
+      time: true,
+      category: {
+        select: { name: true }
+      },
+      images: {
+        orderBy: { order: "asc" },
+        select: { id: true, url: true, alt: true, isPrimary: true }
+      },
       reviews: {
         where: { status: "APPROVED" },
         orderBy: { createdAt: "desc" },
+        select: { id: true, rating: true, comment: true, createdAt: true }
       },
-    },
-  });
+    } as any,
+  }) as any;
 
   if (!product) {
     notFound();

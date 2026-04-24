@@ -91,7 +91,9 @@ export function ProductForm({ initialData, categories, suppliers }: ProductFormP
       isActive: initialData.isActive ?? true,
       images: initialData.images?.map((img: any) => img.url) || [],
       metaTitle: initialData.metaTitle || "",
-      metaDescription: initialData.metaDescription || ""
+      metaDescription: initialData.metaDescription || "",
+      type: initialData.type || "PRODUCT",
+      time: initialData.time || 0
     } : {
       name: "",
       slug: "",
@@ -110,7 +112,9 @@ export function ProductForm({ initialData, categories, suppliers }: ProductFormP
       isActive: true,
       images: [],
       metaTitle: "",
-      metaDescription: ""
+      metaDescription: "",
+      type: "PRODUCT",
+      time: 0
     }
   });
 
@@ -120,6 +124,7 @@ export function ProductForm({ initialData, categories, suppliers }: ProductFormP
   });
 
   const nameValue = watch("name");
+  const typeValue = watch("type");
 
   useEffect(() => {
     if (autoSlug && nameValue) {
@@ -200,6 +205,35 @@ export function ProductForm({ initialData, categories, suppliers }: ProductFormP
               error={errors.name?.message as string}
               {...register("name")}
             />
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div className="flex flex-col gap-2">
+                <label className="text-xs font-black uppercase tracking-widest text-neutral-400 ml-1">
+                  Tipo *
+                </label>
+                <div className="relative">
+                  <select
+                    className="flex h-14 w-full rounded-md border-2 border-neutral-100 bg-white px-4 py-2 text-sm font-medium transition-all duration-300 focus:outline-none focus:border-blue-600 focus:ring-4 focus:ring-blue-500/10 dark:bg-neutral-900 dark:border-neutral-800 dark:text-white appearance-none pr-10"
+                    {...register("type")}
+                  >
+                    <option value="PRODUCT">Producto Físico</option>
+                    <option value="SERVICE">Servicio</option>
+                  </select>
+                  <ChevronDown className="absolute right-4 top-1/2 -translate-y-1/2 w-4 h-4 text-neutral-400 pointer-events-none" />
+                </div>
+              </div>
+
+              {typeValue === "SERVICE" && (
+                <Input
+                  label="Duración (Horas) *"
+                  type="number"
+                  placeholder="Ej: 2"
+                  error={errors.time?.message as string}
+                  {...register("time")}
+                />
+              )}
+            </div>
+
 
             <div className="flex flex-col gap-2">
               <Input

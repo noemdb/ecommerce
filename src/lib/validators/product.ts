@@ -20,6 +20,8 @@ export const productSchema = z.object({
   isActive: z.boolean().default(true),
   metaTitle: z.string().max(60).optional().nullable(),
   metaDescription: z.string().max(160).optional().nullable(),
+  type: z.enum(["PRODUCT", "SERVICE"]).default("PRODUCT"),
+  time: z.coerce.number().int().min(0).optional().nullable().default(0),
 });
 export type ProductInput = z.infer<typeof productSchema>;
 

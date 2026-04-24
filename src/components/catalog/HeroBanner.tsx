@@ -24,6 +24,8 @@ interface HeroProduct {
   promoPrice: number | null;
   images: { url: string; alt: string | null }[];
   videoUrl?: string; // 👈 preparado
+  type?: string;
+  time?: number | null;
 }
 
 import type { SiteConfigData } from "@/lib/site-config/default-site-config";
@@ -108,7 +110,7 @@ export function HeroBanner({ products, config }: HeroBannerProps) {
         mouseX.set(0);
         mouseY.set(0);
       }}
-      className="relative min-h-[600px] lg:h-[80vh] flex items-center overflow-hidden bg-white dark:bg-neutral-950"
+      className="relative min-h-[600px] lg:min-h-[80vh] flex items-center overflow-hidden bg-white dark:bg-neutral-950"
     >
       {/* Fondo Global */}
       <div
@@ -118,7 +120,7 @@ export function HeroBanner({ products, config }: HeroBannerProps) {
         }}
       />
 
-      <div className="container mx-auto px-6 md:px-12 grid grid-cols-1 md:grid-cols-2 gap-12 lg:gap-20 items-center relative z-10 py-20 lg:py-0">
+      <div className="container mx-auto px-6 md:px-12 grid grid-cols-1 md:grid-cols-2 gap-12 lg:gap-20 items-start relative z-10 py-20 lg:py-12">
         
         {/* COLUMNA IZQUIERDA: CONTENIDO */}
         <div className="order-2 md:order-1 max-w-xl">
@@ -130,12 +132,20 @@ export function HeroBanner({ products, config }: HeroBannerProps) {
               exit={{ opacity: 0, x: 20 }}
               transition={{ duration: 0.6, ease: "easeOut" }}
             >
-              {current?.promoPrice && config.heroShowUrgencyBar !== false && (
-                <span className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full bg-blue-600/10 text-blue-600 dark:text-blue-400 text-[10px] font-black uppercase tracking-widest mb-6">
-                  <Zap className="w-3 h-3" />
-                  {t("badge")}
-                </span>
-              )}
+              <div className="flex flex-wrap items-center gap-2 mb-6">
+                {current?.promoPrice && config.heroShowUrgencyBar !== false && (
+                  <span className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full bg-blue-600/10 text-blue-600 dark:text-blue-400 text-[10px] font-black uppercase tracking-widest">
+                    <Zap className="w-3 h-3" />
+                    {t("badge")}
+                  </span>
+                )}
+                {(current as any)?.type === "SERVICE" && (
+                  <span className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full bg-purple-600/10 text-purple-600 dark:text-purple-400 text-[10px] font-black uppercase tracking-widest">
+                    <Tag className="w-3 h-3" />
+                    Servicio • {(current as any)?.time}h
+                  </span>
+                )}
+              </div>
 
               <h1 className="text-4xl md:text-5xl lg:text-7xl font-black text-neutral-900 dark:text-white mb-6 leading-[1.05] tracking-tighter">
                 {current?.name}
@@ -164,46 +174,12 @@ export function HeroBanner({ products, config }: HeroBannerProps) {
                 </div>
               )}
 
-              <div className="flex flex-wrap gap-4">
-                <Link
-                  href={`/producto/${current?.slug}`}
-                  className="inline-flex items-center gap-2 px-8 py-4 bg-blue-600 text-white font-bold rounded-xl hover:bg-blue-700 transition-all active:scale-95 shadow-xl shadow-blue-500/25"
-                >
-                  <ShoppingCart className="w-4 h-4" />
-                  {config.heroCtaPrimaryLabel || "Ver producto ahora"}
-                </Link>
-
-                <Link
-                  href="/#catalogo"
-                  className="inline-flex items-center gap-2 px-8 py-4 border border-neutral-200 dark:border-neutral-800 text-neutral-600 dark:text-neutral-300 rounded-xl hover:bg-neutral-50 dark:hover:bg-neutral-900 transition-colors"
-                >
-                  {config.heroCtaSecondaryLabel || t("cta_catalog")}
-                  <ArrowRight className="w-4 h-4" />
-                </Link>
-              </div>
-
-              {/* Dots indicators */}
-              {products.length > 1 && (
-                <div className="flex gap-2.5 mt-12">
-                  {products.map((_, i) => (
-                    <button
-                      key={i}
-                      onClick={() => setCurrentIndex(i)}
-                      className={cn(
-                        "h-1.5 rounded-full transition-all duration-500",
-                        i === currentIndex ? "w-10 bg-blue-600" : "w-2.5 bg-neutral-200 dark:bg-neutral-800"
-                      )}
-                      aria-label={`Ir al producto ${i + 1}`}
-                    />
-                  ))}
-                </div>
-              )}
             </motion.div>
           </AnimatePresence>
         </div>
 
         {/* COLUMNA DERECHA: MEDIA */}
-        <div className="order-1 md:order-2 flex items-center justify-center relative min-h-[400px]">
+        <div className="order-1 md:order-2 flex items-start justify-center relative min-h-[400px]">
           <AnimatePresence mode="wait">
             <motion.div
               key={currentIndex}
@@ -260,6 +236,44 @@ export function HeroBanner({ products, config }: HeroBannerProps) {
               )}
             </motion.div>
           </AnimatePresence>
+        </div>
+
+        {/* SEGUNDA ROW: BOTONES Y DOTS */}
+        <div className="order-3 md:col-span-2 flex flex-col md:flex-row items-start md:items-center justify-between gap-8 mt-8 lg:mt-12 w-full">
+          <div className="flex flex-wrap gap-4">
+            <Link
+              href={`/producto/${current?.slug}`}
+              className="inline-flex items-center gap-2 px-8 py-4 bg-blue-600 text-white font-bold rounded-xl hover:bg-blue-700 transition-all active:scale-95 shadow-xl shadow-blue-500/25"
+            >
+              <ShoppingCart className="w-4 h-4" />
+              {config.heroCtaPrimaryLabel || "Ver producto ahora"}
+            </Link>
+
+            <Link
+              href="/#catalogo"
+              className="inline-flex items-center gap-2 px-8 py-4 border border-neutral-200 dark:border-neutral-800 text-neutral-600 dark:text-neutral-300 rounded-xl hover:bg-neutral-50 dark:hover:bg-neutral-900 transition-colors"
+            >
+              {config.heroCtaSecondaryLabel || t("cta_catalog")}
+              <ArrowRight className="w-4 h-4" />
+            </Link>
+          </div>
+
+          {/* Dots indicators */}
+          {products.length > 1 && (
+            <div className="flex gap-2.5">
+              {products.map((_, i) => (
+                <button
+                  key={i}
+                  onClick={() => setCurrentIndex(i)}
+                  className={cn(
+                    "h-1.5 rounded-full transition-all duration-500",
+                    i === currentIndex ? "w-10 bg-blue-600" : "w-2.5 bg-neutral-200 dark:bg-neutral-800"
+                  )}
+                  aria-label={`Ir al producto ${i + 1}`}
+                />
+              ))}
+            </div>
+          )}
         </div>
       </div>
     </section>

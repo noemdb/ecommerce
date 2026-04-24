@@ -56,6 +56,8 @@ export default async function HomePage({
     sku: true,
     isFeatured: true,
     isNew: true,
+    type: true,
+    time: true,
     images: {
       where: { isPrimary: true },
       select: { url: true, alt: true },

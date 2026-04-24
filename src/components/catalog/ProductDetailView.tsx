@@ -29,6 +29,8 @@ interface ProductDetailViewProps {
     images: { id: string; url: string; alt?: string | null; isPrimary?: boolean }[];
     isNew?: boolean;
     reviews: { id: string; rating: number; comment: string; createdAt: Date | string }[];
+    type?: string;
+    time?: number | null;
   };
   isPreview?: boolean;
 }
@@ -171,9 +173,16 @@ export function ProductDetailView({ product, isPreview = false }: ProductDetailV
         {/* Right: Info */}
         <div className="flex flex-col">
           <div className="mb-8">
-            <span className="text-xs font-bold text-blue-600 uppercase tracking-widest bg-blue-50 dark:bg-blue-900/30 px-3 py-1 rounded-lg inline-block mb-4">
-              {product.category?.name || "Categoría"}
-            </span>
+            <div className="flex flex-wrap items-center gap-2 mb-4">
+              <span className="text-xs font-bold text-blue-600 uppercase tracking-widest bg-blue-50 dark:bg-blue-900/30 px-3 py-1 rounded-lg">
+                {product.category?.name || "Categoría"}
+              </span>
+              {(product.type === "SERVICE" || (product as any).type === "SERVICE") && (
+                <span className="text-xs font-bold text-purple-600 uppercase tracking-widest bg-purple-50 dark:bg-purple-900/30 px-3 py-1 rounded-lg">
+                  Servicio • {product.time}h
+                </span>
+              )}
+            </div>
             <h1 className={cn(
               "text-3xl md:text-4xl lg:text-5xl font-black tracking-tighter mb-4 text-neutral-900 dark:text-white leading-[1.1]",
               !isPreview ? "" : "@lg:text-4xl @2xl:text-5xl",

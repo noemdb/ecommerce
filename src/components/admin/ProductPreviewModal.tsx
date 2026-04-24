@@ -47,6 +47,8 @@ export function ProductPreviewModal({ isOpen, onClose, productData, categories }
       : [],
     isNew: productData.isNew,
     sku: productData.sku || "PROD-000",
+    type: productData.type || "PRODUCT",
+    time: Number(productData.time) || 0,
     reviews: [] // Mock reviews
   };
 

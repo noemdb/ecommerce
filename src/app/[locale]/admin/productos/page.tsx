@@ -137,7 +137,7 @@ export default async function ProductosPage({
                 </tr>
               </thead>
               <tbody className="divide-y divide-neutral-100 dark:divide-neutral-800">
-                {products.map((p) => (
+                {products.map((p: any) => (
                   <tr
                     key={p.id}
                     className={cn(
@@ -147,11 +147,20 @@ export default async function ProductosPage({
                   >
                     <td className="px-5 py-4">
                       <ProductImageCell 
-                        url={p.images.find(img => img.isPrimary)?.url || p.images[0]?.url || null} 
+                        url={p.images.find((img: any) => img.isPrimary)?.url || p.images[0]?.url || null} 
                         name={p.name} 
                       />
                     </td>
-                    <td className="px-5 py-4 font-semibold text-neutral-900 dark:text-neutral-100">{p.name}</td>
+                    <td className="px-5 py-4">
+                      <div className="flex flex-col gap-1">
+                        <span className="font-semibold text-neutral-900 dark:text-neutral-100">{p.name}</span>
+                        {p.type === "SERVICE" && (
+                          <span className="inline-flex items-center gap-1 w-fit px-1.5 py-0.5 rounded text-[9px] font-black uppercase tracking-widest bg-purple-100 text-purple-700 dark:bg-purple-500/20 dark:text-purple-300">
+                            Servicio • {p.time}h
+                          </span>
+                        )}
+                      </div>
+                    </td>
                     <td className="px-5 py-4">
                       <code className="text-[10px] uppercase font-bold bg-neutral-100 dark:bg-neutral-800 px-2 py-1 rounded text-neutral-500">
                         {p.sku}
