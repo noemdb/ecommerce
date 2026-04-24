@@ -122,7 +122,7 @@ export function HeroBanner({ products, config }: HeroBannerProps) {
         }}
       />
 
-      <div className="container mx-auto px-6 md:px-12 grid grid-cols-1 md:grid-cols-2 gap-12 lg:gap-20 items-start relative z-10 py-20 lg:py-12">
+      <div className="container mx-auto px-6 md:px-12 grid grid-cols-1 md:grid-cols-2 gap-2 lg:gap-12 items-start relative z-10 py-20 lg:py-12">
         
         {/* COLUMNA IZQUIERDA: CONTENIDO */}
         <div className="order-2 md:order-1 max-w-xl">
