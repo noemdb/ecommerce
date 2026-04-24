@@ -150,7 +150,8 @@ export function HeroBanner({ products, config }: HeroBannerProps) {
               </div>
 
               <h1 className="text-4xl md:text-5xl lg:text-7xl font-black text-neutral-900 dark:text-white mb-6 leading-[1.05] tracking-tighter">
-                {t("title_start")} <span className="text-blue-600 block mt-2">{current?.name}</span>
+                {/* {t("title_start")}  */}
+                <span className="text-blue-600 block mt-2">{current?.name}</span>
               </h1>
 
               <p className="text-base md:text-lg text-neutral-500 dark:text-neutral-400 mb-10 whitespace-pre-wrap leading-relaxed max-w-md italic">
