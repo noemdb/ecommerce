@@ -58,10 +58,11 @@ export async function seedCatalogFromJSON(
 
     // 1. Process Categories
     for (const cat of categories) {
+      const { createdAt, updatedAt, ...data } = cat;
       await prisma.category.upsert({
-        where: { id: cat.id },
-        update: { order: cat.order, name: cat.name, slug: cat.slug, isActive: true },
-        create: { ...cat, isActive: true },
+        where: { id: data.id },
+        update: { order: data.order, name: data.name, slug: data.slug, isActive: true },
+        create: { ...data, isActive: true },
       });
     }
 
