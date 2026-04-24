@@ -245,7 +245,7 @@ export function HeroBanner({ products, config }: HeroBannerProps) {
         </div>
 
         {/* SEGUNDA ROW: BOTONES Y DOTS */}
-        <div className="order-3 md:col-span-2 flex flex-col md:flex-row items-start md:items-center justify-between gap-8 mt-2 lg:mt-12 w-full">
+        <div className="order-3 md:col-span-2 flex flex-col md:flex-row items-start md:items-center justify-between gap-8 mt-2 lg:mt-4 w-full">
           <div className="flex flex-wrap gap-4">
             <Link
               href={`/producto/${current?.slug}`}
