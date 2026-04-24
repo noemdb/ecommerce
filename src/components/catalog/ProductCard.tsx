@@ -64,6 +64,8 @@ export function ProductCard({ product, badge, accentIndex }: ProductCardProps) {
       imageUrl: product.images[0]?.url ?? "",
       quantity: 1,
       sku: product.sku,
+      type: product.type as any,
+      time: product.time,
     };
 
     addItem(item);
@@ -114,7 +116,7 @@ export function ProductCard({ product, badge, accentIndex }: ProductCardProps) {
           <>
             {product.type === "SERVICE" && (
               <span className="bg-purple-600/90 text-white text-[10px] font-bold px-2.5 py-1 rounded-full uppercase shadow-lg border border-purple-500/20 backdrop-blur-sm">
-                Servicio • {product.time}h
+                Servicio | Duración: {product.time}Hrs
               </span>
             )}
             {badge && (

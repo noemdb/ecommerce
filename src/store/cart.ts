@@ -12,6 +12,8 @@ export interface CartItem {
   imageUrl: string;
   quantity: number;
   sku: string;
+  type?: "PRODUCT" | "SERVICE";
+  time?: number | null;
 }
 
 interface CartStore {

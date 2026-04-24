@@ -16,7 +16,7 @@ export default async function OrdenDetailPage({
     include: {
       items: {
         include: {
-          product: { select: { id: true, name: true, slug: true } },
+          product: { select: { id: true, name: true, slug: true, type: true, time: true } },
           variant: { select: { id: true, name: true, value: true } },
         },
       },

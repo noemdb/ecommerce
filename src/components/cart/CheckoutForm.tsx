@@ -258,6 +258,11 @@ export function CheckoutForm({ initialData }: CheckoutFormProps) {
                 </div>
                 <div className="flex-1 flex flex-col py-0.5 justify-center">
                   <h4 className="text-sm font-bold line-clamp-2 leading-tight mb-1">{it.name}</h4>
+                  {it.type === "SERVICE" && (
+                    <span className="inline-flex items-center gap-1 w-fit px-1.5 py-0.5 rounded text-[9px] font-black uppercase tracking-widest bg-purple-100 text-purple-700 dark:bg-purple-500/20 dark:text-purple-300 mb-1">
+                      Servicio | Duración: {it.time}Hrs
+                    </span>
+                  )}
                   <div className="flex justify-between items-center mt-2">
                     <span className="text-[10px] font-bold text-neutral-400 bg-white dark:bg-neutral-800 px-2 py-0.5 rounded-lg border dark:border-neutral-700">
                       CANT: {it.quantity}

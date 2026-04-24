@@ -39,6 +39,8 @@ export default async function PedidoDetallePage({
         include: {
           product: {
             select: {
+              type: true,
+              time: true,
               images: {
                 where: { isPrimary: true },
                 take: 1,
@@ -128,6 +130,11 @@ export default async function PedidoDetallePage({
                     </div>
                     <div className="flex-1 min-w-0">
                       <h4 className="text-base font-bold text-neutral-900 dark:text-white">{item.name}</h4>
+                      {item.product.type === "SERVICE" && (
+                        <span className="inline-flex items-center gap-1 w-fit px-1.5 py-0.5 rounded text-[9px] font-black uppercase tracking-widest bg-purple-100 text-purple-700 dark:bg-purple-500/20 dark:text-purple-300 my-1">
+                          Servicio | Duración: {item.product.time}Hrs
+                        </span>
+                      )}
                       <p className="text-sm text-neutral-500">SKU: {item.sku}</p>
                       <div className="mt-1 font-medium text-neutral-900 dark:text-white">
                         {item.quantity} x ${item.price.toFixed(2)}

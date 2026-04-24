@@ -48,7 +48,7 @@ type OrderDetailType = {
     sku: string;
     price: number;
     quantity: number;
-    product: { id: string; name: string; slug: string };
+    product: { id: string; name: string; slug: string; type?: "PRODUCT" | "SERVICE" | string; time?: number | null };
     variant: { id: string; name: string; value: string } | null;
   }>;
   customer: { id: string; name: string; email: string } | null;
@@ -288,6 +288,11 @@ export function OrderDetail({ order }: { order: OrderDetailType }) {
             <div key={item.id} className="px-6 py-4 flex items-center gap-4">
               <div className="flex-1">
                 <p className="font-semibold">{item.name}</p>
+                {item.product.type === "SERVICE" && (
+                  <span className="inline-flex items-center gap-1 w-fit px-1.5 py-0.5 rounded text-[9px] font-black uppercase tracking-widest bg-purple-100 text-purple-700 dark:bg-purple-500/20 dark:text-purple-300 my-1">
+                    Servicio | Duración: {item.product.time}Hrs
+                  </span>
+                )}
                 {item.variant && (
                   <p className="text-xs text-neutral-400">
                     {item.variant.name}: {item.variant.value}

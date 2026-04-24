@@ -16,6 +16,8 @@ interface AddToCartButtonProps {
     images: { url: string; alt?: string | null }[];
     sku: string;
     stock: number;
+    type?: "PRODUCT" | "SERVICE" | string;
+    time?: number | null;
   };
   variantId?: string;
   disabled?: boolean;
@@ -57,6 +59,8 @@ export function AddToCartButton({
         imageUrl: product.images[0]?.url ?? "",
         quantity: 1,
         sku: product.sku,
+        type: product.type as any,
+        time: product.time,
       };
 
       addItem(item);

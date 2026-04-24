@@ -179,7 +179,7 @@ export function ProductDetailView({ product, isPreview = false }: ProductDetailV
               </span>
               {(product.type === "SERVICE" || (product as any).type === "SERVICE") && (
                 <span className="text-xs font-bold text-purple-600 uppercase tracking-widest bg-purple-50 dark:bg-purple-900/30 px-3 py-1 rounded-lg">
-                  Servicio • {product.time}h
+                  Servicio | Duración: {product.time}Hrs
                 </span>
               )}
             </div>

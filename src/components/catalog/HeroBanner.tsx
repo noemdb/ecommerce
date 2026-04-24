@@ -142,7 +142,7 @@ export function HeroBanner({ products, config }: HeroBannerProps) {
                 {(current as any)?.type === "SERVICE" && (
                   <span className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full bg-purple-600/10 text-purple-600 dark:text-purple-400 text-[10px] font-black uppercase tracking-widest">
                     <Tag className="w-3 h-3" />
-                    Servicio • {(current as any)?.time}h
+                    Servicio | Duración: {(current as any)?.time}Hrs
                   </span>
                 )}
               </div>

@@ -156,7 +156,7 @@ export default async function ProductosPage({
                         <span className="font-semibold text-neutral-900 dark:text-neutral-100">{p.name}</span>
                         {p.type === "SERVICE" && (
                           <span className="inline-flex items-center gap-1 w-fit px-1.5 py-0.5 rounded text-[9px] font-black uppercase tracking-widest bg-purple-100 text-purple-700 dark:bg-purple-500/20 dark:text-purple-300">
-                            Servicio • {p.time}h
+                            Servicio | Duración: {p.time}Hrs
                           </span>
                         )}
                       </div>

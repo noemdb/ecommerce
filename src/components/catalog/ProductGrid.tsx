@@ -12,6 +12,8 @@ interface GridProduct {
   stock: number;
   sku: string;
   reviews?: { rating: number }[];
+  type?: "PRODUCT" | "SERVICE" | string;
+  time?: number | null;
 }
 
 interface ProductGridProps {

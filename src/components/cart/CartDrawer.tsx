@@ -110,9 +110,14 @@ export function CartDrawer() {
                         <Trash2 className="w-4 h-4" />
                       </button>
                     </div>
-                    <p className="text-[10px] font-bold text-neutral-400 uppercase tracking-widest mb-3">
+                    <p className="text-[10px] font-bold text-neutral-400 uppercase tracking-widest mb-1">
                       SKU: {item.sku}
                     </p>
+                    {item.type === "SERVICE" && (
+                      <span className="inline-flex items-center gap-1 w-fit px-1.5 py-0.5 rounded text-[9px] font-black uppercase tracking-widest bg-purple-100 text-purple-700 dark:bg-purple-500/20 dark:text-purple-300 mb-2">
+                        Servicio | Duración: {item.time}Hrs
+                      </span>
+                    )}
                     <div className="mt-auto flex items-center justify-between">
                       <div className="flex items-center bg-neutral-50 dark:bg-neutral-800/50 rounded-lg px-2 py-1 gap-4 border dark:border-neutral-800">
                         <button 
