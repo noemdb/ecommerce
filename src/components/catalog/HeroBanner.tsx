@@ -151,7 +151,7 @@ export function HeroBanner({ products, config }: HeroBannerProps) {
 
               <h1 className="text-4xl md:text-5xl lg:text-7xl font-black text-neutral-900 dark:text-white mb-6 leading-[1.05] tracking-tighter">
                 {/* {t("title_start")}  */}
-                <span className="text-blue-600 block mt-2">{current?.name}</span>
+                <span className="block mt-2">{current?.name}</span>
               </h1>
 
               <p className="text-base md:text-lg text-neutral-500 dark:text-neutral-400 mb-10 whitespace-pre-wrap leading-relaxed max-w-md italic">
@@ -245,7 +245,7 @@ export function HeroBanner({ products, config }: HeroBannerProps) {
         </div>
 
         {/* SEGUNDA ROW: BOTONES Y DOTS */}
-        <div className="order-3 md:col-span-2 flex flex-col md:flex-row items-start md:items-center justify-between gap-8 mt-8 lg:mt-12 w-full">
+        <div className="order-3 md:col-span-2 flex flex-col md:flex-row items-start md:items-center justify-between gap-8 mt-2 lg:mt-12 w-full">
           <div className="flex flex-wrap gap-4">
             <Link
               href={`/producto/${current?.slug}`}
@@ -281,6 +281,7 @@ export function HeroBanner({ products, config }: HeroBannerProps) {
             </div>
           )}
         </div>
+
       </div>
     </section>
   );
