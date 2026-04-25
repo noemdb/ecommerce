@@ -27,6 +27,9 @@ export async function exportDatabase() {
       reviews: await prisma.review.findMany(),
       siteConfig: await prisma.siteConfig.findMany(),
       auditLogs: await prisma.auditLog.findMany(),
+      businessProfile: await prisma.businessProfile.findMany(),
+      profileSections: await prisma.profileSection.findMany(),
+      profileFields: await prisma.profileField.findMany(),
     };
     return { success: true, data: JSON.stringify(data) };
   } catch (error: any) {
@@ -125,7 +128,10 @@ export async function importDatabase(jsonDataStr: string) {
         "inventory_movements", 
         "reviews", 
         "site_config", 
-        "audit_logs" 
+        "audit_logs",
+        "business_profile",
+        "profile_sections",
+        "profile_fields"
       CASCADE;
     `);
 
@@ -236,6 +242,24 @@ export async function importDatabase(jsonDataStr: string) {
         }
     }
 
+    if (backup.businessProfile?.length) {
+        for (const item of backup.businessProfile) {
+          await prisma.businessProfile.create({ data: item });
+        }
+    }
+
+    if (backup.profileSections?.length) {
+        for (const item of backup.profileSections) {
+          await prisma.profileSection.create({ data: item });
+        }
+    }
+
+    if (backup.profileFields?.length) {
+        for (const item of backup.profileFields) {
+          await prisma.profileField.create({ data: item });
+        }
+    }
+
     revalidatePath("/admin");
     return { success: true };
   } catch (error: any) {
@@ -265,7 +289,10 @@ export async function resetToInitialState() {
         "inventory_movements", 
         "reviews", 
         "site_config", 
-        "audit_logs" 
+        "audit_logs",
+        "business_profile",
+        "profile_sections",
+        "profile_fields"
       CASCADE;
     `);
 
@@ -306,6 +333,65 @@ export async function resetToInitialState() {
     return { success: true };
   } catch (error: any) {
     console.error("Error resetting database:", error);
+    return { success: false, error: error.message };
+  }
+}
+
+export async function seedNosotrosFromJSON(jsonStr: string) {
+  try {
+    const data = JSON.parse(jsonStr);
+
+    await prisma.$transaction(async (tx) => {
+      // 1. Truncate target tables
+      await tx.$executeRawUnsafe(`TRUNCATE TABLE "business_profile", "profile_sections", "profile_fields" CASCADE;`);
+
+      // 2. Business Profile (Singleton id: 1)
+      if (data.businessProfile) {
+        await tx.businessProfile.create({
+          data: { ...data.businessProfile, id: 1 }
+        });
+      }
+
+      // 3. Sections
+      if (data.profileSections?.length) {
+        await tx.profileSection.createMany({ data: data.profileSections });
+      }
+
+      // 4. Fields
+      if (data.profileFields?.length) {
+        await tx.profileField.createMany({ data: data.profileFields });
+      }
+    });
+
+    revalidatePath("/nosotros");
+    revalidatePath("/admin/nosotros");
+
+    return { success: true };
+  } catch (error: any) {
+    console.error("Error seeding Nosotros:", error);
+    return { success: false, error: error.message };
+  }
+}
+
+export async function seedPromptsFromJSON(jsonStr: string) {
+  try {
+    const prompts = JSON.parse(jsonStr);
+
+    await prisma.$transaction(async (tx) => {
+      // 1. Truncate target table
+      await tx.$executeRawUnsafe(`TRUNCATE TABLE "product_prompts" CASCADE;`);
+
+      // 2. Insert Prompts
+      if (prompts?.length) {
+        await tx.productPrompt.createMany({ data: prompts });
+      }
+    });
+
+    revalidatePath("/admin/productos");
+
+    return { success: true };
+  } catch (error: any) {
+    console.error("Error seeding Prompts:", error);
     return { success: false, error: error.message };
   }
 }

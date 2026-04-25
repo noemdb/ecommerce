@@ -1,0 +1,103 @@
+{
+  "businessProfile": {
+    "fullName": "Ciencia Integral - Educación y Tecnología",
+    "tagline": "MSc. Profesora de Biología",
+    "avatarUrl": "/images/nosotros/logo-ciencia-integral.png",
+    "bio": "Tenemos un equipo multidisciplinario de especialistas dedicados a potenciar la enseñanza de las ciencias naturales, la robótica y la metodología de la investigación. Nuestra misión es brindar herramientas pedagógicas innovadoras que inspiren a la próxima generación de científicos y tecnólogos, facilitando el éxito académico y la profesionalización docente.",
+    "resumeUrl": "/docs/brochure-ciencia-integral.pdf"
+  },
+  "profileSections": [
+    {
+      "id": "sec-mision-vision",
+      "title": "Nuestra Visión Educativa",
+      "subtitle": "Innovación y rigor científico en el aula",
+      "slug": "mision-vision",
+      "icon": "Target",
+      "order": 0,
+      "isVisible": true,
+      "isPublished": true
+    },
+    {
+      "id": "sec-experiencia",
+      "title": "Experiencia y Trayectoria",
+      "subtitle": "Acompañando semilleros y docentes desde 2015",
+      "slug": "experiencia",
+      "icon": "Award",
+      "order": 1,
+      "isVisible": true,
+      "isPublished": true
+    },
+    {
+      "id": "sec-especialidades",
+      "title": "Áreas de Especialidad",
+      "subtitle": "Conocimiento transversal para el siglo XXI",
+      "slug": "especialidades",
+      "icon": "Beaker",
+      "order": 2,
+      "isVisible": true,
+      "isPublished": true
+    }
+  ],
+  "profileFields": [
+    {
+      "id": "f-mision",
+      "sectionId": "sec-mision-vision",
+      "fieldKey": "mision",
+      "label": "Propósito Central",
+      "fieldType": "TEXT",
+      "value": "Democratizar el acceso a la ciencia experimental de alto nivel, proporcionando recursos que transformen el aula en un verdadero laboratorio de ideas.",
+      "order": 0,
+      "isVisible": true
+    },
+    {
+      "id": "f-vision",
+      "sectionId": "sec-mision-vision",
+      "fieldKey": "vision",
+      "label": "Hacia el Futuro",
+      "fieldType": "TEXT",
+      "value": "Ser el referente principal en asesoría pedagógica STEM y preparación para certámenes científicos nacionales e internacionales.",
+      "order": 1,
+      "isVisible": true
+    },
+    {
+      "id": "f-mincyt",
+      "sectionId": "sec-experiencia",
+      "fieldKey": "mincyt",
+      "label": "Asesoría MINCYT",
+      "fieldType": "HTML",
+      "value": "<p>Hemos asesorado a más de <strong>50 proyectos ganadores</strong> en Ferias Científicas nacionales, enfocándonos en el rigor metodológico y la oratoria científica.</p>",
+      "order": 0,
+      "isVisible": true
+    },
+    {
+      "id": "f-formacion",
+      "sectionId": "sec-experiencia",
+      "fieldKey": "formacion",
+      "label": "Formación Docente",
+      "fieldType": "TEXT",
+      "value": "Más de 1,200 docentes capacitados en estrategias de evaluación formativa y planificación por competencias.",
+      "order": 1,
+      "isVisible": true
+    },
+    {
+      "id": "f-biologia",
+      "sectionId": "sec-especialidades",
+      "fieldKey": "biologia",
+      "label": "Ciencias Biológicas",
+      "fieldType": "TEXT",
+      "value": "Biología Celular, Molecular, Genética y Biofísica para todos los niveles educativos.",
+      "order": 0,
+      "isVisible": true
+    },
+    {
+      "id": "f-stem",
+      "sectionId": "sec-especialidades",
+      "fieldKey": "stem",
+      "label": "Educación STEM",
+      "fieldType": "TEXT",
+      "value": "Robótica Educativa con Arduino y Scratch, integrando la tecnología en el currículo de ciencias naturales.",
+      "order": 1,
+      "isVisible": true
+    }
+  ]
+}

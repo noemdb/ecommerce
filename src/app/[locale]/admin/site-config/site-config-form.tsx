@@ -9,7 +9,8 @@ import type { SiteConfigData } from "@/lib/site-config/default-site-config";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { showPremiumToast } from "@/components/ui/PremiumToast";
-import { Save, Loader2 } from "lucide-react";
+import { Save, Loader2, Image as ImageIcon } from "lucide-react";
+import { ImageUploadField } from "./upload-field";
 
 // ─── Submit button with pending state ────────────────────────────────────────
 
@@ -247,31 +248,46 @@ export function SiteConfigForm({ initialData }: { initialData: SiteConfigData })
         title="Branding (Identidad)"
         description="Logotipo, favicon, tema visual y analíticas."
       >
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <div className="flex flex-col gap-1.5">
-            <label htmlFor="logoUrl" className="text-sm font-medium">URL del Logotipo</label>
-            <Input id="logoUrl" name="logoUrl" defaultValue={initialData.logoUrl} placeholder="https://..." error={fieldErrors.logoUrl?.[0]} />
+        <div className="flex flex-col gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <ImageUploadField
+              label="Logotipo"
+              name="logoUrl"
+              defaultValue={initialData.logoUrl}
+              error={fieldErrors.logoUrl?.[0]}
+              endpoint="siteConfigImage"
+            />
+            <ImageUploadField
+              label="Favicon"
+              name="faviconUrl"
+              defaultValue={initialData.faviconUrl}
+              error={fieldErrors.faviconUrl?.[0]}
+              endpoint="siteConfigImage"
+            />
           </div>
-          <div className="flex flex-col gap-1.5">
-            <label htmlFor="faviconUrl" className="text-sm font-medium">URL del Favicon</label>
-            <Input id="faviconUrl" name="faviconUrl" defaultValue={initialData.faviconUrl} placeholder="https://..." error={fieldErrors.faviconUrl?.[0]} />
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="flex flex-col gap-1.5">
+              <label htmlFor="defaultTheme" className="text-sm font-medium">Tema por defecto</label>
+              <select id="defaultTheme" name="defaultTheme" defaultValue={initialData.defaultTheme} className="w-full px-3 py-2 text-sm rounded-md border border-neutral-200 dark:border-neutral-700 bg-white dark:bg-neutral-900 text-neutral-900 dark:text-neutral-100 h-10">
+                <option value="system">Sistema</option>
+                <option value="light">Claro</option>
+                <option value="dark">Oscuro</option>
+              </select>
+            </div>
+            <div className="flex flex-col gap-1.5">
+              <label htmlFor="googleAnalyticsId" className="text-sm font-medium">Google Analytics ID</label>
+              <Input id="googleAnalyticsId" name="googleAnalyticsId" defaultValue={initialData.googleAnalyticsId} placeholder="G-XXXX..." error={fieldErrors.googleAnalyticsId?.[0]} />
+            </div>
           </div>
-          <div className="flex flex-col gap-1.5">
-            <label htmlFor="defaultTheme" className="text-sm font-medium">Tema por defecto</label>
-            <select id="defaultTheme" name="defaultTheme" defaultValue={initialData.defaultTheme} className="w-full px-3 py-2 text-sm rounded-md border border-neutral-200 dark:border-neutral-700 bg-white dark:bg-neutral-900 text-neutral-900 dark:text-neutral-100 h-10">
-              <option value="system">Sistema</option>
-              <option value="light">Claro</option>
-              <option value="dark">Oscuro</option>
-            </select>
-          </div>
-          <div className="flex flex-col gap-1.5">
-            <label htmlFor="googleAnalyticsId" className="text-sm font-medium">Google Analytics ID</label>
-            <Input id="googleAnalyticsId" name="googleAnalyticsId" defaultValue={initialData.googleAnalyticsId} placeholder="G-XXXX..." error={fieldErrors.googleAnalyticsId?.[0]} />
-          </div>
-          <div className="flex flex-col gap-1.5 md:col-span-2">
-            <label htmlFor="metaOgImageUrl" className="text-sm font-medium">OG Image URL (Redes Sociales)</label>
-            <Input id="metaOgImageUrl" name="metaOgImageUrl" defaultValue={initialData.metaOgImageUrl} placeholder="https://..." error={fieldErrors.metaOgImageUrl?.[0]} />
-          </div>
+
+          <ImageUploadField
+            label="OG Image (Imagen para Redes Sociales)"
+            name="metaOgImageUrl"
+            defaultValue={initialData.metaOgImageUrl}
+            error={fieldErrors.metaOgImageUrl?.[0]}
+            endpoint="siteConfigImage"
+          />
         </div>
       </Section>
 

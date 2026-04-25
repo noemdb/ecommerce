@@ -1,0 +1,33 @@
+{
+  "businessProfile": {
+    "fullName": "Mi Negocio E-commerce",
+    "tagline": "Calidad y Confianza",
+    "avatarUrl": "https://example.com/logo.png",
+    "bio": "Una breve biografía sobre el negocio.",
+    "resumeUrl": "https://example.com/cv.pdf"
+  },
+  "profileSections": [
+    {
+      "id": "sec-1",
+      "title": "Misión y Visión",
+      "subtitle": "Nuestro norte",
+      "slug": "mision-vision",
+      "icon": "Target",
+      "order": 0,
+      "isVisible": true,
+      "isPublished": true
+    }
+  ],
+  "profileFields": [
+    {
+      "id": "f-1",
+      "sectionId": "sec-1",
+      "fieldKey": "mision",
+      "label": "Misión",
+      "fieldType": "TEXT",
+      "value": "Nuestra misión es ofrecer los mejores productos.",
+      "order": 0,
+      "isVisible": true
+    }
+  ]
+}

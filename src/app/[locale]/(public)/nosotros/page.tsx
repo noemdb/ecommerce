@@ -3,7 +3,7 @@ import Image from "next/image";
 import { getAboutPageData } from "@/lib/nosotros/get-nosotros";
 import { SectionRenderer } from "@/components/nosotros/SectionRenderer";
 import { getSiteConfig } from "@/lib/site-config/get-site-config";
-import { FileText } from "lucide-react";
+
 
 // ─── SEO Metadata ──────────────────────────────────────────────────────────
 
@@ -76,7 +76,7 @@ export default async function NosotrosPage() {
       )}
 
       <div className="min-h-screen bg-neutral-50 dark:bg-neutral-950">
-        <div className="max-w-4xl mx-auto px-4 py-12 md:py-20 flex flex-col gap-12">
+        <div className="w-full max-w-7xl mx-auto px-4 py-12 md:py-20 flex flex-col gap-12">
 
           {/* ── Hero del perfil ─────────────────────────────────── */}
           {hasProfile && (
@@ -114,17 +114,7 @@ export default async function NosotrosPage() {
                     {profile.bio}
                   </p>
                 )}
-                {profile.resumeUrl && (
-                  <a
-                    href={profile.resumeUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center gap-2 self-center sm:self-start mt-2 px-4 py-2 bg-neutral-900 dark:bg-white text-white dark:text-neutral-900 rounded-lg text-sm font-semibold hover:opacity-90 transition-opacity"
-                  >
-                    <FileText className="w-4 h-4" />
-                    Descargar CV
-                  </a>
-                )}
+
               </div>
             </header>
           )}

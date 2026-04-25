@@ -17,6 +17,7 @@ import {
   ShieldCheck,
   ChevronLeft,
   ChevronRight,
+  ChevronDown,
   Sparkles,
   BookOpen,
   Database,
@@ -28,39 +29,93 @@ import { cn } from "@/lib/utils";
 import { ThemeToggle } from "@/components/shared/ThemeToggle";
 import { LanguageSelector } from "@/components/layout/LanguageSelector";
 
-const SIDEBAR_ITEMS = [
-  { label: "Dashboard", href: "/admin", icon: LayoutDashboard },
-  { label: "Órdenes", href: "/admin/ordenes", icon: ShoppingBag },
-  { label: "Inventario", href: "/admin/inventario", icon: Package },
-  { label: "Productos", href: "/admin/productos", icon: Tags },
-  { label: "Proveedores", href: "/admin/proveedores", icon: Truck },
-  { label: "Categorías", href: "/admin/categorias", icon: Tags },
-  { label: "Clientes", href: "/admin/clientes", icon: Users },
-  { label: "Reseñas", href: "/admin/resenas", icon: MessageSquare },
-  { label: "Prompts AI", href: "/admin/prompts", icon: Sparkles },
-  { label: "Usuarios", href: "/admin/usuarios", icon: ShieldCheck },
-  { label: "Métricas", href: "/admin/metricas", icon: Settings2 },
-  { label: "Base de Datos", href: "/admin/backup", icon: Database },
-  { label: "Nosotros", href: "/admin/nosotros", icon: UserCircle },
-  { label: "Config. Sitio", href: "/admin/site-config", icon: Settings },
-  { label: "Manual de Uso", href: "/admin/manual", icon: BookOpen },
+const SIDEBAR_GROUPS = [
+  {
+    group: "General",
+    icon: LayoutDashboard,
+    items: [
+      { label: "Dashboard", href: "/admin", icon: LayoutDashboard },
+    ]
+  },
+  {
+    group: "Ventas",
+    icon: ShoppingBag,
+    items: [
+      { label: "Órdenes", href: "/admin/ordenes", icon: ShoppingBag },
+      { label: "Clientes", href: "/admin/clientes", icon: Users },
+      { label: "Reseñas", href: "/admin/resenas", icon: MessageSquare },
+    ]
+  },
+  {
+    group: "Catálogo",
+    icon: Package,
+    items: [
+      { label: "Productos", href: "/admin/productos", icon: Tags },
+      { label: "Categorías", href: "/admin/categorias", icon: Tags },
+      { label: "Inventario", href: "/admin/inventario", icon: Package },
+      { label: "Proveedores", href: "/admin/proveedores", icon: Truck },
+    ]
+  },
+  {
+    group: "Contenido",
+    icon: BookOpen,
+    items: [
+      { label: "Nosotros", href: "/admin/nosotros", icon: UserCircle },
+      { label: "Prompts AI", href: "/admin/prompts", icon: Sparkles },
+      { label: "Manual de Uso", href: "/admin/manual", icon: BookOpen },
+    ]
+  },
+  {
+    group: "Configuración",
+    icon: Settings,
+    items: [
+      { label: "Métricas", href: "/admin/metricas", icon: Settings2 },
+      { label: "Base de Datos", href: "/admin/backup", icon: Database },
+      { label: "Usuarios", href: "/admin/usuarios", icon: ShieldCheck },
+      { label: "Config. Sitio", href: "/admin/site-config", icon: Settings },
+    ]
+  }
 ];
 
 export function AdminSidebar() {
   const pathname = usePathname();
   const [isCollapsed, setIsCollapsed] = useState(false);
   const [isMounted, setIsMounted] = useState(false);
+  const [expandedGroups, setExpandedGroups] = useState<Record<string, boolean>>({
+    General: true,
+    Ventas: false,
+    Catálogo: false,
+    Contenido: false,
+    Configuración: false,
+  });
 
   useEffect(() => {
     setIsMounted(true);
     const savedState = localStorage.getItem("admin-sidebar-collapsed");
     if (savedState) setIsCollapsed(savedState === "true");
-  }, []);
+
+    // Expand the group that has the active item
+    SIDEBAR_GROUPS.forEach(group => {
+      const hasActiveChild = group.items.some(item => 
+        pathname === item.href || (item.href !== "/admin" && pathname?.startsWith(item.href))
+      );
+      if (hasActiveChild) {
+        setExpandedGroups(prev => ({ ...prev, [group.group]: true }));
+      }
+    });
+  }, [pathname]);
 
   const toggleSidebar = () => {
     const newState = !isCollapsed;
     setIsCollapsed(newState);
     localStorage.setItem("admin-sidebar-collapsed", String(newState));
+  };
+
+  const toggleGroup = (groupName: string) => {
+    setExpandedGroups(prev => ({
+      ...prev,
+      [groupName]: !prev[groupName]
+    }));
   };
 
   if (!isMounted) return <aside className="w-64 bg-white dark:bg-neutral-900 border-r border-neutral-200 dark:border-neutral-800" />;
@@ -93,25 +148,74 @@ export function AdminSidebar() {
       </button>
 
       {/* Nav Items */}
-      <div className="flex-1 overflow-y-auto py-6 px-3 space-y-1 custom-scrollbar">
-        {SIDEBAR_ITEMS.map((item) => {
-          const isActive = pathname === item.href || (item.href !== "/admin" && pathname?.startsWith(item.href));
+      <div className="flex-1 overflow-y-auto py-6 px-3 space-y-2 custom-scrollbar">
+        {SIDEBAR_GROUPS.map((group) => {
+          const isExpanded = expandedGroups[group.group];
+          const hasActiveChild = group.items.some(item => 
+            pathname === item.href || (item.href !== "/admin" && pathname?.startsWith(item.href))
+          );
+
+          if (isCollapsed) {
+            return (
+              <button
+                key={group.group}
+                onClick={toggleSidebar}
+                title={group.group}
+                className={cn(
+                  "w-full flex items-center justify-center py-3 rounded-md transition-all duration-300",
+                  hasActiveChild 
+                    ? "bg-blue-600/10 text-blue-600 dark:bg-blue-500/10 dark:text-blue-500 shadow-sm" 
+                    : "hover:bg-neutral-100 hover:text-neutral-900 dark:hover:bg-neutral-800/50 dark:hover:text-white text-neutral-500"
+                )}
+              >
+                <group.icon className={cn("w-6 h-6", hasActiveChild ? "text-blue-600 dark:text-blue-500" : "text-neutral-500")} />
+              </button>
+            );
+          }
+
           return (
-            <Link
-              key={item.href}
-              href={item.href}
-              title={isCollapsed ? item.label : undefined}
-              className={cn(
-                "flex items-center gap-3 rounded-md transition-all duration-300 text-sm font-bold",
-                isCollapsed ? "px-3 py-3 justify-center" : "px-4 py-3",
-                isActive 
-                  ? "bg-blue-600/10 text-blue-600 dark:bg-blue-500/10 dark:text-blue-500 shadow-sm" 
-                  : "hover:bg-neutral-100 hover:text-neutral-900 dark:hover:bg-neutral-800/50 dark:hover:text-white text-neutral-500"
-              )}
-            >
-              <item.icon className={cn("w-5 h-5 shrink-0", isActive ? "text-blue-600 dark:text-blue-500" : "text-neutral-500")} />
-              {!isCollapsed && <span className="truncate">{item.label}</span>}
-            </Link>
+            <div key={group.group} className="space-y-1">
+              <button
+                onClick={() => toggleGroup(group.group)}
+                className={cn(
+                  "w-full flex items-center justify-between px-4 py-2 text-[10px] font-black uppercase tracking-[0.2em] transition-colors rounded-md hover:bg-neutral-100 dark:hover:bg-neutral-800/50",
+                  hasActiveChild ? "text-blue-600 dark:text-blue-500" : "text-neutral-400"
+                )}
+              >
+                <span>{group.group}</span>
+                <div className="flex items-center gap-1">
+                  {isExpanded ? (
+                    <ChevronDown className="w-3 h-3" />
+                  ) : (
+                    <ChevronRight className="w-3 h-3" />
+                  )}
+                </div>
+              </button>
+              
+              <div className={cn(
+                "space-y-1 transition-all duration-300 overflow-hidden",
+                !isExpanded ? "max-h-0 opacity-0" : "max-h-[500px] opacity-100"
+              )}>
+                {group.items.map((item) => {
+                  const isActive = pathname === item.href || (item.href !== "/admin" && pathname?.startsWith(item.href));
+                  return (
+                    <Link
+                      key={item.href}
+                      href={item.href}
+                      className={cn(
+                        "flex items-center gap-3 rounded-md transition-all duration-300 text-sm font-bold px-4 py-2.5 ml-2",
+                        isActive 
+                          ? "bg-blue-600/10 text-blue-600 dark:bg-blue-500/10 dark:text-blue-500 shadow-sm" 
+                          : "hover:bg-neutral-100 hover:text-neutral-900 dark:hover:bg-neutral-800/50 dark:hover:text-white text-neutral-500"
+                      )}
+                    >
+                      <item.icon className={cn("w-5 h-5 shrink-0", isActive ? "text-blue-600 dark:text-blue-500" : "text-neutral-500")} />
+                      <span className="truncate">{item.label}</span>
+                    </Link>
+                  );
+                })}
+              </div>
+            </div>
           );
         })}
       </div>

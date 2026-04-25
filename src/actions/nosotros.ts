@@ -237,3 +237,57 @@ export async function deleteFieldAction(id: string) {
     return { success: false, error: "Error al eliminar el campo" };
   }
 }
+
+// ─── Wizard Actions ───────────────────────────────────────────────────────
+
+export async function createSectionWithFieldsAction(data: {
+  section: {
+    title: string;
+    subtitle?: string;
+    slug: string;
+    icon?: string;
+    isPublished: boolean;
+    isVisible: boolean;
+  };
+  fields: {
+    fieldKey: string;
+    label: string;
+    fieldType: ProfileFieldType;
+    value: string;
+    isVisible: boolean;
+  }[];
+}) {
+  try {
+    await requirePermission("products:write");
+    
+    const maxOrder = await prisma.profileSection.aggregate({ _max: { order: true } });
+    const nextOrder = (maxOrder._max.order ?? -1) + 1;
+
+    // Utilizamos una transacción para crear la sección y todos sus campos de manera atómica
+    await prisma.$transaction(async (tx) => {
+      const section = await tx.profileSection.create({
+        data: {
+          ...data.section,
+          order: nextOrder,
+        },
+      });
+
+      if (data.fields.length > 0) {
+        await tx.profileField.createMany({
+          data: data.fields.map((field, index) => ({
+            ...field,
+            sectionId: section.id,
+            order: index,
+            value: sanitizeIfHtml(field.fieldType, field.value),
+          })),
+        });
+      }
+    });
+
+    revalidateNosotros();
+    return { success: true, message: "Sección y campos creados correctamente" };
+  } catch (error) {
+    console.error("[createSectionWithFieldsAction]", error);
+    return { success: false, error: "Error al crear la sección con sus campos" };
+  }
+}

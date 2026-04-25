@@ -8,9 +8,15 @@ export const NosotrosSection = () => (
         <UserCircle className="text-neutral-500 w-6 h-6" />
         Módulo "Nosotros" (Perfil del Negocio)
       </h3>
-      <p className="text-neutral-600 dark:text-neutral-400 leading-relaxed">
+      <p className="text-neutral-600 dark:text-neutral-400 leading-relaxed mb-4">
         Este módulo te permite crear una página pública altamente dinámica para presentarte a ti o a tu empresa. Funciona mediante un perfil principal y múltiples secciones personalizables.
       </p>
+      <a 
+        href="/admin/nosotros/secciones/wizard" 
+        className="inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-5 py-2.5 rounded-lg font-medium transition-colors shadow-sm"
+      >
+        <span className="text-lg leading-none">+</span> Abrir Asistente de Creación de Secciones
+      </a>
     </div>
 
     <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">

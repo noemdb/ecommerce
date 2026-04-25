@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { Download, Upload, Server, FileJson, AlertTriangle } from "lucide-react";
-import { exportDatabase, importDatabase, seedCatalogFromJSON, resetToInitialState } from "@/actions/database-manager";
+import { exportDatabase, importDatabase, seedCatalogFromJSON, resetToInitialState, seedNosotrosFromJSON, seedPromptsFromJSON } from "@/actions/database-manager";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -24,6 +24,8 @@ export default function BackupPage() {
   const [catFile, setCatFile] = useState<File | null>(null);
   const [prodFile, setProdFile] = useState<File | null>(null);
   const [imgFile, setImgFile] = useState<File | null>(null);
+  const [nosotrosFile, setNosotrosFile] = useState<File | null>(null);
+  const [promptsFile, setPromptsFile] = useState<File | null>(null);
 
   const handleExport = async () => {
     setIsExporting(true);
@@ -97,6 +99,52 @@ export default function BackupPage() {
         setIsSeeding(false);
      }
   };
+
+  const handleSeedNosotros = async () => {
+    if (!nosotrosFile) {
+       toast.error("Debes cargar el archivo JSON de Nosotros & Prompts");
+       return;
+    }
+
+    setIsSeeding(true);
+    try {
+       const jsonStr = await nosotrosFile.text();
+       const res = await seedNosotrosFromJSON(jsonStr);
+       if (res.success) {
+         toast.success("Información de Nosotros y Prompts inyectada");
+         setNosotrosFile(null);
+       } else {
+          toast.error("Error inyectando información", { description: res.error });
+       }
+    } catch(e) {
+       toast.error("Error inesperado ejecutando seed");
+    } finally {
+       setIsSeeding(false);
+    }
+ };
+
+  const handleSeedPrompts = async () => {
+    if (!promptsFile) {
+       toast.error("Debes cargar el archivo JSON de Prompts");
+       return;
+    }
+
+    setIsSeeding(true);
+    try {
+       const jsonStr = await promptsFile.text();
+       const res = await seedPromptsFromJSON(jsonStr);
+       if (res.success) {
+         toast.success("Prompts de productos inyectados correctamente");
+         setPromptsFile(null);
+       } else {
+          toast.error("Error inyectando prompts", { description: res.error });
+       }
+    } catch(e) {
+       toast.error("Error inesperado ejecutando seed");
+    } finally {
+       setIsSeeding(false);
+    }
+ };
  
   const handleReset = async () => {
     setShowResetDialog(false);
@@ -133,6 +181,7 @@ export default function BackupPage() {
         <TabsList className="mb-4">
           <TabsTrigger value="backup" className="font-semibold">Backup Completo</TabsTrigger>
           <TabsTrigger value="seed" className="font-semibold">Seeder de Catálogo</TabsTrigger>
+          <TabsTrigger value="nosotros-seed" className="font-semibold">Seeder Nosotros & Prompts</TabsTrigger>
         </TabsList>
         
         {/* TAB BACKUP */}
@@ -239,7 +288,7 @@ export default function BackupPage() {
             />
         </TabsContent>
 
-        {/* TAB SEEDER */}
+        {/* TAB SEEDER CATALOGO */}
         <TabsContent value="seed" className="space-y-6">
             <Card>
                 <CardHeader>
@@ -288,6 +337,73 @@ export default function BackupPage() {
                         className="w-full sm:w-auto font-bold bg-emerald-600 hover:bg-emerald-700"
                     >
                         {isSeeding ? "Inyectando Catálogo..." : "Ejecutar Seeder"}
+                    </Button>
+                </CardFooter>
+            </Card>
+        </TabsContent>
+
+        {/* TAB SEEDERS ESPECIALES */}
+        <TabsContent value="nosotros-seed" className="space-y-6">
+            <Card>
+                <CardHeader>
+                    <CardTitle className="flex items-center gap-2">
+                        <FileJson className="w-5 h-5 text-indigo-600" />
+                        Semilla de Nosotros (Perfil & Secciones)
+                    </CardTitle>
+                    <CardDescription>
+                        Carga información del perfil del negocio y secciones personalizables.
+                    </CardDescription>
+                </CardHeader>
+                <CardContent className="space-y-6">
+                    <div className="grid gap-2">
+                        <Label htmlFor="nosotros-file">Archivo Nosotros (`nosotros.json`)</Label>
+                        <Input 
+                            id="nosotros-file" 
+                            type="file" 
+                            accept=".json" 
+                            onChange={(e) => setNosotrosFile(e.target.files?.[0] || null)}
+                        />
+                    </div>
+                </CardContent>
+                <CardFooter>
+                    <Button 
+                        onClick={handleSeedNosotros} 
+                        disabled={!nosotrosFile || isSeeding}
+                        className="w-full sm:w-auto font-bold bg-indigo-600 hover:bg-indigo-700"
+                    >
+                        {isSeeding ? "Inyectando Nosotros..." : "Ejecutar Seeder Nosotros"}
+                    </Button>
+                </CardFooter>
+            </Card>
+
+            <Card>
+                <CardHeader>
+                    <CardTitle className="flex items-center gap-2">
+                        <FileJson className="w-5 h-5 text-amber-600" />
+                        Semilla de Product Prompts
+                    </CardTitle>
+                    <CardDescription>
+                        Carga prompts personalizados para el generador de descripciones IA.
+                    </CardDescription>
+                </CardHeader>
+                <CardContent className="space-y-6">
+                    <div className="grid gap-2">
+                        <Label htmlFor="prompts-file">Archivo Prompts (`prompts.json`)</Label>
+                        <Input 
+                            id="prompts-file" 
+                            type="file" 
+                            accept=".json" 
+                            onChange={(e) => setPromptsFile(e.target.files?.[0] || null)}
+                        />
+                    </div>
+                </CardContent>
+                <CardFooter>
+                    <Button 
+                        onClick={handleSeedPrompts} 
+                        disabled={!promptsFile || isSeeding}
+                        className="w-full sm:w-auto font-bold bg-amber-600 hover:bg-amber-700"
+                    >
+                        {isSeeding ? "Inyectando Prompts..." : "Ejecutar Seeder Prompts"}
                     </Button>
                 </CardFooter>
             </Card>

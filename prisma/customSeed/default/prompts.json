@@ -1,0 +1,10 @@
+[
+  {
+    "id": "cm9abc123",
+    "productId": "some-product-id",
+    "version": 1,
+    "prompt": "Este es un prompt de ejemplo para marketing.",
+    "isActive": true,
+    "notes": "Notas sobre el prompt"
+  }
+]

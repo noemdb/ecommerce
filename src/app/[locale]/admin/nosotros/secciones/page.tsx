@@ -45,8 +45,24 @@ export default async function AdminSeccionesPage() {
         </div>
       </div>
 
-      {/* Formulario de nueva sección */}
-      <CreateSectionForm />
+      {/* Acciones para crear nueva sección */}
+      <div className="flex flex-col sm:flex-row sm:items-center gap-4 bg-blue-50/50 dark:bg-blue-900/10 border border-blue-100 dark:border-blue-900/30 p-5 rounded-2xl shadow-sm">
+        <div className="flex-1">
+          <h3 className="font-semibold text-blue-900 dark:text-blue-100 mb-1">Crea una nueva sección</h3>
+          <p className="text-sm text-blue-700 dark:text-blue-300">
+            Utiliza el asistente paso a paso para diseñar tu sección y ver los cambios en tiempo real, o crea un borrador rápido vacío.
+          </p>
+        </div>
+        <div className="flex items-center gap-3">
+          <Link
+            href="/admin/nosotros/secciones/wizard"
+            className="inline-flex items-center gap-2 px-5 py-2.5 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-medium shadow-sm hover:shadow transition-all"
+          >
+            <span className="text-lg leading-none">+</span> Asistente Completo
+          </Link>
+          <CreateSectionForm />
+        </div>
+      </div>
 
       {/* Lista de secciones */}
       <SectionsList sections={sections} />
