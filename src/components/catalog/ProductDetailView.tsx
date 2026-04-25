@@ -12,7 +12,7 @@ import { Link } from "@/i18n/navigation";
 import { RatingStars } from "./RatingStars";
 import { AddToCartButton } from "./AddToCartButton";
 import { formatPrice } from "@/lib/utils";
-import { Package, ShieldCheck, Truck, ArrowLeft, MessageSquare, Star } from "lucide-react";
+import { Package, ShieldCheck, Truck, ArrowLeft, MessageSquare, Star, Headset, Sparkles } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 interface ProductDetailViewProps {
@@ -57,6 +57,32 @@ export function ProductDetailView({ product, isPreview = false }: ProductDetailV
 
   const accent = getAccent(product.id);
   const shouldReduceMotion = useReducedMotion();
+
+  const isService = product.type === "SERVICE" || (product as any).type === "SERVICE";
+
+  const trustBadges = isService ? [
+    {
+      title: "Soporte",
+      description: "Durante el transcurso del curso",
+      icon: Headset,
+    },
+    {
+      title: "Atención",
+      description: "Preferencia",
+      icon: Sparkles,
+    }
+  ] : [
+    {
+      title: "Garantía Real",
+      description: "12 meses de soporte",
+      icon: ShieldCheck,
+    },
+    {
+      title: "Envío Seguro",
+      description: "Verificado manualmente",
+      icon: Truck,
+    }
+  ];
 
   // 👇 PREMIUM PARALLAX SYSTEM
   const mouseX = useMotionValue(0);
@@ -239,7 +265,7 @@ export function ProductDetailView({ product, isPreview = false }: ProductDetailV
             />
             
             <p className="text-[10px] text-center text-neutral-400 mt-4 uppercase tracking-[0.2em] font-bold">
-              Garantía de satisfacción y pago seguro
+              {isService ? "Garantía de aprendizaje y satisfacción asegurada" : "Garantía de satisfacción y pago seguro"}
             </p>
           </div>
 
@@ -252,24 +278,17 @@ export function ProductDetailView({ product, isPreview = false }: ProductDetailV
             </div>
 
             <div className="grid grid-cols-2 gap-4 pt-6 border-t dark:border-neutral-800">
-              <div className="flex items-start gap-3">
-                <div className="p-2 bg-neutral-100 dark:bg-neutral-800 rounded-lg text-neutral-500">
-                  <ShieldCheck className="w-5 h-5" />
+              {trustBadges.map((badge, idx) => (
+                <div key={idx} className="flex items-start gap-3">
+                  <div className="p-2 bg-neutral-100 dark:bg-neutral-800 rounded-lg text-neutral-500">
+                    <badge.icon className="w-5 h-5" />
+                  </div>
+                  <div>
+                    <h4 className="text-xs font-bold uppercase">{badge.title}</h4>
+                    <p className="text-[10px] text-neutral-500">{badge.description}</p>
+                  </div>
                 </div>
-                <div>
-                  <h4 className="text-xs font-bold uppercase">Garantía Real</h4>
-                  <p className="text-[10px] text-neutral-500">12 meses de soporte</p>
-                </div>
-              </div>
-              <div className="flex items-start gap-3">
-                <div className="p-2 bg-neutral-100 dark:bg-neutral-800 rounded-lg text-neutral-500">
-                  <Truck className="w-5 h-5" />
-                </div>
-                <div>
-                  <h4 className="text-xs font-bold uppercase">Envío Seguro</h4>
-                  <p className="text-[10px] text-neutral-500">Verificado manualmente</p>
-                </div>
-              </div>
+              ))}
             </div>
           </div>
         </div>

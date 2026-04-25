@@ -108,30 +108,35 @@ export function ProductCard({ product, badge, accentIndex }: ProductCardProps) {
       <Link href={`/producto/${product.slug}`} className="absolute inset-0 z-0" />
 
       {/* BADGES */}
-      <div className="absolute z-20 top-4 left-4 flex flex-col gap-2 pointer-events-none transition-all duration-300 group-hover:translate-x-1 group-hover:translate-y-1">
-        {isOutOfStock ? (
-          <span className="bg-red-500/90 text-white text-[10px] font-bold px-2.5 py-1 rounded-full uppercase">
-            {t("sold_out")}
-          </span>
-        ) : (
-          <>
-            {product.type === "SERVICE" && (
-              <span className="bg-purple-600/90 text-white text-[10px] font-bold px-2.5 py-1 rounded-full uppercase shadow-lg border border-purple-500/20 backdrop-blur-sm">
+      <div className="absolute z-20 top-3 left-3 right-3 flex justify-between items-start pointer-events-none transition-all duration-300">
+        {/* Left: Status / Type */}
+        <div className="flex flex-col gap-1.5">
+          {isOutOfStock ? (
+            <span className="bg-red-500/90 text-white text-[9px] sm:text-[10px] font-bold px-2.5 py-1 rounded-full uppercase shadow-lg backdrop-blur-sm">
+              {t("sold_out")}
+            </span>
+          ) : (
+            product.type === "SERVICE" && (
+              <span className="bg-purple-600/90 text-white text-[9px] sm:text-[10px] font-bold px-2.5 py-1 rounded-full uppercase shadow-lg border border-purple-500/20 backdrop-blur-sm">
                 Servicio | Duración: {product.time}Hrs
               </span>
-            )}
-            {badge && (
-              <span className="bg-white/10 border border-white/20 text-white text-[10px] font-bold px-2.5 py-1 rounded-full uppercase">
-                {badge}
-              </span>
-            )}
-            {product.promoPrice && (
-              <span className="bg-blue-500 text-white text-[10px] font-bold px-2.5 py-1 rounded-full shadow-lg">
-                {t("promo")}
-              </span>
-            )}
-          </>
-        )}
+            )
+          )}
+        </div>
+
+        {/* Right: Marketing labels */}
+        <div className="flex flex-col items-end gap-1.5">
+          {badge && (
+            <span className="bg-neutral-900/80 dark:bg-white/90 text-white dark:text-black text-[9px] sm:text-[10px] font-bold px-2.5 py-1 rounded-full uppercase shadow-lg backdrop-blur-sm border border-white/10 dark:border-black/10">
+              {badge}
+            </span>
+          )}
+          {!isOutOfStock && product.promoPrice && (
+            <span className="bg-blue-600 text-white text-[9px] sm:text-[10px] font-bold px-2.5 py-1 rounded-full shadow-lg border border-blue-400/20">
+              {t("promo")}
+            </span>
+          )}
+        </div>
       </div>
 
       {/* IMAGE */}
