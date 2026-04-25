@@ -19,7 +19,8 @@ import {
   ChevronRight,
   Sparkles,
   BookOpen,
-  Database
+  Database,
+  UserCircle
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useState, useEffect } from "react";
@@ -40,6 +41,7 @@ const SIDEBAR_ITEMS = [
   { label: "Usuarios", href: "/admin/usuarios", icon: ShieldCheck },
   { label: "Métricas", href: "/admin/metricas", icon: Settings2 },
   { label: "Base de Datos", href: "/admin/backup", icon: Database },
+  { label: "Nosotros", href: "/admin/nosotros", icon: UserCircle },
   { label: "Config. Sitio", href: "/admin/site-config", icon: Settings },
   { label: "Manual de Uso", href: "/admin/manual", icon: BookOpen },
 ];

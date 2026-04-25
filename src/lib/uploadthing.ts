@@ -24,6 +24,15 @@ export const ourFileRouter = {
       console.log("Receipt Upload complete:", file.ufsUrl);
       return { url: file.ufsUrl };
     }),
+
+  profileImage: f({ image: { maxFileSize: "4MB" } })
+    .middleware(async () => {
+      return { uploadedBy: "admin" };
+    })
+    .onUploadComplete(async ({ metadata, file }) => {
+      console.log("Profile image upload complete:", file.ufsUrl);
+      return { uploadedBy: metadata.uploadedBy, url: file.ufsUrl };
+    }),
 } satisfies FileRouter;
 
 export type OurFileRouter = typeof ourFileRouter;

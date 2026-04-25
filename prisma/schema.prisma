@@ -412,6 +412,62 @@ model AuditLog {
   @@map("audit_logs")
 }
 
+model BusinessProfile {
+  id        Int      @id @default(1)
+  fullName  String   @default("")
+  tagline   String?
+  avatarUrl String?
+  bio       String?
+  resumeUrl String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("business_profile")
+}
+
+model ProfileSection {
+  id          String         @id @default(cuid())
+  title       String
+  subtitle    String?
+  slug        String         @unique
+  icon        String?
+  order       Int            @default(0)
+  isVisible   Boolean        @default(true)
+  isPublished Boolean        @default(false)
+  createdAt   DateTime       @default(now())
+  updatedAt   DateTime       @updatedAt
+  fields      ProfileField[]
+
+  @@index([isPublished, isVisible, order])
+  @@map("profile_sections")
+}
+
+model ProfileField {
+  id        String           @id @default(cuid())
+  sectionId String
+  fieldKey  String
+  label     String
+  fieldType ProfileFieldType @default(TEXT)
+  value     String           @default("")
+  order     Int              @default(0)
+  isVisible Boolean          @default(true)
+  createdAt DateTime         @default(now())
+  updatedAt DateTime         @updatedAt
+  section   ProfileSection   @relation(fields: [sectionId], references: [id], onDelete: Cascade)
+
+  @@index([sectionId, isVisible, order])
+  @@map("profile_fields")
+}
+
+enum ProfileFieldType {
+  TEXT
+  HTML
+  IMAGE_URL
+  LINK
+  DATE
+  NUMBER
+}
+
 enum UserRole {
   ADMIN
   STAFF

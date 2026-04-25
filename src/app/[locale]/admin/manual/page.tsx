@@ -17,7 +17,8 @@ import {
   HelpCircle,
   ChevronLeft,
   ChevronRight,
-  Database
+  Database,
+  UserCircle
 } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { cn } from "@/lib/utils";
@@ -34,6 +35,7 @@ import { ReviewsSection } from "./_components/ReviewsSection";
 import { StaffSection } from "./_components/StaffSection";
 import { ConfigSection } from "./_components/ConfigSection";
 import { DatabaseSection } from "./_components/DatabaseSection";
+import { NosotrosSection } from "./_components/NosotrosSection";
 
 const MANUAL_SECTIONS = [
   {
@@ -101,6 +103,12 @@ const MANUAL_SECTIONS = [
     title: "11. Base de Datos",
     icon: Database,
     content: <DatabaseSection />
+  },
+  {
+    id: "nosotros",
+    title: "12. Perfil (Nosotros)",
+    icon: UserCircle,
+    content: <NosotrosSection />
   }
 ];
 
