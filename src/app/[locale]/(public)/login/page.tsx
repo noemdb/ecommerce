@@ -1,4 +1,4 @@
-import { CustomerLoginForm } from "@/components/auth/CustomerLoginForm";
+import { UnifiedLoginForm } from "@/components/auth/UnifiedLoginForm";
 import { AuthCard } from "@/components/auth/AuthCard";
 import { LogIn } from "lucide-react";
 import { Suspense } from "react";
@@ -36,7 +36,7 @@ export default async function LoginPage({
         icon={<LogIn className="w-8 h-8" />}
       >
         <Suspense fallback={<div className="h-64 flex items-center justify-center">Cargando...</div>}>
-          <CustomerLoginForm />
+          <UnifiedLoginForm />
         </Suspense>
       </AuthCard>
     </div>

@@ -8,17 +8,17 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
   secret: process.env.AUTH_SECRET || "lccIuYgBEi9Bjub1lKFZKBD0NM1y6QvO0RozLFFuzJc=",
   trustHost: true,
   providers: [
-    // Provider 1: Staff interno (ADMIN / STAFF)
+    // Provider Único: Staff o Clientes
     Credentials({
-      id: "staff-credentials",
-      name: "Staff Login",
+      id: "credentials",
+      name: "Login",
       async authorize(credentials) {
         const parsed = loginSchema.safeParse(credentials);
         if (!parsed.success) return null;
 
         const { email, password } = parsed.data;
 
-        // Check for staff/admin in User table (v1.0 compatibility)
+        // 1. Intentar como Staff
         const user = await prisma.user.findUnique({
           where: { email }
         });
@@ -35,20 +35,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
           }
         }
 
-        return null;
-      },
-    }),
-    // Provider 2: Clientes (CUSTOMER)
-    Credentials({
-      id: "customer-credentials",
-      name: "Customer Login",
-      async authorize(credentials) {
-        const parsed = loginSchema.safeParse(credentials);
-        if (!parsed.success) return null;
-
-        const { email, password } = parsed.data;
-
-        // Check for customer
+        // 2. Intentar como Cliente
         const customer = await prisma.customer.findUnique({ 
           where: { email } 
         });

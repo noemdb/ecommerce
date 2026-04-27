@@ -10,8 +10,8 @@
     "en": "English"
   },
   "Auth": {
-    "login_title": "Mi Cuenta",
-    "login_subtitle": "Inicia sesión para continuar tu experiencia premium",
+    "login_title": "Acceso al Sistema",
+    "login_subtitle": "Identifícate para acceder a tu panel personalizado",
     "register_title": "Crear Cuenta",
     "register_subtitle": "Únete para acceder a beneficios exclusivos"
   },

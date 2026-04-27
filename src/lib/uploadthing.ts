@@ -41,6 +41,15 @@ export const ourFileRouter = {
     .onUploadComplete(async ({ metadata, file }) => {
       return { uploadedBy: metadata.uploadedBy, url: file.ufsUrl };
     }),
+
+  resumeFile: f({ pdf: { maxFileSize: "8MB" } })
+    .middleware(async () => {
+      return { uploadedBy: "admin" };
+    })
+    .onUploadComplete(async ({ metadata, file }) => {
+      console.log("Resume upload complete:", file.ufsUrl);
+      return { uploadedBy: metadata.uploadedBy, url: file.ufsUrl };
+    }),
 } satisfies FileRouter;
 
 export type OurFileRouter = typeof ourFileRouter;

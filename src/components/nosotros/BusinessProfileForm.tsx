@@ -9,7 +9,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/Label";
 import { Textarea } from "@/components/ui/textarea";
-import { User, Save, Loader2 } from "lucide-react";
+import { User, Save, Loader2, FileText } from "lucide-react";
 import type { BusinessProfile } from "@prisma/client";
 
 interface Props {
@@ -20,6 +20,7 @@ export function BusinessProfileForm({ profile }: Props) {
   const [isPending, startTransition] = useTransition();
   const [message, setMessage] = useState<{ type: "ok" | "error"; text: string } | null>(null);
   const [avatarUrl, setAvatarUrl] = useState(profile?.avatarUrl ?? "");
+  const [resumeUrl, setResumeUrl] = useState(profile?.resumeUrl ?? "");
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -32,7 +33,7 @@ export function BusinessProfileForm({ profile }: Props) {
         tagline: (fd.get("tagline") as string) || undefined,
         bio: (fd.get("bio") as string) || undefined,
         avatarUrl: avatarUrl || undefined,
-        resumeUrl: (fd.get("resumeUrl") as string) || undefined,
+        resumeUrl: resumeUrl || undefined,
       });
       setMessage({ type: result.success ? "ok" : "error", text: result.success ? result.message! : result.error! });
     });
@@ -103,15 +104,48 @@ export function BusinessProfileForm({ profile }: Props) {
       </div>
 
       {/* URL del CV */}
-      <div className="flex flex-col gap-2">
+      <div className="flex flex-col gap-3">
         <Label htmlFor="resumeUrl">URL del CV <span className="text-neutral-400">(PDF)</span></Label>
-        <Input
-          id="resumeUrl"
-          name="resumeUrl"
-          type="url"
-          defaultValue={profile?.resumeUrl ?? ""}
-          placeholder="https://drive.google.com/..."
-        />
+        <div className="flex items-center gap-3">
+          <Input
+            id="resumeUrl"
+            name="resumeUrl"
+            value={resumeUrl}
+            onChange={(e) => setResumeUrl(e.target.value)}
+            placeholder="https://drive.google.com/..."
+            className="flex-1"
+          />
+          <UploadButton<OurFileRouter, "resumeFile">
+            endpoint="resumeFile"
+            onClientUploadComplete={(res) => {
+              if (res?.[0]?.url) {
+                setResumeUrl(res[0].url);
+                setMessage({ type: "ok", text: "CV subido correctamente" });
+              }
+            }}
+            onUploadError={(err) => setMessage({ type: "error", text: err.message })}
+            appearance={{
+              button: "bg-neutral-100 hover:bg-neutral-200 dark:bg-neutral-800 dark:hover:bg-neutral-700 text-neutral-900 dark:text-neutral-100 text-xs font-medium px-4 py-2 rounded-lg h-10 transition-colors border border-neutral-200 dark:border-neutral-700",
+              allowedContent: "hidden",
+            }}
+            content={{
+              button: "Subir PDF"
+            }}
+          />
+        </div>
+        {resumeUrl && (
+          <div className="flex items-center gap-2 text-xs">
+            <FileText className="w-3.5 h-3.5 text-blue-600 dark:text-blue-400" />
+            <a 
+              href={resumeUrl} 
+              target="_blank" 
+              rel="noopener noreferrer" 
+              className="text-blue-600 dark:text-blue-400 hover:underline font-medium"
+            >
+              Ver CV cargado
+            </a>
+          </div>
+        )}
       </div>
 
       {/* Feedback */}

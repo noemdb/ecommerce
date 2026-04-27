@@ -9,7 +9,7 @@ import { ChevronLeft } from "lucide-react";
 export default async function AdminSeccionesPage() {
   const session = await auth();
   if (!session || (session.user as any).role === "CUSTOMER") {
-    redirect("/admin/login");
+    redirect("/login");
   }
 
   const sections = await getAllSectionsForAdmin();

@@ -12,7 +12,7 @@ interface Props {
 export default async function SectionDetailPage({ params }: Props) {
   const session = await auth();
   if (!session || (session.user as any).role === "CUSTOMER") {
-    redirect("/admin/login");
+    redirect("/login");
   }
 
   const { id } = await params;

@@ -3,6 +3,7 @@ import Image from "next/image";
 import { getAboutPageData } from "@/lib/nosotros/get-nosotros";
 import { SectionRenderer } from "@/components/nosotros/SectionRenderer";
 import { getSiteConfig } from "@/lib/site-config/get-site-config";
+import { FileDown } from "lucide-react";
 
 
 // ─── SEO Metadata ──────────────────────────────────────────────────────────
@@ -113,6 +114,20 @@ export default async function NosotrosPage() {
                   <p className="text-neutral-600 dark:text-neutral-400 leading-relaxed max-w-xl">
                     {profile.bio}
                   </p>
+                )}
+
+                {profile.resumeUrl && (
+                  <div className="pt-2 flex justify-center sm:justify-start">
+                    <a
+                      href={profile.resumeUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-2 px-5 py-2.5 bg-neutral-900 dark:bg-white text-white dark:text-neutral-900 rounded-full text-sm font-semibold hover:bg-neutral-800 dark:hover:bg-neutral-100 transition-all shadow-sm hover:shadow-md active:scale-95"
+                    >
+                      <FileDown className="w-4 h-4" />
+                      Descargar CV
+                    </a>
+                  </div>
                 )}
 
               </div>

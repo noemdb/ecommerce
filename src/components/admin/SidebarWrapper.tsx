@@ -5,6 +5,6 @@ import { AdminSidebar } from "@/components/admin/AdminSidebar";
 
 export function SidebarWrapper() {
   const pathname = usePathname();
-  if (pathname && pathname.endsWith("/admin/login")) return null;
+  if (pathname && pathname.endsWith("/login")) return null;
   return <AdminSidebar />;
 }

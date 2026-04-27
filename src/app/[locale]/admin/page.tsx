@@ -18,7 +18,7 @@ export default async function AdminDashboardPage() {
   const session = await auth();
 
   if (!session || (session.user as any).role === "CUSTOMER") {
-    redirect("/admin/login");
+    redirect("/login");
   }
 
   // ═══════════════════════════════════════════════════════════════

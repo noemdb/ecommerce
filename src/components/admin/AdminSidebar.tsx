@@ -228,7 +228,7 @@ export function AdminSidebar() {
         </div>
         <Button 
           variant="ghost" 
-          onClick={() => signOut({ callbackUrl: "/admin/login" })}
+          onClick={() => signOut({ callbackUrl: "/login" })}
           title={isCollapsed ? "Cerrar Sesión" : undefined}
           className={cn(
             "w-full gap-3 h-12 rounded-md text-neutral-600 dark:text-neutral-400 font-bold hover:text-red-600 dark:hover:text-red-500 hover:bg-red-50 dark:hover:bg-red-500/10 transition-all",

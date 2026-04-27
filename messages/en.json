@@ -10,8 +10,8 @@
     "en": "English"
   },
   "Auth": {
-    "login_title": "My Account",
-    "login_subtitle": "Log in to continue your premium experience",
+    "login_title": "System Access",
+    "login_subtitle": "Identify yourself to access your personalized panel",
     "register_title": "Create Account",
     "register_subtitle": "Join to access exclusive benefits"
   },

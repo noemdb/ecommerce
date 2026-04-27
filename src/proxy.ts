@@ -29,21 +29,24 @@ export default async function proxy(request: NextRequest) {
   const role = session?.user?.role;
 
   try {
-    const isAdminRoute = pathname.startsWith("/admin") && pathname !== "/admin/login";
-    const isCuentaRoute = pathname.startsWith("/cuenta");
-    const isAdminLogin = pathname === "/admin/login";
+    const isAdminRoute = pathname.includes("/admin");
+    const isCuentaRoute = pathname.includes("/cuenta");
+    const isLoginRoute = pathname.includes("/login");
 
-    // Protection for /admin/* — only ADMIN
-    if (isAdminLogin && session && role === "ADMIN") {
+    // Redirigir a /admin si ya está logueado como Staff e intenta entrar a /login
+    if (isLoginRoute && session && (role === "ADMIN" || role === "STAFF")) {
       return NextResponse.redirect(new URL("/admin", request.url));
     }
-    
-    if (isAdminRoute && (!session || role !== "ADMIN")) {
-      return NextResponse.redirect(new URL("/admin/login", request.url));
+
+    // Protección para /admin/* — Solo ADMIN o STAFF
+    if (isAdminRoute && !isLoginRoute && (!session || (role !== "ADMIN" && role !== "STAFF"))) {
+      const loginUrl = new URL("/login", request.url);
+      loginUrl.searchParams.set("callbackUrl", pathname);
+      return NextResponse.redirect(loginUrl);
     }
 
-    // Protection for /cuenta/* — only CUSTOMER
-    if (isCuentaRoute && role !== "CUSTOMER") {
+    // Protección para /cuenta/* — Solo CUSTOMER
+    if (isCuentaRoute && (!session || role !== "CUSTOMER")) {
       const loginUrl = new URL("/login", request.url);
       loginUrl.searchParams.set("callbackUrl", pathname);
       return NextResponse.redirect(loginUrl);

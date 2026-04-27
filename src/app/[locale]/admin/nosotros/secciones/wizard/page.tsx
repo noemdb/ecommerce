@@ -5,7 +5,7 @@ import { SectionWizard } from "@/components/nosotros/wizard/SectionWizard";
 export default async function AdminSectionWizardPage() {
   const session = await auth();
   if (!session || (session.user as any).role === "CUSTOMER") {
-    redirect("/admin/login");
+    redirect("/login");
   }
 
   return (

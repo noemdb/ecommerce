@@ -8,7 +8,7 @@ import { LayoutList } from "lucide-react";
 export default async function AdminNosotrosPage() {
   const session = await auth();
   if (!session || (session.user as any).role === "CUSTOMER") {
-    redirect("/admin/login");
+    redirect("/login");
   }
 
   const profile = await getBusinessProfile();

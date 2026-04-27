@@ -46,7 +46,7 @@ export async function requirePermission(permission: Permission): Promise<void> {
   const session = await auth();
   if (!session?.user) {
     if (permission === "account:read") redirect("/login");
-    redirect("/admin/login");
+    redirect("/login");
   }
   const role = session.user.role as string;
   const perms = ROLE_PERMISSIONS[role] ?? [];
@@ -67,7 +67,7 @@ export async function requireCustomerSession() {
 export async function requireStaffSession() {
   const session = await auth();
   if (!session?.user || session.user.role === "CUSTOMER") {
-    redirect("/admin/login");
+    redirect("/login");
   }
   return session;
 }
