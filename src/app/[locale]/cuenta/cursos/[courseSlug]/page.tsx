@@ -68,10 +68,12 @@ export default async function CourseDetailPage(props: {
   const firstLesson = course.modules[0]?.lessons[0] || null;
 
   return (
-    <div className="flex h-[calc(100vh-theme(spacing.32))] flex-col md:flex-row gap-6 overflow-hidden">
-      <CourseSidebar course={course} courseSlug={params.courseSlug} />
+    <div className="flex flex-col md:flex-row w-full min-h-screen bg-neutral-50 dark:bg-neutral-950">
+      <div className="md:sticky md:top-0 h-auto md:h-screen z-10">
+        <CourseSidebar course={course} courseSlug={params.courseSlug} />
+      </div>
       
-      <div className="flex-1 overflow-y-auto p-6 flex flex-col gap-8 bg-card rounded-lg border">
+      <div className="flex-1 p-6 lg:p-10 flex flex-col gap-8 w-full max-w-6xl mx-auto">
         <div>
           <h1 className="text-3xl font-bold tracking-tight">{course.title}</h1>
           <p className="mt-4 text-lg text-muted-foreground">
@@ -79,12 +81,12 @@ export default async function CourseDetailPage(props: {
           </p>
         </div>
 
-        <div className="bg-muted/50 p-6 rounded-lg space-y-6">
+        <div className="bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 shadow-sm p-8 rounded-2xl space-y-8">
           <CourseProgressBar progress={enrollment?.progress ?? 0} />
           
           {enrollment?.progress === 100 && certificate && (
-            <div className="pt-4 border-t">
-              <h3 className="font-medium mb-4">¡Felicidades, has completado el curso!</h3>
+            <div className="pt-6 border-t border-neutral-100 dark:border-neutral-800">
+              <h3 className="font-semibold text-lg mb-4">¡Felicidades, has completado el curso!</h3>
               <CertificateButton 
                 certificateKey={certificate.certificateKey} 
                 verificationCode={certificate.verificationCode} 
@@ -93,7 +95,7 @@ export default async function CourseDetailPage(props: {
           )}
 
           {firstLesson && (
-            <div className="pt-4 border-t">
+            <div className="pt-6 border-t border-neutral-100 dark:border-neutral-800">
               <Link href={`/cuenta/cursos/${params.courseSlug}/${firstLesson.slug}`}>
                 <Button className="gap-2" size="lg">
                   <PlayCircle className="h-5 w-5" />

@@ -12,7 +12,7 @@ export default async function CursosLayout({
   }
 
   return (
-    <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
+    <div className="flex-1 flex flex-col w-full h-full min-h-[calc(100vh-theme(spacing.16))]">
       {children}
     </div>
   );

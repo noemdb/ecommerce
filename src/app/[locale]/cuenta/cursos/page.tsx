@@ -51,28 +51,30 @@ export default async function CursosPage() {
   });
 
   return (
-    <div className="space-y-8">
-      <div>
-        <h1 className="text-3xl font-bold tracking-tight">Mis Cursos</h1>
-        <p className="text-muted-foreground mt-2">
-          Continúa donde lo dejaste y revisa tu progreso.
-        </p>
-      </div>
-
-      {dashboardData.length === 0 ? (
-        <div className="text-center py-12 rounded-lg border bg-muted/20">
-          <h2 className="text-xl font-semibold">Aún no tienes cursos</h2>
+    <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8 w-full">
+      <div className="space-y-8">
+        <div>
+          <h1 className="text-3xl font-bold tracking-tight">Mis Cursos</h1>
           <p className="text-muted-foreground mt-2">
-            Explora nuestro catálogo para matricularte en cursos increíbles.
+            Continúa donde lo dejaste y revisa tu progreso.
           </p>
         </div>
-      ) : (
-        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {dashboardData.map((data) => (
-            <CourseCard key={data.course.id} dashboardData={data} />
-          ))}
-        </div>
-      )}
+
+        {dashboardData.length === 0 ? (
+          <div className="text-center py-12 rounded-lg border bg-muted/20">
+            <h2 className="text-xl font-semibold">Aún no tienes cursos</h2>
+            <p className="text-muted-foreground mt-2">
+              Explora nuestro catálogo para matricularte en cursos increíbles.
+            </p>
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            {dashboardData.map((data) => (
+              <CourseCard key={data.course.id} dashboardData={data} />
+            ))}
+          </div>
+        )}
+      </div>
     </div>
   );
 }

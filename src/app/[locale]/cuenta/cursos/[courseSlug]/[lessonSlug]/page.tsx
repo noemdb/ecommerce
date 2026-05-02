@@ -98,31 +98,33 @@ export default async function LessonPage(props: {
     currentModule.lessons.findIndex((l) => l.slug === params.lessonSlug) + 1;
 
   return (
-    <div className="flex w-full h-[calc(100vh-theme(spacing.20))] overflow-hidden bg-neutral-50 dark:bg-neutral-950">
-      {/* Sidebar */}
-      <CourseSidebar course={course} courseSlug={params.courseSlug} />
+    <div className="flex w-full min-h-screen bg-neutral-50 dark:bg-neutral-950 relative">
+      {/* Sidebar sticky wrapper */}
+      <div className="md:sticky md:top-0 h-auto md:h-screen flex-shrink-0 z-20">
+        <CourseSidebar course={course} courseSlug={params.courseSlug} />
+      </div>
 
       {/* Main Content Area */}
-      <div className="flex-1 flex flex-col min-w-0 overflow-hidden">
+      <div className="flex-1 flex flex-col min-w-0 w-full">
         {/* Top breadcrumb bar */}
-        <div className="shrink-0 flex items-center gap-2 px-6 py-3 border-b border-neutral-200 dark:border-neutral-800 bg-white/80 dark:bg-neutral-900/80 backdrop-blur-sm text-xs font-medium text-neutral-500 dark:text-neutral-400">
-          <GraduationCap className="w-3.5 h-3.5 text-blue-500" />
-          <span className="truncate max-w-[160px] text-neutral-700 dark:text-neutral-300">
+        <div className="sticky top-0 z-10 shrink-0 flex items-center gap-2 px-6 py-4 border-b border-neutral-200 dark:border-neutral-800 bg-white/90 dark:bg-neutral-900/90 backdrop-blur-md text-xs font-medium text-neutral-500 dark:text-neutral-400 shadow-sm">
+          <GraduationCap className="w-4 h-4 text-blue-500" />
+          <span className="truncate max-w-[200px] text-neutral-700 dark:text-neutral-300">
             {course.title}
           </span>
           <ChevronRight className="w-3.5 h-3.5 shrink-0" />
-          <Layers className="w-3.5 h-3.5 text-violet-500 shrink-0" />
-          <span className="truncate max-w-[160px]">{currentModule.title}</span>
+          <Layers className="w-4 h-4 text-violet-500 shrink-0" />
+          <span className="truncate max-w-[200px]">{currentModule.title}</span>
           <ChevronRight className="w-3.5 h-3.5 shrink-0" />
-          <span className="truncate text-neutral-700 dark:text-neutral-300 font-semibold">
+          <span className="truncate text-neutral-800 dark:text-neutral-200 font-bold">
             {currentLesson.title}
           </span>
         </div>
 
-        {/* Scrollable content */}
-        <div className="flex-1 overflow-y-auto">
+        {/* Content Flow */}
+        <div className="w-full flex flex-col flex-1 px-4 py-2">
           {/* Hero header */}
-          <div className="w-full bg-gradient-to-br from-blue-600 via-blue-700 to-violet-700 dark:from-blue-900 dark:via-blue-800 dark:to-violet-900 px-8 py-10 md:py-14 relative overflow-hidden">
+          <div className="w-full rounded-lg bg-gradient-to-br from-blue-600 via-blue-700 to-violet-700 dark:from-blue-900 dark:via-blue-800 dark:to-violet-900 px-8 py-10 md:py-14 relative overflow-hidden">
             {/* Decorative circles */}
             <div className="absolute -top-16 -right-16 w-64 h-64 rounded-full bg-white/5 blur-2xl pointer-events-none" />
             <div className="absolute bottom-0 left-1/2 w-96 h-24 rounded-full bg-violet-500/20 blur-3xl pointer-events-none" />
@@ -169,7 +171,7 @@ export default async function LessonPage(props: {
           </div>
 
           {/* Body content */}
-          <div className="max-w-4xl mx-auto w-full px-6 md:px-8 py-10 space-y-10">
+          <div className="w-full mx-auto px-4 md:px-4 lg:px-4 py-4 space-y-2 max-w-none">
             {/* Main lesson content */}
             <section className="bg-white dark:bg-neutral-900 rounded-2xl border border-neutral-200 dark:border-neutral-800 shadow-sm overflow-hidden">
               <div className="border-b border-neutral-100 dark:border-neutral-800 px-6 py-4 flex items-center gap-2.5">
