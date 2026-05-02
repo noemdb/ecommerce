@@ -3,10 +3,11 @@
 import { useState } from "react";
 import { Download, Upload, Server, FileJson, AlertTriangle } from "lucide-react";
 import { exportDatabase, importDatabase, seedCatalogFromJSON, resetToInitialState, seedNosotrosFromJSON, seedPromptsFromJSON } from "@/actions/database-manager";
+import { importCoursesFromJson } from "@/actions/lms/course.actions";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/Label";
+import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle, CardFooter } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/Alert";
@@ -26,6 +27,7 @@ export default function BackupPage() {
   const [imgFile, setImgFile] = useState<File | null>(null);
   const [nosotrosFile, setNosotrosFile] = useState<File | null>(null);
   const [promptsFile, setPromptsFile] = useState<File | null>(null);
+  const [lmsFile, setLmsFile] = useState<File | null>(null);
 
   const handleExport = async () => {
     setIsExporting(true);
@@ -99,6 +101,29 @@ export default function BackupPage() {
         setIsSeeding(false);
      }
   };
+
+  const handleSeedLms = async () => {
+    if (!lmsFile) {
+       toast.error("Debes cargar el archivo JSON de Cursos LMS");
+       return;
+    }
+
+    setIsSeeding(true);
+    try {
+       const jsonStr = await lmsFile.text();
+       const res = await importCoursesFromJson(jsonStr);
+       if (res.ok) {
+         toast.success(`¡Éxito! Se han importado ${res.data?.count} cursos completos.`);
+         setLmsFile(null);
+       } else {
+          toast.error("Error inyectando cursos", { description: res.error });
+       }
+    } catch(e) {
+       toast.error("Error inesperado ejecutando seed LMS");
+    } finally {
+       setIsSeeding(false);
+    }
+ };
 
   const handleSeedNosotros = async () => {
     if (!nosotrosFile) {
@@ -182,6 +207,7 @@ export default function BackupPage() {
           <TabsTrigger value="backup" className="font-semibold">Backup Completo</TabsTrigger>
           <TabsTrigger value="seed" className="font-semibold">Seeder de Catálogo</TabsTrigger>
           <TabsTrigger value="nosotros-seed" className="font-semibold">Seeder Nosotros & Prompts</TabsTrigger>
+          <TabsTrigger value="lms-seed" className="font-semibold">Seeder de Cursos (LMS)</TabsTrigger>
         </TabsList>
         
         {/* TAB BACKUP */}
@@ -404,6 +430,41 @@ export default function BackupPage() {
                         className="w-full sm:w-auto font-bold bg-amber-600 hover:bg-amber-700"
                     >
                         {isSeeding ? "Inyectando Prompts..." : "Ejecutar Seeder Prompts"}
+                    </Button>
+                </CardFooter>
+            </Card>
+        </TabsContent>
+
+        {/* TAB SEEDER LMS */}
+        <TabsContent value="lms-seed" className="space-y-6">
+            <Card>
+                <CardHeader>
+                    <CardTitle className="flex items-center gap-2">
+                        <FileJson className="w-5 h-5 text-blue-600" />
+                        Semilla de Cursos LMS (Bulk Import)
+                    </CardTitle>
+                    <CardDescription>
+                        Carga cursos completos incluyendo módulos, lecciones y enlaces a recursos desde un JSON estructurado.
+                    </CardDescription>
+                </CardHeader>
+                <CardContent className="space-y-6">
+                    <div className="grid gap-2">
+                        <Label htmlFor="lms-file">Archivo de Cursos (`cursos.json`)</Label>
+                        <Input 
+                            id="lms-file" 
+                            type="file" 
+                            accept=".json" 
+                            onChange={(e) => setLmsFile(e.target.files?.[0] || null)}
+                        />
+                    </div>
+                </CardContent>
+                <CardFooter>
+                    <Button 
+                        onClick={handleSeedLms} 
+                        disabled={!lmsFile || isSeeding}
+                        className="w-full sm:w-auto font-bold bg-blue-600 hover:bg-blue-700"
+                    >
+                        {isSeeding ? "Importando Cursos..." : "Ejecutar Importación LMS"}
                     </Button>
                 </CardFooter>
             </Card>

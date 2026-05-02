@@ -27,27 +27,31 @@ model User {
 }
 
 model Customer {
-  id                   String           @id @default(cuid())
+  id                   String             @id @default(cuid())
   name                 String
-  email                String           @unique
+  email                String             @unique
   phone                String?
   idDoc                String?
   address              String?
   password             String?
-  isEmailVerified      Boolean          @default(false)
-  phoneVerified        Boolean          @default(false)
+  isEmailVerified      Boolean            @default(false)
+  phoneVerified        Boolean            @default(false)
   emailVerifyToken     String?
   emailVerifyExpires   DateTime?
   resetPasswordToken   String?
   resetPasswordExpires DateTime?
-  isBlocked            Boolean          @default(false)
+  isBlocked            Boolean            @default(false)
   notes                String?
-  createdAt            DateTime         @default(now())
-  updatedAt            DateTime         @updatedAt
+  createdAt            DateTime           @default(now())
+  updatedAt            DateTime           @updatedAt
   customerActions      CustomerAction[]
   orders               Order[]
   otpTokens            OTPToken[]
   reviews              Review[]
+  // LMS
+  enrollments          CourseEnrollment[]
+  lessonProgress       LessonProgress[]
+  certificates         CourseCertificate[]
 
   @@index([email])
   @@index([isBlocked])
@@ -148,6 +152,8 @@ model Product {
   time               Int?                @default(0)
   categoryId         String
   supplierId         String?
+  // LMS — un producto SERVICE puede vincularse a un Course (1:1)
+  courseId           String?
   createdAt          DateTime            @default(now())
   updatedAt          DateTime            @updatedAt
   inventoryMovements InventoryMovement[]
@@ -158,6 +164,7 @@ model Product {
   category           Category            @relation(fields: [categoryId], references: [id])
   supplier           Supplier?           @relation(fields: [supplierId], references: [id])
   reviews            Review[]
+  course             Course?             @relation(fields: [courseId], references: [id])
 
   @@index([slug])
   @@index([categoryId])
@@ -166,6 +173,7 @@ model Product {
   @@index([isBestSeller])
   @@index([isNew])
   @@index([stock])
+  @@index([courseId])
   @@map("products")
 }
 
@@ -237,6 +245,8 @@ model Order {
   statusHistory   OrderStatusHistory[]
   confirmedBy     User?                @relation("ConfirmedByUser", fields: [confirmedById], references: [id])
   customer        Customer?            @relation(fields: [customerId], references: [id])
+  // LMS — matrículas originadas por esta orden
+  courseEnrollments CourseEnrollment[]
 
   @@index([customerId])
   @@index([status])
@@ -508,4 +518,148 @@ enum CustomerActionType {
 enum ProductType {
   PRODUCT
   SERVICE
+}
+
+// ── LMS ─────────────────────────────────────────────────────────────────────────
+
+enum LessonFileType {
+  PDF
+  IMAGE
+  VIDEO
+  DOWNLOAD
+}
+
+model Course {
+  id               String              @id @default(cuid())
+  title            String              @db.VarChar(255)
+  slug             String              @unique @db.VarChar(255)
+  description      String?             @db.Text
+  shortDescription String?             @db.VarChar(500)
+  thumbnailKey     String? // fileKey de UploadThing — NO url pública
+  isPublished      Boolean             @default(false)
+  isActive         Boolean             @default(true)
+  createdAt        DateTime            @default(now())
+  updatedAt        DateTime            @updatedAt
+
+  modules      CourseModule[]
+  enrollments  CourseEnrollment[]
+  certificates CourseCertificate[]
+  products     Product[]
+
+  @@index([slug])
+  @@index([isPublished, isActive])
+  @@map("courses")
+}
+
+model CourseModule {
+  id          String         @id @default(cuid())
+  courseId    String
+  title       String         @db.VarChar(255)
+  description String?        @db.Text
+  position    Int
+  isPublished Boolean        @default(true)
+  createdAt   DateTime       @default(now())
+  updatedAt   DateTime       @updatedAt
+
+  course   Course         @relation(fields: [courseId], references: [id], onDelete: Cascade)
+  lessons  CourseLesson[]
+
+  @@index([courseId, position])
+  @@map("course_modules")
+}
+
+model CourseLesson {
+  id          String           @id @default(cuid())
+  moduleId    String
+  title       String           @db.VarChar(255)
+  slug        String           @db.VarChar(255)
+  content     String?          @db.Text // HTML enriquecido
+  durationSec Int? // duración estimada en segundos
+  isPreview   Boolean          @default(false)
+  isPublished Boolean          @default(true)
+  position    Int
+  createdAt   DateTime         @default(now())
+  updatedAt   DateTime         @updatedAt
+
+  module    CourseModule     @relation(fields: [moduleId], references: [id], onDelete: Cascade)
+  resources LessonResource[]
+  progress  LessonProgress[]
+
+  @@unique([moduleId, slug])
+  @@index([moduleId, position])
+  @@map("course_lessons")
+}
+
+model LessonResource {
+  id          String          @id @default(cuid())
+  lessonId    String
+  title       String          @db.VarChar(255)
+  fileKey     String          @unique // NUNCA fileUrl — ver ADR-001
+  fileType    LessonFileType
+  mimeType    String          @db.VarChar(127)
+  fileSize    Int // bytes
+  durationSec Int? // solo VIDEO
+  sortOrder   Int             @default(0)
+  createdAt   DateTime        @default(now())
+  updatedAt   DateTime        @updatedAt
+
+  lesson CourseLesson @relation(fields: [lessonId], references: [id], onDelete: Cascade)
+
+  @@index([lessonId])
+  @@index([fileKey])
+  @@map("lesson_resources")
+}
+
+model CourseEnrollment {
+  id          String    @id @default(cuid())
+  customerId  String
+  courseId    String
+  orderId     String // orden que originó la matrícula
+  enrolledAt  DateTime  @default(now())
+  completedAt DateTime?
+  progress    Float     @default(0) // 0-100, caché desnormalizado — ver ADR-004
+
+  customer Customer @relation(fields: [customerId], references: [id])
+  course   Course   @relation(fields: [courseId], references: [id], onDelete: Cascade)
+  order    Order    @relation(fields: [orderId], references: [id])
+
+  @@unique([customerId, courseId])
+  @@index([customerId])
+  @@index([courseId])
+  @@map("course_enrollments")
+}
+
+model LessonProgress {
+  id          String       @id @default(cuid())
+  customerId  String
+  lessonId    String
+  completed   Boolean      @default(false)
+  completedAt DateTime?
+  watchedSec  Int          @default(0) // segundos vistos (para video analytics)
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
+
+  customer Customer     @relation(fields: [customerId], references: [id])
+  lesson   CourseLesson @relation(fields: [lessonId], references: [id], onDelete: Cascade)
+
+  @@unique([customerId, lessonId])
+  @@index([customerId])
+  @@index([lessonId])
+  @@map("lesson_progress")
+}
+
+model CourseCertificate {
+  id               String   @id @default(cuid())
+  customerId       String
+  courseId         String
+  certificateKey   String? // fileKey UploadThing del PDF generado
+  verificationCode String   @unique @default(cuid()) // código de verificación público
+  issuedAt         DateTime @default(now())
+
+  customer Customer @relation(fields: [customerId], references: [id])
+  course   Course   @relation(fields: [courseId], references: [id], onDelete: Cascade)
+
+  @@unique([customerId, courseId])
+  @@index([verificationCode])
+  @@map("course_certificates")
 }

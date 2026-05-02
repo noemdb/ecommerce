@@ -6,7 +6,7 @@ import { createSectionWithFieldsAction } from "@/actions/nosotros";
 import { SectionRenderer } from "@/components/nosotros/SectionRenderer";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/Label";
+import { Label } from "@/components/ui/label";
 import { 
   ChevronRight, ChevronLeft, Plus, Trash2, LayoutList, 
   Settings, Type, FileText, Image as ImageIcon, Link2, 

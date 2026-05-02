@@ -4,6 +4,7 @@ import { prisma } from "@/lib/prisma";
 import { requirePermission } from "@/lib/rbac";
 import { auth } from "@/auth";
 import { revalidatePath } from "next/cache";
+import { autoEnrollCustomerToCourses } from "@/lib/lms/enrollment";
 import type { ActionResult } from "@/types/actions";
 import type { OrderStatus } from "@prisma/client";
 
@@ -49,6 +50,15 @@ export async function updateOrderStatusAction(
         },
       });
     });
+
+    if (status === "CONFIRMADA" || status === "COMPLETADA") {
+      try {
+        await autoEnrollCustomerToCourses(orderId);
+        // await sendEnrollmentEmail(orderId); // Se activará en Fase 6
+      } catch (err) {
+        console.error("[updateOrderStatus] fallo en matrícula automática:", err);
+      }
+    }
 
     revalidatePath(`/admin/ordenes/${orderId}`);
     revalidatePath("/admin/ordenes");

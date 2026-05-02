@@ -8,24 +8,100 @@
   },
   "profileSections": [
     {
-      "id": "sec-mision-vision",
-      "title": "Nuestra Visión Educativa",
-      "subtitle": "Innovación y rigor científico en el aula",
-      "slug": "mision-vision",
-      "icon": "Target",
+      "id": "cmondwoz70002xlxjlsdkccff",
+      "title": "Presentación",
+      "subtitle": "Quién soy",
+      "slug": "introduction",
+      "icon": "User",
       "order": 0,
       "isVisible": true,
-      "isPublished": true
+      "isPublished": false,
+      "createdAt": "2026-05-01 20:47:48.596",
+      "updatedAt": "2026-05-01 20:47:48.596"
     },
     {
-      "id": "sec-experiencia",
-      "title": "Experiencia y Trayectoria",
-      "subtitle": "Acompañando semilleros y docentes desde 2015",
-      "slug": "experiencia",
-      "icon": "Award",
+      "id": "cmondwpa60003xlxjvzsgy67o",
+      "title": "Información Básica",
+      "subtitle": "Datos de contacto y personales",
+      "slug": "basic-info",
+      "icon": "Info",
       "order": 1,
       "isVisible": true,
-      "isPublished": true
+      "isPublished": false,
+      "createdAt": "2026-05-01 20:47:48.99",
+      "updatedAt": "2026-05-01 20:47:48.99"
+    },
+    {
+      "id": "cmondwpl30004xlxj0c7vo5ep",
+      "title": "Formación Académica",
+      "subtitle": "Estudios y titulaciones",
+      "slug": "academic-formation",
+      "icon": "GraduationCap",
+      "order": 2,
+      "isVisible": true,
+      "isPublished": false,
+      "createdAt": "2026-05-01 20:47:49.383",
+      "updatedAt": "2026-05-01 20:47:49.383"
+    },
+    {
+      "id": "cmondwpvy0005xlxjuvcu9gbg",
+      "title": "Habilidades",
+      "subtitle": "Competencias técnicas y blandas",
+      "slug": "skills",
+      "icon": "Zap",
+      "order": 3,
+      "isVisible": true,
+      "isPublished": false,
+      "createdAt": "2026-05-01 20:47:49.774",
+      "updatedAt": "2026-05-01 20:47:49.774"
+    },
+    {
+      "id": "cmondwq6o0006xlxjulcgpeo4",
+      "title": "Experiencia Laboral",
+      "subtitle": "Trayectoria profesional",
+      "slug": "work-experience",
+      "icon": "Briefcase",
+      "order": 4,
+      "isVisible": true,
+      "isPublished": false,
+      "createdAt": "2026-05-01 20:47:50.16",
+      "updatedAt": "2026-05-01 20:47:50.16"
+    },
+    {
+      "id": "cmondwqhg0007xlxjhjj81dfh",
+      "title": "Certificaciones",
+      "subtitle": "Cursos y certificados obtenidos",
+      "slug": "certifications",
+      "icon": "Award",
+      "order": 5,
+      "isVisible": true,
+      "isPublished": false,
+      "createdAt": "2026-05-01 20:47:50.548",
+      "updatedAt": "2026-05-01 20:47:50.548"
+    },
+    {
+      "id": "cmondwqsi0008xlxjbtw3csbk",
+      "title": "Idiomas",
+      "subtitle": "Lenguas que domino",
+      "slug": "languages",
+      "icon": "Globe",
+      "order": 6,
+      "isVisible": true,
+      "isPublished": false,
+      "createdAt": "2026-05-01 20:47:50.946",
+      "updatedAt": "2026-05-01 20:47:50.946"
+    },
+    {
+      "id": "cmondwr330009xlxje4e680lz",
+      "title": "Contacto",
+      "subtitle": "¿Cómo puedes comunicarte conmigo?",
+      "slug": "contact",
+      "icon": "Mail",
+      "order": 7,
+      "isVisible": true,
+      "isPublished": false,
+      "createdAt": "2026-05-01 20:47:51.328",
+      "updatedAt": "2026-05-01 20:47:51.328"
     },
     {
       "id": "sec-especialidades",
@@ -35,39 +111,47 @@
       "icon": "Beaker",
       "order": 2,
       "isVisible": true,
-      "isPublished": true
+      "isPublished": true,
+      "createdAt": "2026-04-25 17:11:24.247",
+      "updatedAt": "2026-04-25 17:11:24.247"
+    },
+    {
+      "id": "sec-experiencia",
+      "title": "Experiencia y Trayectoria",
+      "subtitle": "Acompañando semilleros y docentes desde 2015",
+      "slug": "experiencia",
+      "icon": "Award",
+      "order": 1,
+      "isVisible": true,
+      "isPublished": true,
+      "createdAt": "2026-04-25 17:11:24.247",
+      "updatedAt": "2026-04-25 17:11:24.247"
+    },
+    {
+      "id": "sec-mision-vision",
+      "title": "Nuestra Visión Educativa",
+      "subtitle": "Innovación y rigor científico en el aula",
+      "slug": "mision-vision",
+      "icon": "Target",
+      "order": 0,
+      "isVisible": true,
+      "isPublished": true,
+      "createdAt": "2026-04-25 17:11:24.247",
+      "updatedAt": "2026-04-25 17:11:24.247"
     }
   ],
   "profileFields": [
     {
-      "id": "f-mision",
-      "sectionId": "sec-mision-vision",
-      "fieldKey": "mision",
-      "label": "Propósito Central",
+      "id": "f-biologia",
+      "sectionId": "sec-especialidades",
+      "fieldKey": "biologia",
+      "label": "Ciencias Biológicas",
       "fieldType": "TEXT",
-      "value": "Democratizar el acceso a la ciencia experimental de alto nivel, proporcionando recursos que transformen el aula en un verdadero laboratorio de ideas.",
+      "value": "Biología Celular, Molecular, Genética y Biofísica para todos los niveles educativos.",
       "order": 0,
-      "isVisible": true
-    },
-    {
-      "id": "f-vision",
-      "sectionId": "sec-mision-vision",
-      "fieldKey": "vision",
-      "label": "Hacia el Futuro",
-      "fieldType": "TEXT",
-      "value": "Ser el referente principal en asesoría pedagógica STEM y preparación para certámenes científicos nacionales e internacionales.",
-      "order": 1,
-      "isVisible": true
-    },
-    {
-      "id": "f-mincyt",
-      "sectionId": "sec-experiencia",
-      "fieldKey": "mincyt",
-      "label": "Asesoría MINCYT",
-      "fieldType": "HTML",
-      "value": "<p>Hemos asesorado a más de <strong>50 proyectos ganadores</strong> en Ferias Científicas nacionales, enfocándonos en el rigor metodológico y la oratoria científica.</p>",
-      "order": 0,
-      "isVisible": true
+      "isVisible": true,
+      "createdAt": "2026-04-25 17:11:24.452",
+      "updatedAt": "2026-04-25 17:11:24.452"
     },
     {
       "id": "f-formacion",
@@ -77,17 +161,33 @@
       "fieldType": "TEXT",
       "value": "Más de 1,200 docentes capacitados en estrategias de evaluación formativa y planificación por competencias.",
       "order": 1,
-      "isVisible": true
+      "isVisible": true,
+      "createdAt": "2026-04-25 17:11:24.452",
+      "updatedAt": "2026-04-25 17:11:24.452"
     },
     {
-      "id": "f-biologia",
-      "sectionId": "sec-especialidades",
-      "fieldKey": "biologia",
-      "label": "Ciencias Biológicas",
-      "fieldType": "TEXT",
-      "value": "Biología Celular, Molecular, Genética y Biofísica para todos los niveles educativos.",
+      "id": "f-mincyt",
+      "sectionId": "sec-experiencia",
+      "fieldKey": "mincyt",
+      "label": "Asesoría MINCYT",
+      "fieldType": "HTML",
+      "value": "<p>Hemos asesorado a más de <strong>50 proyectos ganadores</strong> en Ferias Científicas nacionales, enfocándonos en el rigor metodológico y la oratoria científica.</p>",
       "order": 0,
-      "isVisible": true
+      "isVisible": true,
+      "createdAt": "2026-04-25 17:11:24.452",
+      "updatedAt": "2026-04-25 17:11:24.452"
+    },
+    {
+      "id": "f-mision",
+      "sectionId": "sec-mision-vision",
+      "fieldKey": "mision",
+      "label": "Propósito Central",
+      "fieldType": "TEXT",
+      "value": "Democratizar el acceso a la ciencia experimental de alto nivel, proporcionando recursos que transformen el aula en un verdadero laboratorio de ideas.",
+      "order": 0,
+      "isVisible": true,
+      "createdAt": "2026-04-25 17:11:24.452",
+      "updatedAt": "2026-04-25 17:11:24.452"
     },
     {
       "id": "f-stem",
@@ -97,7 +197,21 @@
       "fieldType": "TEXT",
       "value": "Robótica Educativa con Arduino y Scratch, integrando la tecnología en el currículo de ciencias naturales.",
       "order": 1,
-      "isVisible": true
+      "isVisible": true,
+      "createdAt": "2026-04-25 17:11:24.452",
+      "updatedAt": "2026-04-25 17:11:24.452"
+    },
+    {
+      "id": "f-vision",
+      "sectionId": "sec-mision-vision",
+      "fieldKey": "vision",
+      "label": "Hacia el Futuro",
+      "fieldType": "TEXT",
+      "value": "Ser el referente principal en asesoría pedagógica STEM y preparación para certámenes científicos nacionales e internacionales.",
+      "order": 1,
+      "isVisible": true,
+      "createdAt": "2026-04-25 17:11:24.452",
+      "updatedAt": "2026-04-25 17:11:24.452"
     }
   ]
 }

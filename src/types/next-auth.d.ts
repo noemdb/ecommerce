@@ -6,6 +6,7 @@ declare module "next-auth" {
     user: {
       id: string;
       role: string; // "ADMIN" | "STAFF" | "CUSTOMER"
+      customerId?: string; // presente cuando role === "CUSTOMER" (= id del Customer)
     } & DefaultSession["user"];
   }
 }

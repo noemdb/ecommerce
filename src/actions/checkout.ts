@@ -42,6 +42,19 @@ export async function createOrderAction(
     const orderNumber = `ORD-${Date.now()}-${nanoid(4).toUpperCase()}`;
 
     console.error("[CHECKOUT_ACTION] Saving to DB...");
+    
+    // Validate variants before transaction to absolutely prevent FK errors
+    const variantIds = items.map(i => i.variantId).filter(v => typeof v === "string" && v.length > 5 && v !== "undefined" && v !== "null");
+    let validVariants = new Set<string>();
+    
+    if (variantIds.length > 0) {
+      const dbVariants = await prisma.productVariant.findMany({
+        where: { id: { in: variantIds } },
+        select: { id: true }
+      });
+      validVariants = new Set(dbVariants.map(v => v.id));
+    }
+
     const order = await prisma.$transaction(async (tx) => {
       const customer = await tx.customer.upsert({
         where: { email },
@@ -66,14 +79,25 @@ export async function createOrderAction(
           total,
           status: "PENDIENTE",
           items: {
-            create: items.map((item) => ({
-              productId: item.productId,
-              variantId: item.variantId || null,
-              name: item.name,
-              sku: item.sku,
-              price: Number(item.price),
-              quantity: Number(item.quantity),
-            })),
+            create: items.map((item) => {
+              // Ensure variantId is valid or gracefully fall back to null
+              // Ensure variantId is valid or gracefully fall back to null
+              const vId = item.variantId;
+              let finalVariantId = null;
+
+              if (typeof vId === "string" && validVariants.has(vId)) {
+                finalVariantId = vId;
+              }
+              
+              return {
+                productId: item.productId,
+                variantId: finalVariantId,
+                name: item.name,
+                sku: item.sku || "N/A",
+                price: Number(item.price),
+                quantity: Number(item.quantity),
+              };
+            }),
           },
           statusHistory: {
             create: { status: "PENDIENTE", note: "Orden creada por el cliente" },

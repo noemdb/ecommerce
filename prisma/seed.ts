@@ -97,6 +97,129 @@ async function main() {
     });
   }
 
+  // ─────────────────────────────────────────────
+  // 7. LMS SEEDER
+  // ─────────────────────────────────────────────
+  const lmsCategory = await prisma.category.upsert({
+    where: { slug: "cursos-online" },
+    update: {},
+    create: {
+      name: "Cursos Online",
+      slug: "cursos-online",
+      description: "Cursos y material educativo",
+    }
+  });
+
+  const courseProduct = await prisma.product.upsert({
+    where: { slug: "curso-desarrollo-web-fullstack" },
+    update: {},
+    create: {
+      name: "Curso de Desarrollo Web Fullstack",
+      slug: "curso-desarrollo-web-fullstack",
+      description: "Aprende a crear aplicaciones completas.",
+      price: 99.99,
+      type: "SERVICE",
+      isActive: true,
+      categoryId: lmsCategory.id,
+      sku: "CURSO-WEB-01"
+    }
+  });
+
+  const demoCourse = await prisma.course.upsert({
+    where: { slug: "curso-desarrollo-web-fullstack" },
+    update: {},
+    create: {
+      title: "Desarrollo Web Fullstack",
+      slug: "curso-desarrollo-web-fullstack",
+      description: "Curso completo desde cero a experto.",
+      products: { connect: { id: courseProduct.id } },
+      isPublished: true,
+      modules: {
+        create: [
+          {
+            title: "Módulo 1: Introducción",
+            position: 0,
+            isPublished: true,
+            lessons: {
+              create: [
+                {
+                  title: "1. Bienvenida al curso",
+                  slug: "bienvenida",
+                  content: "<p>Bienvenidos al curso de desarrollo web. Aquí aprenderás los fundamentos esenciales.</p>",
+                  position: 0,
+                  isPublished: true,
+                },
+                {
+                  title: "2. Preparando el entorno",
+                  slug: "preparando-entorno",
+                  content: "<p>Instala Node.js y VS Code para comenzar a programar.</p>",
+                  position: 1,
+                  isPublished: true,
+                }
+              ]
+            }
+          },
+          {
+            title: "Módulo 2: Frontend Avanzado",
+            position: 1,
+            isPublished: true,
+            lessons: {
+              create: [
+                {
+                  title: "1. Introducción a Next.js",
+                  slug: "intro-nextjs",
+                  content: "<p>Aprende sobre Server Components y Server Actions.</p>",
+                  position: 0,
+                  isPublished: true,
+                }
+              ]
+            }
+          }
+        ]
+      }
+    }
+  });
+
+  // Enrolar al cliente demo en el curso
+  const demoCustomer = await prisma.customer.findUnique({ where: { email: "cliente@demo.com" } });
+  if (demoCustomer) {
+    const dummyOrder = await prisma.order.upsert({
+      where: { orderNumber: "DEMO-LMS-001" },
+      update: {},
+      create: {
+        orderNumber: "DEMO-LMS-001",
+        customerId: demoCustomer.id,
+        customerName: demoCustomer.name || "Demo",
+        customerEmail: demoCustomer.email,
+        customerPhone: demoCustomer.phone || "0000000",
+        bankName: "Demo Bank",
+        accountHolder: "Demo User",
+        referenceNumber: "123456",
+        transferAmount: 0,
+        transferDate: new Date(),
+        subtotal: 0,
+        total: 0,
+        status: "COMPLETADA",
+      }
+    });
+
+    await prisma.courseEnrollment.upsert({
+      where: {
+        customerId_courseId: {
+          customerId: demoCustomer.id,
+          courseId: demoCourse.id
+        }
+      },
+      update: {},
+      create: {
+        customer: { connect: { id: demoCustomer.id } },
+        course: { connect: { id: demoCourse.id } },
+        order: { connect: { id: dummyOrder.id } },
+        progress: 0
+      }
+    });
+  }
+
   console.log("🌟 Seed completado correctamente");
 }
 

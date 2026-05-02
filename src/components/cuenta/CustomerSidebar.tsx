@@ -11,7 +11,8 @@ import {
   History,
   AlertTriangle,
   ChevronLeft,
-  ChevronRight
+  ChevronRight,
+  BookOpen
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useState, useEffect } from "react";
@@ -21,6 +22,7 @@ import { ThemeToggle } from "@/components/shared/ThemeToggle";
 const SIDEBAR_ITEMS = [
   { label: "Dashboard", href: "/cuenta", icon: LayoutDashboard },
   { label: "Mis Pedidos", href: "/cuenta/pedidos", icon: ShoppingBag },
+  { label: "Mis Cursos", href: "/cuenta/cursos", icon: BookOpen },
   { label: "Mi Perfil", href: "/cuenta/perfil", icon: User },
   { label: "Bitácora", href: "/cuenta/bitacora", icon: History },
   { label: "Zona de Riesgo", href: "/cuenta/zona-riesgo", icon: AlertTriangle, isDanger: true },

@@ -21,7 +21,9 @@ import {
   Sparkles,
   BookOpen,
   Database,
-  UserCircle
+  UserCircle,
+  GraduationCap,
+  BarChart2
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useState, useEffect } from "react";
@@ -57,6 +59,15 @@ const SIDEBAR_GROUPS = [
     ]
   },
   {
+    group: "LMS",
+    icon: GraduationCap,
+    items: [
+      { label: "Dashboard LMS", href: "/admin/lms", icon: GraduationCap },
+      { label: "Cursos", href: "/admin/lms/courses", icon: BookOpen },
+      { label: "Analíticas", href: "/admin/lms/analytics", icon: BarChart2 },
+    ]
+  },
+  {
     group: "Contenido",
     icon: BookOpen,
     items: [
@@ -85,6 +96,7 @@ export function AdminSidebar() {
     General: true,
     Ventas: false,
     Catálogo: false,
+    LMS: false,
     Contenido: false,
     Configuración: false,
   });

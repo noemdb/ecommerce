@@ -14,7 +14,7 @@ import {
 } from "@/actions/nosotros";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/Label";
+import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import {
   Eye, EyeOff, Trash2, Plus, Save, Loader2, ArrowUp, ArrowDown, X, Pencil

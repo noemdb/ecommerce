@@ -1,0 +1,652 @@
+{
+  "courses": [
+    {
+      "title": "Biología Celular y Molecular para Media General",
+      "slug": "biologia-celular-molecular-media",
+      "shortDescription": "Domina los fundamentos de la vida desde la estructura celular hasta la genética moderna.",
+      "description": "Este curso especializado ha sido diseñado para estudiantes de educación media general que desean profundizar en la complejidad de la estructura celular, los procesos metabólicos y las leyes de la genética. Integra material visual interactivo y prácticas guiadas.",
+      "isPublished": true,
+      "modules": [
+        {
+          "title": "Módulo 1: La Célula como Unidad de Vida",
+          "description": "Teoría celular y tipos de células.",
+          "position": 0,
+          "isPublished": true,
+          "lessons": [
+            { "title": "Teoría Celular y su Historia", "slug": "teoria-celular-historia", "durationSec": 1200, "position": 0, "isPublished": true, "resources": [] },
+            { "title": "Células Procariotas", "slug": "celulas-procariotas", "durationSec": 1200, "position": 1, "isPublished": true, "resources": [] },
+            { "title": "Células Eucariotas", "slug": "celulas-eucariotas", "durationSec": 1500, "position": 2, "isPublished": true, "resources": [] },
+            { "title": "Diferencias Animal y Vegetal", "slug": "celula-animal-vegetal", "durationSec": 1200, "position": 3, "isPublished": true, "resources": [] }
+          ]
+        },
+        {
+          "title": "Módulo 2: Estructuras y Organelos",
+          "description": "Viaje al interior de la célula.",
+          "position": 1,
+          "isPublished": true,
+          "lessons": [
+            { "title": "El Núcleo y el Nucleolo", "slug": "nucleo-celular", "durationSec": 1500, "position": 0, "isPublished": true, "resources": [] },
+            { "title": "Mitocondrias y Energía", "slug": "mitocondrias-energia", "durationSec": 1800, "position": 1, "isPublished": true, "resources": [] },
+            { "title": "Ribosomas y Retículo", "slug": "ribosomas-reticulo", "durationSec": 1500, "position": 2, "isPublished": true, "resources": [] },
+            { "title": "Aparato de Golgi", "slug": "aparato-golgi", "durationSec": 1200, "position": 3, "isPublished": true, "resources": [] }
+          ]
+        },
+        {
+          "title": "Módulo 3: Membrana y Transporte",
+          "description": "Intercambio de sustancias.",
+          "position": 2,
+          "isPublished": true,
+          "lessons": [
+            { "title": "Estructura de la Membrana", "slug": "membrana-estructura", "durationSec": 1500, "position": 0, "isPublished": true, "resources": [] },
+            { "title": "Transporte Pasivo", "slug": "transporte-pasivo", "durationSec": 1200, "position": 1, "isPublished": true, "resources": [] },
+            { "title": "Transporte Activo", "slug": "transporte-activo", "durationSec": 1500, "position": 2, "isPublished": true, "resources": [] },
+            { "title": "Endocitosis y Exocitosis", "slug": "endo-exocitosis", "durationSec": 1200, "position": 3, "isPublished": true, "resources": [] }
+          ]
+        },
+        {
+          "title": "Módulo 4: Metabolismo y Energía",
+          "description": "Fotosíntesis y respiración.",
+          "position": 3,
+          "isPublished": true,
+          "lessons": [
+            { "title": "Enzimas y Bioenergética", "slug": "enzimas-bioenergetica", "durationSec": 1800, "position": 0, "isPublished": true, "resources": [] },
+            { "title": "Fotosíntesis: Fase Lumínica", "slug": "fotosintesis-fase-luminica", "durationSec": 2000, "position": 1, "isPublished": true, "resources": [] },
+            { "title": "Fotosíntesis: Ciclo de Calvin", "slug": "fotosintesis-calvin", "durationSec": 2000, "position": 2, "isPublished": true, "resources": [] },
+            { "title": "Respiración Celular Anaerobia", "slug": "respiracion-anaerobia", "durationSec": 1500, "position": 3, "isPublished": true, "resources": [] }
+          ]
+        },
+        {
+          "title": "Módulo 5: Ciclo Celular y Mitosis",
+          "description": "Reproducción celular.",
+          "position": 4,
+          "isPublished": true,
+          "lessons": [
+            { "title": "La Interfase", "slug": "interfase-celular", "durationSec": 1200, "position": 0, "isPublished": true, "resources": [] },
+            { "title": "Profase y Metafase", "slug": "profase-metafase", "durationSec": 1500, "position": 1, "isPublished": true, "resources": [] },
+            { "title": "Anafase y Telofase", "slug": "anafase-telofase", "durationSec": 1500, "position": 2, "isPublished": true, "resources": [] },
+            { "title": "Citocinesis", "slug": "citocinesis", "durationSec": 1200, "position": 3, "isPublished": true, "resources": [] }
+          ]
+        },
+        {
+          "title": "Módulo 6: Genética Molecular",
+          "description": "ADN, ARN y síntesis de proteínas.",
+          "position": 5,
+          "isPublished": true,
+          "lessons": [
+            { "title": "Estructura del ADN", "slug": "adn-estructura", "durationSec": 1800, "position": 0, "isPublished": true, "resources": [] },
+            { "title": "Replicación del ADN", "slug": "adn-replicacion", "durationSec": 2000, "position": 1, "isPublished": true, "resources": [] },
+            { "title": "Transcripción del ARN", "slug": "arn-transcripcion", "durationSec": 1800, "position": 2, "isPublished": true, "resources": [] },
+            { "title": "Traducción y Proteínas", "slug": "proteinas-traduccion", "durationSec": 2200, "position": 3, "isPublished": true, "resources": [] }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Iniciación a la Robótica con Arduino",
+      "slug": "robotica-arduino-docentes",
+      "shortDescription": "Aprende a construir prototipos electrónicos y programar microcontroladores.",
+      "description": "Una experiencia intensiva diseñada para docentes innovadores y estudiantes entusiastas.",
+      "isPublished": true,
+      "modules": [
+        {
+          "title": "Módulo 1: Fundamentos de Electrónica",
+          "description": "Conceptos básicos y componentes.",
+          "position": 0,
+          "isPublished": true,
+          "lessons": [
+            { "title": "Voltaje, Corriente y Resistencia", "slug": "conceptos-electricidad", "durationSec": 1800, "position": 0, "isPublished": true, "resources": [] },
+            { "title": "Uso del Protoboard", "slug": "uso-protoboard", "durationSec": 1200, "position": 1, "isPublished": true, "resources": [] },
+            { "title": "Código de Colores de Resistencias", "slug": "colores-resistencias", "durationSec": 1200, "position": 2, "isPublished": true, "resources": [] },
+            { "title": "Circuitos Serie y Paralelo", "slug": "circuitos-basicos", "durationSec": 1800, "position": 3, "isPublished": true, "resources": [] }
+          ]
+        },
+        {
+          "title": "Módulo 2: Introducción al IDE de Arduino",
+          "description": "Instalación y primer programa.",
+          "position": 1,
+          "isPublished": true,
+          "lessons": [
+            { "title": "Instalación del Software", "slug": "instalacion-arduino-ide", "durationSec": 900, "position": 0, "isPublished": true, "resources": [] },
+            { "title": "Estructura de un Sketch", "slug": "estructura-sketch", "durationSec": 1200, "position": 1, "isPublished": true, "resources": [] },
+            { "title": "Variables y Tipos de Datos", "slug": "variables-arduino", "durationSec": 1500, "position": 2, "isPublished": true, "resources": [] },
+            { "title": "Entradas y Salidas Digitales", "slug": "io-digitales", "durationSec": 1800, "position": 3, "isPublished": true, "resources": [] }
+          ]
+        },
+        {
+          "title": "Módulo 3: Sensores y Actuadores",
+          "description": "Interactuando con el entorno.",
+          "position": 2,
+          "isPublished": true,
+          "lessons": [
+            { "title": "Sensor de Ultrasonido HC-SR04", "slug": "sensor-ultrasonido", "durationSec": 1800, "position": 0, "isPublished": true, "resources": [] },
+            { "title": "Uso de Servomotores", "slug": "uso-servomotores", "durationSec": 1500, "position": 1, "isPublished": true, "resources": [] },
+            { "title": "Sensor de Humedad y Temperatura", "slug": "sensor-dht11", "durationSec": 1800, "position": 2, "isPublished": true, "resources": [] },
+            { "title": "Control de Motores DC", "slug": "motores-dc", "durationSec": 2000, "position": 3, "isPublished": true, "resources": [] }
+          ]
+        },
+        {
+          "title": "Módulo 4: Programación de Estructuras Lógicas",
+          "description": "Condicionales y bucles.",
+          "position": 3,
+          "isPublished": true,
+          "lessons": [
+            { "title": "Sentencias IF / ELSE", "slug": "sentencias-if", "durationSec": 1500, "position": 0, "isPublished": true, "resources": [] },
+            { "title": "Bucle FOR y WHILE", "slug": "bucles-programacion", "durationSec": 1800, "position": 1, "isPublished": true, "resources": [] },
+            { "title": "Funciones Personalizadas", "slug": "funciones-arduino", "durationSec": 2000, "position": 2, "isPublished": true, "resources": [] },
+            { "title": "Uso del Monitor Serial", "slug": "monitor-serial", "durationSec": 1200, "position": 3, "isPublished": true, "resources": [] }
+          ]
+        },
+        {
+          "title": "Módulo 5: Pantallas LCD y Displays",
+          "description": "Visualización de datos.",
+          "position": 4,
+          "isPublished": true,
+          "lessons": [
+            { "title": "Conexión LCD con I2C", "slug": "lcd-i2c", "durationSec": 1500, "position": 0, "isPublished": true, "resources": [] },
+            { "title": "Impresión de Texto y Variables", "slug": "lcd-print", "durationSec": 1200, "position": 1, "isPublished": true, "resources": [] },
+            { "title": "Creación de Caracteres Especiales", "slug": "lcd-custom-chars", "durationSec": 1500, "position": 2, "isPublished": true, "resources": [] },
+            { "title": "Display de 7 Segmentos", "slug": "display-7seg", "durationSec": 1800, "position": 3, "isPublished": true, "resources": [] }
+          ]
+        },
+        {
+          "title": "Módulo 6: Proyecto Final Integrador",
+          "description": "Construcción completa.",
+          "position": 5,
+          "isPublished": true,
+          "lessons": [
+            { "title": "Diseño del Sistema", "slug": "proyecto-diseno", "durationSec": 1800, "position": 0, "isPublished": true, "resources": [] },
+            { "title": "Ensamblaje del Hardware", "slug": "proyecto-ensamblaje", "durationSec": 3600, "position": 1, "isPublished": true, "resources": [] },
+            { "title": "Codificación del Programa", "slug": "proyecto-codigo", "durationSec": 3600, "position": 2, "isPublished": true, "resources": [] },
+            { "title": "Pruebas y Depuración", "slug": "proyecto-pruebas", "durationSec": 2400, "position": 3, "isPublished": true, "resources": [] }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Diseño de Proyectos de Investigación Escolar",
+      "slug": "diseno-investigacion-escolar",
+      "shortDescription": "Metodología científica para ferias de ciencia y semilleros nacionales.",
+      "description": "Acompañamiento en las etapas del proceso científico.",
+      "isPublished": true,
+      "modules": [
+        {
+          "title": "Módulo 1: La Pregunta de Investigación",
+          "description": "Observación y curiosidad.",
+          "position": 0,
+          "isPublished": true,
+          "lessons": [
+            { "title": "Observación del Entorno", "slug": "observacion-entorno", "durationSec": 1200, "position": 0, "isPublished": true, "resources": [] },
+            { "title": "Identificación de Problemas", "slug": "identificacion-problemas", "durationSec": 1200, "position": 1, "isPublished": true, "resources": [] },
+            { "title": "Planteamiento de la Pregunta", "slug": "planteamiento-pregunta", "durationSec": 1500, "position": 2, "isPublished": true, "resources": [] },
+            { "title": "Justificación del Proyecto", "slug": "justificacion-proyecto", "durationSec": 1200, "position": 3, "isPublished": true, "resources": [] }
+          ]
+        },
+        {
+          "title": "Módulo 2: Antecedentes y Marco Teórico",
+          "description": "Investigación bibliográfica.",
+          "position": 1,
+          "isPublished": true,
+          "lessons": [
+            { "title": "Búsqueda de Información", "slug": "busqueda-informacion", "durationSec": 1500, "position": 0, "isPublished": true, "resources": [] },
+            { "title": "Selección de Fuentes", "slug": "seleccion-fuentes", "durationSec": 1200, "position": 1, "isPublished": true, "resources": [] },
+            { "title": "Redacción de Antecedentes", "slug": "redaccion-antecedentes", "durationSec": 1800, "position": 2, "isPublished": true, "resources": [] },
+            { "title": "Bases Teóricas", "slug": "bases-teoricas", "durationSec": 2000, "position": 3, "isPublished": true, "resources": [] }
+          ]
+        },
+        {
+          "title": "Módulo 3: Objetivos e Hipótesis",
+          "description": "Rumbo de la investigación.",
+          "position": 2,
+          "isPublished": true,
+          "lessons": [
+            { "title": "Objetivo General", "slug": "objetivo-general", "durationSec": 1200, "position": 0, "isPublished": true, "resources": [] },
+            { "title": "Objetivos Específicos", "slug": "objetivos-especificos", "durationSec": 1200, "position": 1, "isPublished": true, "resources": [] },
+            { "title": "Formulación de Hipótesis", "slug": "formulacion-hipotesis", "durationSec": 1500, "position": 2, "isPublished": true, "resources": [] },
+            { "title": "Variables de Estudio", "slug": "variables-estudio", "durationSec": 1500, "position": 3, "isPublished": true, "resources": [] }
+          ]
+        },
+        {
+          "title": "Módulo 4: Diseño Metodológico",
+          "description": "Variables y procedimientos.",
+          "position": 3,
+          "isPublished": true,
+          "lessons": [
+            { "title": "Tipo de Investigación", "slug": "tipo-investigacion", "durationSec": 1500, "position": 0, "isPublished": true, "resources": [] },
+            { "title": "Población y Muestra", "slug": "poblacion-muestra", "durationSec": 1500, "position": 1, "isPublished": true, "resources": [] },
+            { "title": "Técnicas de Recolección", "slug": "tecnicas-recoleccion", "durationSec": 1800, "position": 2, "isPublished": true, "resources": [] },
+            { "title": "Cronograma de Actividades", "slug": "cronograma-actividades", "durationSec": 1200, "position": 3, "isPublished": true, "resources": [] }
+          ]
+        },
+        {
+          "title": "Módulo 5: Análisis de Resultados",
+          "description": "Experimentación y tablas.",
+          "position": 4,
+          "isPublished": true,
+          "lessons": [
+            { "title": "Tabulación de Datos", "slug": "tabulacion-datos", "durationSec": 1800, "position": 0, "isPublished": true, "resources": [] },
+            { "title": "Gráficos de Barras y Sectores", "slug": "graficos-barras-sectores", "durationSec": 1500, "position": 1, "isPublished": true, "resources": [] },
+            { "title": "Interpretación de Hallazgos", "slug": "interpretacion-hallazgos", "durationSec": 2000, "position": 2, "isPublished": true, "resources": [] },
+            { "title": "Conclusiones y Recomendaciones", "slug": "conclusiones-recomendaciones", "durationSec": 1500, "position": 3, "isPublished": true, "resources": [] }
+          ]
+        },
+        {
+          "title": "Módulo 6: Socialización Científica",
+          "description": "Oratoria y póster científico.",
+          "position": 5,
+          "isPublished": true,
+          "lessons": [
+            { "title": "Estructura del Informe Final", "slug": "informe-final-estructura", "durationSec": 2400, "position": 0, "isPublished": true, "resources": [] },
+            { "title": "Diseño del Póster Científico", "slug": "diseno-poster-cientifico", "durationSec": 1800, "position": 1, "isPublished": true, "resources": [] },
+            { "title": "Técnicas de Exposición Oral", "slug": "exposicion-oral-tecnicas", "durationSec": 1500, "position": 2, "isPublished": true, "resources": [] },
+            { "title": "Preparación de la Defensa", "slug": "defensa-proyecto", "durationSec": 2000, "position": 3, "isPublished": true, "resources": [] }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Estrategias Didácticas Transversales",
+      "slug": "didactica-transversal-ciencias",
+      "shortDescription": "Transforma tu práctica pedagógica con el enfoque por competencias.",
+      "description": "Integra disciplinas bajo un currículo unificado.",
+      "isPublished": true,
+      "modules": [
+        {
+          "title": "Módulo 1: Pedagogía Moderna",
+          "description": "Nuevos paradigmas.",
+          "position": 0,
+          "isPublished": true,
+          "lessons": [
+            { "title": "El Estudiante como Protagonista", "slug": "estudiante-protagonista", "durationSec": 1200, "position": 0, "isPublished": true, "resources": [] },
+            { "title": "Aprendizaje Significativo", "slug": "aprendizaje-significativo", "durationSec": 1500, "position": 1, "isPublished": true, "resources": [] },
+            { "title": "Teorías Constructivistas", "slug": "constructivismo", "durationSec": 1800, "position": 2, "isPublished": true, "resources": [] },
+            { "title": "Neuroeducación Básica", "slug": "neuroeducacion", "durationSec": 2000, "position": 3, "isPublished": true, "resources": [] }
+          ]
+        },
+        {
+          "title": "Módulo 2: Planificación por Competencias",
+          "description": "Diseño curricular.",
+          "position": 1,
+          "isPublished": true,
+          "lessons": [
+            { "title": "Competencias vs Contenidos", "slug": "competencias-vs-contenidos", "durationSec": 1500, "position": 0, "isPublished": true, "resources": [] },
+            { "title": "Indicadores de Logro", "slug": "indicadores-logro", "durationSec": 1200, "position": 1, "isPublished": true, "resources": [] },
+            { "title": "Secuencias Didácticas", "slug": "secuencias-didacticas", "durationSec": 2000, "position": 2, "isPublished": true, "resources": [] },
+            { "title": "Transversalidad Curricular", "slug": "transversalidad", "durationSec": 1800, "position": 3, "isPublished": true, "resources": [] }
+          ]
+        },
+        {
+          "title": "Módulo 3: Metodologías Activas",
+          "description": "Estrategias participativas.",
+          "position": 2,
+          "isPublished": true,
+          "lessons": [
+            { "title": "Aula Invertida (Flipped Classroom)", "slug": "flipped-classroom", "durationSec": 1800, "position": 0, "isPublished": true, "resources": [] },
+            { "title": "Gamificación en Ciencias", "slug": "gamificacion", "durationSec": 2000, "position": 1, "isPublished": true, "resources": [] },
+            { "title": "Aprendizaje Basado en Retos", "slug": "aprendizaje-retos", "durationSec": 1500, "position": 2, "isPublished": true, "resources": [] },
+            { "title": "Pensamiento de Diseño (Design Thinking)", "slug": "design-thinking", "durationSec": 1800, "position": 3, "isPublished": true, "resources": [] }
+          ]
+        },
+        {
+          "title": "Módulo 4: Evaluación Auténtica",
+          "description": "Medición del desempeño.",
+          "position": 3,
+          "isPublished": true,
+          "lessons": [
+            { "title": "Tipos de Evaluación", "slug": "tipos-evaluacion", "durationSec": 1200, "position": 0, "isPublished": true, "resources": [] },
+            { "title": "La Evaluación Formativa", "slug": "evaluacion-formativa", "durationSec": 1500, "position": 1, "isPublished": true, "resources": [] },
+            { "title": "Autoevaluación y Coevaluación", "slug": "auto-coevaluacion", "durationSec": 1200, "position": 2, "isPublished": true, "resources": [] },
+            { "title": "Instrumentos de Evaluación", "slug": "instrumentos-evaluacion", "durationSec": 1800, "position": 3, "isPublished": true, "resources": [] }
+          ]
+        },
+        {
+          "title": "Módulo 5: Rúbricas de Evaluación",
+          "description": "Criterios claros.",
+          "position": 4,
+          "isPublished": true,
+          "lessons": [
+            { "title": "Estructura de una Rúbrica", "slug": "estructura-rubrica", "durationSec": 1500, "position": 0, "isPublished": true, "resources": [] },
+            { "title": "Niveles de Desempeño", "slug": "niveles-desempeno", "durationSec": 1200, "position": 1, "isPublished": true, "resources": [] },
+            { "title": "Rúbricas Holísticas vs Analíticas", "slug": "tipos-rubricas", "durationSec": 1500, "position": 2, "isPublished": true, "resources": [] },
+            { "title": "Herramientas Digitales para Rúbricas", "slug": "herramientas-rubricas", "durationSec": 1200, "position": 3, "isPublished": true, "resources": [] }
+          ]
+        },
+        {
+          "title": "Módulo 6: Tic y Tac en Educación",
+          "description": "Tecnología con propósito.",
+          "position": 5,
+          "isPublished": true,
+          "lessons": [
+            { "title": "Plataformas de Gestión (LMS)", "slug": "plataformas-lms", "durationSec": 1500, "position": 0, "isPublished": true, "resources": [] },
+            { "title": "Recursos Educativos Abiertos", "slug": "recursos-abiertos", "durationSec": 1200, "position": 1, "isPublished": true, "resources": [] },
+            { "title": "Creación de Contenido Multimedia", "slug": "creacion-multimedia", "durationSec": 2400, "position": 2, "isPublished": true, "resources": [] },
+            { "title": "Ciudadanía Digital", "slug": "ciudadania-digital", "durationSec": 1500, "position": 3, "isPublished": true, "resources": [] }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Microscopía y Técnicas de Laboratorio",
+      "slug": "microscopia-tecnicas-laboratorio",
+      "shortDescription": "Práctica intensiva sobre manejo de microscopio y preparación de muestras.",
+      "description": "Despertando la vocación científica mediante la experimentación real.",
+      "isPublished": true,
+      "modules": [
+        {
+          "title": "Módulo 1: El Laboratorio Escolar",
+          "description": "Normas y equipos.",
+          "position": 0,
+          "isPublished": true,
+          "lessons": [
+            { "title": "Normas de Bioseguridad", "slug": "bioseguridad-laboratorio", "durationSec": 1200, "position": 0, "isPublished": true, "resources": [] },
+            { "title": "Material de Vidrio y Equipo", "slug": "material-vidrio", "durationSec": 1200, "position": 1, "isPublished": true, "resources": [] },
+            { "title": "Uso de la Balanza y Medición", "slug": "medicion-laboratorio", "durationSec": 1500, "position": 2, "isPublished": true, "resources": [] },
+            { "title": "Manejo de Sustancias Químicas", "slug": "sustancias-quimicas", "durationSec": 1800, "position": 3, "isPublished": true, "resources": [] }
+          ]
+        },
+        {
+          "title": "Módulo 2: Fundamentos de Óptica",
+          "description": "Cómo vemos lo pequeño.",
+          "position": 1,
+          "isPublished": true,
+          "lessons": [
+            { "title": "Luz y Refracción", "slug": "luz-refraccion", "durationSec": 1500, "position": 0, "isPublished": true, "resources": [] },
+            { "title": "Poder de Resolución", "slug": "poder-resolucion", "durationSec": 1800, "position": 1, "isPublished": true, "resources": [] },
+            { "title": "Tipos de Microscopios", "slug": "tipos-microscopios", "durationSec": 1500, "position": 2, "isPublished": true, "resources": [] },
+            { "title": "Mantenimiento Preventivo", "slug": "mantenimiento-microscopio", "durationSec": 1200, "position": 3, "isPublished": true, "resources": [] }
+          ]
+        },
+        {
+          "title": "Módulo 3: El Microscopio Óptico",
+          "description": "Manejo profesional.",
+          "position": 2,
+          "isPublished": true,
+          "lessons": [
+            { "title": "Partes Mecánicas y Ópticas", "slug": "partes-microscopio", "durationSec": 1200, "position": 0, "isPublished": true, "resources": [] },
+            { "title": "Enfoque Correcto", "slug": "enfoque-microscopio", "durationSec": 1200, "position": 1, "isPublished": true, "resources": [] },
+            { "title": "Iluminación Köhler", "slug": "iluminacion-kohler", "durationSec": 1800, "position": 2, "isPublished": true, "resources": [] },
+            { "title": "Uso del Aceite de Inmersión", "slug": "aceite-inmersion", "durationSec": 1200, "position": 3, "isPublished": true, "resources": [] }
+          ]
+        },
+        {
+          "title": "Módulo 4: Preparación de Placas",
+          "description": "Montaje de muestras.",
+          "position": 3,
+          "isPublished": true,
+          "lessons": [
+            { "title": "Portaobjetos y Cubreobjetos", "slug": "porta-cubreobjetos", "durationSec": 900, "position": 0, "isPublished": true, "resources": [] },
+            { "title": "Montaje en Seco y Húmedo", "slug": "tipos-montaje", "durationSec": 1200, "position": 1, "isPublished": true, "resources": [] },
+            { "title": "Técnicas de Frotis", "slug": "tecnicas-frotis", "durationSec": 1500, "position": 2, "isPublished": true, "resources": [] },
+            { "title": "Cortes Histológicos Básicos", "slug": "cortes-histologicos", "durationSec": 1800, "position": 3, "isPublished": true, "resources": [] }
+          ]
+        },
+        {
+          "title": "Módulo 5: Coloración Biológica",
+          "description": "Resaltando estructuras.",
+          "position": 4,
+          "isPublished": true,
+          "lessons": [
+            { "title": "Fundamentos de la Coloración", "slug": "fundamentos-coloracion", "durationSec": 1500, "position": 0, "isPublished": true, "resources": [] },
+            { "title": "Tinción con Lugol", "slug": "tincion-lugol", "durationSec": 1200, "position": 1, "isPublished": true, "resources": [] },
+            { "title": "Tinción con Azul de Metileno", "slug": "tincion-azul-metileno-lab", "durationSec": 1200, "position": 2, "isPublished": true, "resources": [] },
+            { "title": "Coloración de Gram (Básico)", "slug": "coloracion-gram", "durationSec": 2400, "position": 3, "isPublished": true, "resources": [] }
+          ]
+        },
+        {
+          "title": "Módulo 6: El Cuaderno de Laboratorio",
+          "description": "Registro científico.",
+          "position": 5,
+          "isPublished": true,
+          "lessons": [
+            { "title": "Dibujo Científico", "slug": "dibujo-cientifico", "durationSec": 1500, "position": 0, "isPublished": true, "resources": [] },
+            { "title": "Cálculo de Aumentos", "slug": "calculo-aumentos", "durationSec": 1200, "position": 1, "isPublished": true, "resources": [] },
+            { "title": "Escala y Medidas Micro", "slug": "escala-micro", "durationSec": 1800, "position": 2, "isPublished": true, "resources": [] },
+            { "title": "Redacción de Resultados", "slug": "redaccion-resultados", "durationSec": 1500, "position": 3, "isPublished": true, "resources": [] }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Genética Mendeliana Interactiva",
+      "slug": "genetica-mendeliana-interactiva",
+      "shortDescription": "Descubre las leyes de la herencia mediante herramientas digitales.",
+      "description": "Explora los cruces genéticos y cálculos de probabilidad.",
+      "isPublished": true,
+      "modules": [
+        {
+          "title": "Módulo 1: Introducción a la Genética",
+          "description": "Conceptos y herencia.",
+          "position": 0,
+          "isPublished": true,
+          "lessons": [
+            { "title": "Qué es la Herencia", "slug": "herencia-intro", "durationSec": 1200, "position": 0, "isPublished": true, "resources": [] },
+            { "title": "Cromosomas y Genes", "slug": "cromosomas-genes", "durationSec": 1500, "position": 1, "isPublished": true, "resources": [] },
+            { "title": "Locus y Alelos", "slug": "locus-alelos", "durationSec": 1200, "position": 2, "isPublished": true, "resources": [] },
+            { "title": "Fenotipo y Genotipo", "slug": "feno-genotipo", "durationSec": 1200, "position": 3, "isPublished": true, "resources": [] }
+          ]
+        },
+        {
+          "title": "Módulo 2: Mendel y sus Guisantes",
+          "description": "La base de la genética.",
+          "position": 1,
+          "isPublished": true,
+          "lessons": [
+            { "title": "Biografía de Gregor Mendel", "slug": "mendel-biografia", "durationSec": 900, "position": 0, "isPublished": true, "resources": [] },
+            { "title": "Por qué Pisum sativum", "slug": "pisum-sativum", "durationSec": 1200, "position": 1, "isPublished": true, "resources": [] },
+            { "title": "Siete Caracteres de Mendel", "slug": "mendel-caracteres", "durationSec": 1500, "position": 2, "isPublished": true, "resources": [] },
+            { "title": "Líneas Puras e Híbridos", "slug": "lineas-puras-hibridos", "durationSec": 1500, "position": 3, "isPublished": true, "resources": [] }
+          ]
+        },
+        {
+          "title": "Módulo 3: Primera y Segunda Ley",
+          "description": "Segregación de alelos.",
+          "position": 2,
+          "isPublished": true,
+          "lessons": [
+            { "title": "Ley de Uniformidad", "slug": "ley-uniformidad", "durationSec": 1500, "position": 0, "isPublished": true, "resources": [] },
+            { "title": "Ley de Segregación", "slug": "ley-segregacion", "durationSec": 1800, "position": 1, "isPublished": true, "resources": [] },
+            { "title": "Cuadros de Punnett 2x2", "slug": "punnett-2x2", "durationSec": 1500, "position": 2, "isPublished": true, "resources": [] },
+            { "title": "Proporciones Genotípicas", "slug": "proporciones-genotipicas", "durationSec": 1500, "position": 3, "isPublished": true, "resources": [] }
+          ]
+        },
+        {
+          "title": "Módulo 4: Tercera Ley de Mendel",
+          "description": "Transmisión independiente.",
+          "position": 3,
+          "isPublished": true,
+          "lessons": [
+            { "title": "Distribución Independiente", "slug": "distribucion-independiente", "durationSec": 1800, "position": 0, "isPublished": true, "resources": [] },
+            { "title": "Cruces Dihíbridos", "slug": "cruces-dihibridos-mendel", "durationSec": 2400, "position": 1, "isPublished": true, "resources": [] },
+            { "title": "Proporción 9:3:3:1", "slug": "proporcion-9331", "durationSec": 1500, "position": 2, "isPublished": true, "resources": [] },
+            { "title": "Cálculo de Probabilidades", "slug": "probabilidades-genetica", "durationSec": 1800, "position": 3, "isPublished": true, "resources": [] }
+          ]
+        },
+        {
+          "title": "Módulo 5: Herencia No Mendeliana",
+          "description": "Casos especiales.",
+          "position": 4,
+          "isPublished": true,
+          "lessons": [
+            { "title": "Codominancia", "slug": "codominancia", "durationSec": 1500, "position": 0, "isPublished": true, "resources": [] },
+            { "title": "Dominancia Incompleta", "slug": "dominancia-incompleta-gen", "durationSec": 1500, "position": 1, "isPublished": true, "resources": [] },
+            { "title": "Alelos Múltiples", "slug": "alelos-multiples", "durationSec": 1800, "position": 2, "isPublished": true, "resources": [] },
+            { "title": "Herencia Ligada al Sexo", "slug": "herencia-sexo", "durationSec": 2000, "position": 3, "isPublished": true, "resources": [] }
+          ]
+        },
+        {
+          "title": "Módulo 6: Árboles Genealógicos",
+          "description": "Pedigrí y genética humana.",
+          "position": 5,
+          "isPublished": true,
+          "lessons": [
+            { "title": "Simbología de Pedigrí", "slug": "simbologia-pedigri", "durationSec": 1200, "position": 0, "isPublished": true, "resources": [] },
+            { "title": "Patrones de Herencia", "slug": "patrones-herencia", "durationSec": 1800, "position": 1, "isPublished": true, "resources": [] },
+            { "title": "Análisis de Casos Reales", "slug": "casos-pedigri", "durationSec": 2000, "position": 2, "isPublished": true, "resources": [] },
+            { "title": "Genética y Ética", "slug": "genetica-etica", "durationSec": 1500, "position": 3, "isPublished": true, "resources": [] }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Programación para Docentes (STEM)",
+      "slug": "programacion-docentes-stem",
+      "shortDescription": "Integra la lógica de programación en la enseñanza de las ciencias.",
+      "description": "Crea simulaciones científicas y juegos educativos.",
+      "isPublished": true,
+      "modules": [
+        {
+          "title": "Módulo 1: Pensamiento Computacional",
+          "description": "Bases de la programación.",
+          "position": 0,
+          "isPublished": true,
+          "lessons": [
+            { "title": "Descomposición de Problemas", "slug": "descomposicion-problemas", "durationSec": 1200, "position": 0, "isPublished": true, "resources": [] },
+            { "title": "Reconocimiento de Patrones", "slug": "patrones-computacionales", "durationSec": 1200, "position": 1, "isPublished": true, "resources": [] },
+            { "title": "Abstracción", "slug": "abstraccion", "durationSec": 1200, "position": 2, "isPublished": true, "resources": [] },
+            { "title": "Algoritmos en la Vida Diaria", "slug": "algoritmos-vida", "durationSec": 1200, "position": 3, "isPublished": true, "resources": [] }
+          ]
+        },
+        {
+          "title": "Módulo 2: Introducción a Scratch",
+          "description": "Programación por bloques.",
+          "position": 1,
+          "isPublished": true,
+          "lessons": [
+            { "title": "El Entorno de Scratch", "slug": "entorno-scratch", "durationSec": 1200, "position": 0, "isPublished": true, "resources": [] },
+            { "title": "Movimientos y Sonidos", "slug": "scratch-basico", "durationSec": 1500, "position": 1, "isPublished": true, "resources": [] },
+            { "title": "Disfraces y Fondos", "slug": "scratch-disfraces", "durationSec": 1200, "position": 2, "isPublished": true, "resources": [] },
+            { "title": "Controlando Personajes", "slug": "scratch-control", "durationSec": 1500, "position": 3, "isPublished": true, "resources": [] }
+          ]
+        },
+        {
+          "title": "Módulo 3: Lógica en Scratch",
+          "description": "Programación avanzada.",
+          "position": 2,
+          "isPublished": true,
+          "lessons": [
+            { "title": "Eventos y Mensajes", "slug": "scratch-eventos", "durationSec": 1800, "position": 0, "isPublished": true, "resources": [] },
+            { "title": "Condicionales IF y Bucles", "slug": "scratch-logica", "durationSec": 2000, "position": 1, "isPublished": true, "resources": [] },
+            { "title": "Variables y Puntajes", "slug": "scratch-variables", "durationSec": 1800, "position": 2, "isPublished": true, "resources": [] },
+            { "title": "Sensores e Interacción", "slug": "scratch-sensores", "durationSec": 1800, "position": 3, "isPublished": true, "resources": [] }
+          ]
+        },
+        {
+          "title": "Módulo 4: Fundamentos de Python",
+          "description": "Código textual.",
+          "position": 3,
+          "isPublished": true,
+          "lessons": [
+            { "title": "Por qué Python en Educación", "slug": "porque-python", "durationSec": 900, "position": 0, "isPublished": true, "resources": [] },
+            { "title": "Instalación y Consola", "slug": "python-consola", "durationSec": 1200, "position": 1, "isPublished": true, "resources": [] },
+            { "title": "Sintaxis y Tipos de Datos", "slug": "python-sintaxis", "durationSec": 1500, "position": 2, "isPublished": true, "resources": [] },
+            { "title": "Operadores Matemáticos", "slug": "python-operadores", "durationSec": 1200, "position": 3, "isPublished": true, "resources": [] }
+          ]
+        },
+        {
+          "title": "Módulo 5: Python Avanzado",
+          "description": "Estructuras y datos.",
+          "position": 4,
+          "isPublished": true,
+          "lessons": [
+            { "title": "Listas y Diccionarios", "slug": "python-listas", "durationSec": 1800, "position": 0, "isPublished": true, "resources": [] },
+            { "title": "Funciones y Módulos", "slug": "python-funciones", "durationSec": 2000, "position": 1, "isPublished": true, "resources": [] },
+            { "title": "Librería Matplotlib", "slug": "python-matplotlib", "durationSec": 2400, "position": 2, "isPublished": true, "resources": [] },
+            { "title": "Lectura de Archivos CSV", "slug": "python-csv", "durationSec": 1800, "position": 3, "isPublished": true, "resources": [] }
+          ]
+        },
+        {
+          "title": "Módulo 6: Proyectos de Aula",
+          "description": "Aplicación práctica.",
+          "position": 5,
+          "isPublished": true,
+          "lessons": [
+            { "title": "Simulando Crecimiento Poblacional", "slug": "simulacion-biologia", "durationSec": 3600, "position": 0, "isPublished": true, "resources": [] },
+            { "title": "Calculadora de Salud (IMC)", "slug": "calculadora-imc", "durationSec": 1800, "position": 1, "isPublished": true, "resources": [] },
+            { "title": "Trivia Científica", "slug": "trivia-cientifica", "durationSec": 2400, "position": 2, "isPublished": true, "resources": [] },
+            { "title": "Portafolio de Proyectos", "slug": "portafolio-proyectos", "durationSec": 1500, "position": 3, "isPublished": true, "resources": [] }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Biofisicoquímica Universitaria Avanzada",
+      "slug": "biofisicoquimica-universitaria",
+      "shortDescription": "Dominio de los fundamentos físicos y químicos de los sistemas vivos.",
+      "description": "Termodinámica, bioenergética y transporte de membranas.",
+      "isPublished": true,
+      "modules": [
+        {
+          "title": "Módulo 1: Termodinámica Biológica",
+          "description": "Energía y entropía.",
+          "position": 0,
+          "isPublished": true,
+          "lessons": [
+            { "title": "Sistemas Abiertos en Biología", "slug": "sistemas-biologicos", "durationSec": 1800, "position": 0, "isPublished": true, "resources": [] },
+            { "title": "Primera Ley de Termodinámica", "slug": "primera-ley-termo", "durationSec": 2000, "position": 1, "isPublished": true, "resources": [] },
+            { "title": "Segunda Ley y Entropía", "slug": "segunda-ley-entropia", "durationSec": 2000, "position": 2, "isPublished": true, "resources": [] },
+            { "title": "Energía Libre de Gibbs", "slug": "energia-gibbs", "durationSec": 2400, "position": 3, "isPublished": true, "resources": [] }
+          ]
+        },
+        {
+          "title": "Módulo 2: Bioenergética Molecular",
+          "description": "Transferencia de energía.",
+          "position": 1,
+          "isPublished": true,
+          "lessons": [
+            { "title": "El ATP como Moneda Energética", "slug": "atp-energia", "durationSec": 1500, "position": 0, "isPublished": true, "resources": [] },
+            { "title": "Reacciones de Óxido-Reducción", "slug": "reacciones-redox", "durationSec": 2000, "position": 1, "isPublished": true, "resources": [] },
+            { "title": "Potencial de Membrana", "slug": "potencial-membrana", "durationSec": 1800, "position": 2, "isPublished": true, "resources": [] },
+            { "title": "Cadena de Transporte", "slug": "cadena-transporte", "durationSec": 2400, "position": 3, "isPublished": true, "resources": [] }
+          ]
+        },
+        {
+          "title": "Módulo 3: Cinética Enzimática",
+          "description": "Velocidad de reacción.",
+          "position": 2,
+          "isPublished": true,
+          "lessons": [
+            { "title": "Energía de Activación", "slug": "energia-activacion", "durationSec": 1800, "position": 0, "isPublished": true, "resources": [] },
+            { "title": "Ecuación de Michaelis-Menten", "slug": "michaelis-menten-eq", "durationSec": 2400, "position": 1, "isPublished": true, "resources": [] },
+            { "title": "Inhibición Enzimática", "slug": "inhibicion-enzimatica", "durationSec": 2000, "position": 2, "isPublished": true, "resources": [] },
+            { "title": "Factores que afectan la Catálisis", "slug": "factores-catalisis", "durationSec": 1800, "position": 3, "isPublished": true, "resources": [] }
+          ]
+        },
+        {
+          "title": "Módulo 4: Propiedades Coligativas",
+          "description": "Soluciones biológicas.",
+          "position": 3,
+          "isPublished": true,
+          "lessons": [
+            { "title": "Presión de Vapor", "slug": "presion-vapor", "durationSec": 1200, "position": 0, "isPublished": true, "resources": [] },
+            { "title": "Osmosis y Presión Osmótica", "slug": "osmosis-presion", "durationSec": 1800, "position": 1, "isPublished": true, "resources": [] },
+            { "title": "Tonicidad y Células", "slug": "tonicidad-celular", "durationSec": 1500, "position": 2, "isPublished": true, "resources": [] },
+            { "title": "Efectos en Sueros Fisiológicos", "slug": "sueros-fisiologicos", "durationSec": 1200, "position": 3, "isPublished": true, "resources": [] }
+          ]
+        },
+        {
+          "title": "Módulo 5: Espectroscopía Biológica",
+          "description": "Luz y moléculas.",
+          "position": 4,
+          "isPublished": true,
+          "lessons": [
+            { "title": "Ley de Beer-Lambert", "slug": "beer-lambert", "durationSec": 1500, "position": 0, "isPublished": true, "resources": [] },
+            { "title": "Absorbancia y Transmitancia", "slug": "absorbancia-transmitancia", "durationSec": 1200, "position": 1, "isPublished": true, "resources": [] },
+            { "title": "Espectrofotometría UV-Vis", "slug": "espectrofotometria", "durationSec": 2400, "position": 2, "isPublished": true, "resources": [] },
+            { "title": "Cuantificación de Proteínas", "slug": "cuantificacion-proteinas", "durationSec": 2000, "position": 3, "isPublished": true, "resources": [] }
+          ]
+        },
+        {
+          "title": "Módulo 6: Dinámica de Fluidos",
+          "description": "Flujo en sistemas vivos.",
+          "position": 5,
+          "isPublished": true,
+          "lessons": [
+            { "title": "Viscosidad de la Sangre", "slug": "viscosidad-sangre", "durationSec": 1800, "position": 0, "isPublished": true, "resources": [] },
+            { "title": "Ecuación de Poiseuille", "slug": "poiseuille-eq", "durationSec": 2000, "position": 1, "isPublished": true, "resources": [] },
+            { "title": "Tensión Superficial y Alvéolos", "slug": "tension-superficial", "durationSec": 1800, "position": 2, "isPublished": true, "resources": [] },
+            { "title": "Biofísica de la Circulación", "slug": "biofisica-circulacion", "durationSec": 2400, "position": 3, "isPublished": true, "resources": [] }
+          ]
+        }
+      ]
+    }
+  ]
+}
