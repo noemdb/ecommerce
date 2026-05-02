@@ -48,7 +48,7 @@ export function CourseSidebar({ course, courseSlug }: CourseSidebarProps) {
         </div>
       </div>
 
-      <div className={cn("flex-1 overflow-y-auto overflow-x-hidden custom-scrollbar", isCollapsed && "md:hidden")}>
+      <div className={cn("flex-1 overflow-x-hidden", isCollapsed && "md:hidden")}>
         <Accordion type="multiple" defaultValue={defaultModules} className="w-full">
           {course.modules.map((module) => (
             <AccordionItem value={module.id} key={module.id} className="border-b border-neutral-100 dark:border-neutral-800/50 last:border-0">
@@ -110,7 +110,7 @@ export function CourseSidebar({ course, courseSlug }: CourseSidebarProps) {
 
       {/* Visualización colapsada para desktop */}
       {isCollapsed && (
-        <div className="hidden md:flex flex-col items-center py-4 gap-4 flex-1 overflow-y-auto">
+        <div className="hidden md:flex flex-col items-center py-4 gap-4 flex-1">
           {course.modules.map((module) => (
             <div key={module.id} className="w-10 h-10 rounded-full bg-neutral-100 dark:bg-neutral-800 flex items-center justify-center text-neutral-500 cursor-pointer hover:bg-neutral-200 dark:hover:bg-neutral-700 transition-colors" title={module.title}>
               <span className="text-xs font-bold">{module.position}</span>

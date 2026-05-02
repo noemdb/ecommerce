@@ -98,9 +98,9 @@ export default async function LessonPage(props: {
     currentModule.lessons.findIndex((l) => l.slug === params.lessonSlug) + 1;
 
   return (
-    <div className="flex w-full min-h-screen bg-neutral-50 dark:bg-neutral-950 relative">
-      {/* Sidebar sticky wrapper */}
-      <div className="md:sticky md:top-0 h-auto md:h-screen flex-shrink-0 z-20">
+    <div className="flex w-full min-h-full bg-neutral-50 dark:bg-neutral-950 relative">
+      {/* Sidebar wrapper */}
+      <div className="flex-shrink-0 z-20">
         <CourseSidebar course={course} courseSlug={params.courseSlug} />
       </div>
 

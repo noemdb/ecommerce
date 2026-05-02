@@ -68,8 +68,8 @@ export default async function CourseDetailPage(props: {
   const firstLesson = course.modules[0]?.lessons[0] || null;
 
   return (
-    <div className="flex flex-col md:flex-row w-full min-h-screen bg-neutral-50 dark:bg-neutral-950">
-      <div className="md:sticky md:top-0 h-auto md:h-screen z-10">
+    <div className="flex flex-col md:flex-row w-full min-h-full bg-neutral-50 dark:bg-neutral-950">
+      <div className="flex-shrink-0 z-10">
         <CourseSidebar course={course} courseSlug={params.courseSlug} />
       </div>
       
