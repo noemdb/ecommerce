@@ -70,7 +70,7 @@ export const ourFileRouter = {
     pdf: { maxFileSize: "2MB", maxFileCount: 1 },
     image: { maxFileSize: "4MB", maxFileCount: 1 },
     video: { maxFileSize: "512MB", maxFileCount: 1 },
-    blob: { maxFileSize: "50MB", maxFileCount: 1 }, // DOWNLOAD
+    blob: { maxFileSize: "64MB", maxFileCount: 1 }, // DOWNLOAD
   })
     .input(ResourceUploadMetaSchema)
     .middleware(async ({ req, input }) => {
